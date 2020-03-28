@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bill split test</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="Auth">Авторизация</string>
+    <string name="reg">Регистрация</string>
+    <string name="Exit">Выйти</string>
+</resources>
