@@ -14,10 +14,14 @@
 
     <Button
         android:id="@+id/button_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Exit"
-        android:layout_alignEnd="@id/text"/>
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/Exit" />
 
     <EditText android:layout_width="250dp"
         android:layout_height="50dp"
@@ -55,5 +59,15 @@
             android:id="@+id/btn_registration"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_exit"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="130dp"
+        android:text="Считать данные" />
 
 </RelativeLayout>

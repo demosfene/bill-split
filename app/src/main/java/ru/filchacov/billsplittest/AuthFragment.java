@@ -1,6 +1,7 @@
 package ru.filchacov.billsplittest;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AuthFragment extends Fragment {
     private FirebaseAuth mAuth;
@@ -27,14 +30,19 @@ public class AuthFragment extends Fragment {
     private EditText ETpassword;
     private Button buttonExit;
     private Button signButton;
+    private Button btnRead;
     private Button regButton;
     private TextView textView;
+
+    private DatabaseReference mDataBase;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mDataBase = FirebaseDatabase.getInstance().getReference();
         if (user != null) {
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
@@ -48,6 +56,7 @@ public class AuthFragment extends Fragment {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
+
         }
     }
 
@@ -60,6 +69,7 @@ public class AuthFragment extends Fragment {
             ETpassword = view.findViewById(R.id.et_password);
             buttonExit = view.findViewById(R.id.button_exit);
             signButton = view.findViewById(R.id.btn_sign_in);
+            btnRead = view.findViewById(R.id.btn_read);
             regButton = view.findViewById(R.id.btn_registration);
             textView = view.findViewById(R.id.text);
 
@@ -74,6 +84,13 @@ public class AuthFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 signOut();
+            }
+        });
+
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRead(v);
             }
         });
 
@@ -92,8 +109,9 @@ public class AuthFragment extends Fragment {
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
+                if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
                     createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
+                }
             }
         });
 
@@ -113,6 +131,7 @@ public class AuthFragment extends Fragment {
                             Toast.makeText(getActivity(), "User "  + " with password" ,
                                     Toast.LENGTH_LONG).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            writeNewUser(user.getUid(), user.getEmail());
                             updateUI(user);
                         } else {
                             Toast.makeText(getActivity(), "Authentication failed.",
@@ -128,6 +147,11 @@ public class AuthFragment extends Fragment {
     public void signOut(){
         mAuth.signOut();
         updateUI(null);
+    }
+
+    private void writeNewUser(String userId, String email) {
+        User user = new User(email, userId);
+        mDataBase.child("users").child(userId).setValue(user);
     }
 
     public void signIn(String email, String password){
@@ -159,6 +183,11 @@ public class AuthFragment extends Fragment {
         if(user!=null)
             textView.setText(user.getEmail());
         else textView.setText("Войдите пожалуйста");
+    }
+
+    public void onClickRead(View view) {
+        Intent i = new Intent(getActivity(), ReadActivity.class);
+        startActivity(i);
     }
 
 }
