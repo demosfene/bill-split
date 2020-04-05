@@ -6,23 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    AuthFragment authFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        authFragment = new AuthFragment();
-
-
-        showAuthFragment();
+        if (savedInstanceState == null){
+            showAuthFragment();
+        }
     }
 
     private void showAuthFragment(){
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.mainActivity, authFragment)
+                .add(R.id.fragment_container, new AuthFragment())
                 .commit();
     }
 

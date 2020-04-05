@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -186,8 +188,16 @@ public class AuthFragment extends Fragment {
     }
 
     public void onClickRead(View view) {
-        Intent i = new Intent(getActivity(), ReadActivity.class);
-        startActivity(i);
+        FragmentManager fm = getFragmentManager();
+        assert fm != null;
+        Fragment fragment = fm.findFragmentById(R.id.read_fragment);
+        if (fragment == null) {
+            fragment = new ReadFragment();
+        }
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
 }
