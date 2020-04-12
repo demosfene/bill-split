@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,10 +19,12 @@ import java.text.SimpleDateFormat
 class BillActivity : AppCompatActivity() {
 //    20200326T2909
 
+    private var mDataBase: DatabaseReference? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
-
+        mDataBase = FirebaseDatabase.getInstance().reference
 
     }
 
@@ -96,6 +100,7 @@ class BillActivity : AppCompatActivity() {
 
                 } else {
                     anytext.text = result.data?.totalSum.toString()
+                    result.data?.dateTime?.let { writeNewBill(result.data?.items, it) }
                 }
                 }catch (e:Exception) {
                     Log.e("Internet3", e.message.toString())
@@ -104,6 +109,11 @@ class BillActivity : AppCompatActivity() {
             }
             }
         }
+    }
+    private fun writeNewBill(items: MutableList<Bill.Item>?, dateTime: String) {
+        val bill = Bill(items, dateTime)
+        mDataBase!!.child("bills").child(dateTime).setValue(bill)
+
     }
 }
 
