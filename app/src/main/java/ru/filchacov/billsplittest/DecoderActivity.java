@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView.OnQRCodeReadListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
 
 import ru.filchacov.billsplittest.QRReader.PointsOverlayView;
 
