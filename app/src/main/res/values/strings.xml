@@ -8,4 +8,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="list_is_empty">Ваш список пуст</string>
+    <string name="this_field_for_email">this field for email</string>
 </resources>
