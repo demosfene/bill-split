@@ -2,9 +2,12 @@ package ru.filchacov.billsplittest
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -16,23 +19,58 @@ import ru.filchacov.billsplittest.BillInfo.BillService
 import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import java.text.SimpleDateFormat
 
+
 class BillActivity : AppCompatActivity() {
 //    20200326T2909
 
     private var mDataBase: DatabaseReference? = null
+
+    private var mRecyclerView: RecyclerView? = null
+    private var mAdapter: RecyclerView.Adapter<*>? = null
+    private var mLayoutManager: RecyclerView.LayoutManager? = null
+
+    private var mFriendList: ArrayList<FriendItem>? = null
+
+    private var buttonInsert: Button? = null
+    private var editTextInsert: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
         mDataBase = FirebaseDatabase.getInstance().reference
 
+        mFriendList = ArrayList()
+        buildRecyclerView()
+
+        buttonInsert = findViewById(R.id.button_insert)
+        editTextInsert = findViewById(R.id.edittext_insert)
+
+        buttonInsert!!.setOnClickListener {
+            val name = editTextInsert!!.getText().toString()
+            insertItem(name)
+            editTextInsert!!.setText("")
+        }
+
+    }
+
+    fun insertItem(name: String) {
+        mFriendList?.add(FriendItem(R.drawable.ic_android, name))
+        mAdapter!!.notifyDataSetChanged()
+    }
+
+    fun buildRecyclerView() {
+        mRecyclerView = findViewById(R.id.recyclerView)
+        mRecyclerView!!.setHasFixedSize(true)
+        mLayoutManager = LinearLayoutManager(this)
+        mAdapter = FriendAdapter(mFriendList)
+        mRecyclerView!!.setLayoutManager(mLayoutManager)
+        mRecyclerView!!.setAdapter(mAdapter)
     }
 
 
     override fun onStart() {
         super.onStart()
 
-        val anytext = findViewById<TextView>(R.id.anytext)
         var time = ""
 //        val s = "t=ututututututuut&s=517.00&&i=57851&fp=3481384931&n=1"
 //        val ss = "t=20200405T1439&s=4124.00&fn=9280440300752035&i=53562&fp=135155323&n=1"
@@ -96,10 +134,8 @@ class BillActivity : AppCompatActivity() {
                 }
                 if (result.error != null) {
                     Log.d("gdeti", result.error)
-                    anytext.text = result.error
 
                 } else {
-                    anytext.text = result.data?.totalSum.toString()
                     result.data?.dateTime?.let { writeNewBill(result.data?.items, it) }
                 }
                 }catch (e:Exception) {
