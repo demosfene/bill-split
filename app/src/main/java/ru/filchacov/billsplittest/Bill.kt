@@ -6,6 +6,8 @@ import java.util.Collections.emptyList
 class Bill {
     @SerializedName("receiptCode")
     var receiptCode = 0
+    @SerializedName("user")
+    var user = "" // Дата совершения покупки
     @SerializedName("items")
     var items = emptyList<Item>() // Лист списка покупок (вся инфа по покупкам тут)
     @SerializedName("cashTotalSum")
