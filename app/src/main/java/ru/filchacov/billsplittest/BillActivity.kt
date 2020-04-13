@@ -1,8 +1,8 @@
 package ru.filchacov.billsplittest
 
+import android.R
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +16,7 @@ import ru.filchacov.billsplittest.BillInfo.BillService
 import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import java.text.SimpleDateFormat
 
+
 class BillActivity : AppCompatActivity() {
 //    20200326T2909
 
@@ -25,6 +26,9 @@ class BillActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
         mDataBase = FirebaseDatabase.getInstance().reference
+        val friendList: ArrayList<FriendItem> = ArrayList()
+        friendList.add(FriendItem(R.drawable.ic_android, "Line 1"))
+        friendList.add(FriendItem(R.drawable.ic_android, "Line 2"))
 
     }
 
@@ -32,7 +36,6 @@ class BillActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val anytext = findViewById<TextView>(R.id.anytext)
         var time = ""
 //        val s = "t=ututututututuut&s=517.00&&i=57851&fp=3481384931&n=1"
 //        val ss = "t=20200405T1439&s=4124.00&fn=9280440300752035&i=53562&fp=135155323&n=1"
@@ -96,10 +99,8 @@ class BillActivity : AppCompatActivity() {
                 }
                 if (result.error != null) {
                     Log.d("gdeti", result.error)
-                    anytext.text = result.error
 
                 } else {
-                    anytext.text = result.data?.totalSum.toString()
                     result.data?.dateTime?.let { writeNewBill(result.data?.items, it) }
                 }
                 }catch (e:Exception) {
