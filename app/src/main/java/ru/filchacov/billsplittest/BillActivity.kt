@@ -152,7 +152,7 @@ class BillActivity : AppCompatActivity() {
 
                 }
                 if (result.error != null) {
-                    Log.d("gdeti", result.error)
+                    Log.d("gdetii", result.error)
 
                 } else {
                     result.data?.dateTime?.let { writeNewBill(result.data?.items, it)
