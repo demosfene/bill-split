@@ -12,4 +12,6 @@
     <string name="this_field_for_email">this field for email</string>
     <string name="on_off_qr_decoding">On/Off QR decoding</string>
     <string name="on_off_flashlight">On/Off flashlight</string>
+    <string name="put_name">Ведите имя:</string>
+    <string name="click_name">Нажмите на имя для выбора покупок</string>
 </resources>
