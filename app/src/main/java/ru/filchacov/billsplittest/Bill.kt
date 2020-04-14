@@ -48,6 +48,10 @@ class Bill {
         this.dateTime = dateTime
     }
 
+    constructor(dateTime: String) {
+        this.dateTime = dateTime
+    }
+
 
     class Item {
         @SerializedName("name") var name: String? = null
