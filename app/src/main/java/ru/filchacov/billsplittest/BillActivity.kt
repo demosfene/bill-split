@@ -38,13 +38,12 @@ class BillActivity : AppCompatActivity() {
 
     private var buttonInsert: Button? = null
     private var editTextInsert: EditText? = null
-    private var billCount: Int = 0
+    private var billCount: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
         mAuth = FirebaseAuth.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser
         mDataBase = FirebaseDatabase.getInstance().reference
 
         mFriendList = ArrayList()
@@ -56,25 +55,25 @@ class BillActivity : AppCompatActivity() {
         buttonInsert!!.setOnClickListener {
             val name = editTextInsert!!.getText().toString()
             if (editTextInsert!!.getText().length == 0){
-                editTextInsert!!.setError("Заполните Пустое Поле");
+                editTextInsert!!.setError("Введите имя Вашего друга");
             } else {
-                insertItem(name, billCount)
+                insertItem(name, billCount.toString())
                 editTextInsert!!.setText("")
             }
         }
 
     }
 
-    fun insertItem(name: String, bill: Int) {
+    fun insertItem(name: String, bill: String) {
         mFriendList?.add(FriendItem(R.drawable.ic_android, name))
         mAdapter!!.notifyDataSetChanged()
         val user = mAuth!!.currentUser
         writeNewFriend(user!!.uid, bill)
     }
 
-    private fun writeNewFriend(userId: String, billCounter: Int) {
+    private fun writeNewFriend(userId: String, billCounter: String) {
         mFriendListDB?.add(editTextInsert!!.getText().toString())
-        mDataBase!!.child("users").child(userId).child("friends").child("$billCounter чек").push().setValue(editTextInsert!!.getText().toString())
+        mDataBase!!.child("users").child(userId).child("friends").child(billCounter).push().setValue(editTextInsert!!.getText().toString())
     }
 
     fun buildRecyclerView() {
@@ -152,10 +151,12 @@ class BillActivity : AppCompatActivity() {
 
                 }
                 if (result.error != null) {
-                    Log.d("gdeti", result.error)
+                    Log.d("gdetii", result.error)
 
                 } else {
-                    result.data?.dateTime?.let { writeNewBill(result.data?.items, it) }
+                    result.data?.dateTime?.let { writeNewBill(result.data?.items, it)
+                    billCount = result.data?.dateTime!!
+                    }
                 }
                 }catch (e:Exception) {
                     Log.e("Internet3", e.message.toString())
@@ -168,8 +169,6 @@ class BillActivity : AppCompatActivity() {
     private fun writeNewBill(items: MutableList<Bill.Item>?, dateTime: String) {
         val bill = Bill(items, dateTime)
         mDataBase!!.child("bills").child(dateTime).setValue(bill)
-        billCount++
-
     }
 }
 
