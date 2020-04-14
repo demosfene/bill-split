@@ -44,7 +44,6 @@ class BillActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
         mAuth = FirebaseAuth.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser
         mDataBase = FirebaseDatabase.getInstance().reference
 
         mFriendList = ArrayList()
