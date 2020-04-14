@@ -55,7 +55,7 @@ class BillActivity : AppCompatActivity() {
         buttonInsert!!.setOnClickListener {
             val name = editTextInsert!!.getText().toString()
             if (editTextInsert!!.getText().length == 0){
-                editTextInsert!!.setError("Заполните Пустое Поле");
+                editTextInsert!!.setError("Введите имя Вашего друга");
             } else {
                 insertItem(name, billCount.toString())
                 editTextInsert!!.setText("")
