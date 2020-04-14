@@ -10,4 +10,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_is_empty">Ваш список пуст</string>
     <string name="this_field_for_email">this field for email</string>
+    <string name="on_off_qr_decoding">On/Off QR decoding</string>
+    <string name="on_off_flashlight">On/Off flashlight</string>
 </resources>

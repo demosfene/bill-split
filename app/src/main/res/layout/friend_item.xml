@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+<<<<<<< HEAD
     app:cardCornerRadius="4dp">
+=======
+    app:cardCornerRadius="4dp"
+    android:layout_marginBottom="4dp">
+>>>>>>> origin/master
     
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,17 +16,33 @@
         android:layout_margin="4dp">
         
         <ImageView
+<<<<<<< HEAD
+=======
+            android:id="@+id/imageView"
+>>>>>>> origin/master
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="2dp"/>
 
         <TextView
+<<<<<<< HEAD
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="285dp"
+=======
+            android:id="@+id/textView"
+            android:layout_width="219dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="112dp"
+            android:layout_toEndOf="@+id/imageView"
+>>>>>>> origin/master
             android:text="User 1"
             android:textColor="@android:color/black"
             android:textSize="20sp"

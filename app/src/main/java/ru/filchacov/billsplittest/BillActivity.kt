@@ -2,12 +2,9 @@ package ru.filchacov.billsplittest
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -35,7 +32,7 @@ class BillActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-//        val anytext = findViewById<TextView>(R.id.date)
+        val anytext = findViewById<TextView>(R.id.anytext)
         var time = ""
 //        val s = "t=ututututututuut&s=517.00&&i=57851&fp=3481384931&n=1"
 //        val ss = "t=20200405T1439&s=4124.00&fn=9280440300752035&i=53562&fp=135155323&n=1"
@@ -82,44 +79,34 @@ class BillActivity : AppCompatActivity() {
         //проверяет включен ли интернет
         if (isNetworkAvailable.isNetworkAvailable(applicationContext)) {
             CoroutineScope(Dispatchers.Main).launch {
-                try {
-                    val result = withContext(Dispatchers.IO) {
-                        checkService.api.checkGet(
-                                fn = qrInfo.getQueryParameter("fn")!!
-                                , fd = qrInfo.getQueryParameter("i")!!
-                                , fp = qrInfo.getQueryParameter("fp")!!
-                                , n = qrInfo.getQueryParameter("n")!!.toInt()
-                                , s = qrInfo.getQueryParameter("s")!!
-                                , t = time
-                                , qr = 0
-                        ).execute().body()!!
+                try{
+                val result = withContext(Dispatchers.IO) {
+                     checkService.api.checkGet(
+                        fn = qrInfo.getQueryParameter("fn")!!
+                        , fd = qrInfo.getQueryParameter("i")!!
+                        , fp = qrInfo.getQueryParameter("fp")!!
+                        , n = qrInfo.getQueryParameter("n")!!.toInt()
+                        , s = qrInfo.getQueryParameter("s")!!
+                        , t = time
+                        , qr = 0
+                    ).execute().body()!!
 
-                    }
-                    val bill = result.data
 
-                    if (result.error != null) {
-                        Log.d("gdeti", result.error)
-//                    anytext.text = result.error
 
-                    } else {
-//                    anytext.text = result.data?.totalSum.toString()
-                        val dateTime = findViewById<TextView>(R.id.date)
-                        val totalSum = findViewById<TextView>(R.id.total_sum)
-                        dateTime.text = bill!!.dateTime
-                        totalSum.text = ((bill!!.totalSum.toDouble())/100).toString()
+                }
+                if (result.error != null) {
+                    Log.d("gdeti", result.error)
+                    anytext.text = result.error
 
-                        val recyclerView = findViewById<RecyclerView>(R.id.bill_list)
-                        val layoutManager:LinearLayoutManager = LinearLayoutManager(applicationContext)
-                        recyclerView.layoutManager = layoutManager
-                        recyclerView.adapter = BillAdapter(bill.items)
-
-                    }
+                } else {
+                    anytext.text = result.data?.totalSum.toString()
                     result.data?.dateTime?.let { writeNewBill(result.data?.items, it) }
+                }
                 }catch (e:Exception) {
                     Log.e("Internet3", e.message.toString())
                 Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_LONG)
                     .show()
-                }
+            }
             }
         }
     }
@@ -129,6 +116,5 @@ class BillActivity : AppCompatActivity() {
 
     }
 }
-
 
 
