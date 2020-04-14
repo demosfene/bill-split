@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat
 class BillActivity : AppCompatActivity() {
 //    20200326T2909
 
+    private var mAuth: FirebaseAuth? = null
+
     private var mDataBase: DatabaseReference? = null
 
     private var mRecyclerView: RecyclerView? = null
@@ -31,12 +34,17 @@ class BillActivity : AppCompatActivity() {
 
     private var mFriendList: ArrayList<FriendItem>? = null
 
+    private var mFriendListDB: ArrayList<String>? = null
+
     private var buttonInsert: Button? = null
     private var editTextInsert: EditText? = null
+    private var billCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
+        mAuth = FirebaseAuth.getInstance()
+        val user = FirebaseAuth.getInstance().currentUser
         mDataBase = FirebaseDatabase.getInstance().reference
 
         mFriendList = ArrayList()
@@ -47,15 +55,26 @@ class BillActivity : AppCompatActivity() {
 
         buttonInsert!!.setOnClickListener {
             val name = editTextInsert!!.getText().toString()
-            insertItem(name)
-            editTextInsert!!.setText("")
+            if (editTextInsert!!.getText().length == 0){
+                editTextInsert!!.setError("Заполните Пустое Поле");
+            } else {
+                insertItem(name, billCount)
+                editTextInsert!!.setText("")
+            }
         }
 
     }
 
-    fun insertItem(name: String) {
+    fun insertItem(name: String, bill: Int) {
         mFriendList?.add(FriendItem(R.drawable.ic_android, name))
         mAdapter!!.notifyDataSetChanged()
+        val user = mAuth!!.currentUser
+        writeNewFriend(user!!.uid, bill)
+    }
+
+    private fun writeNewFriend(userId: String, billCounter: Int) {
+        mFriendListDB?.add(editTextInsert!!.getText().toString())
+        mDataBase!!.child("users").child(userId).child("friends").child("$billCounter чек").push().setValue(editTextInsert!!.getText().toString())
     }
 
     fun buildRecyclerView() {
@@ -149,6 +168,7 @@ class BillActivity : AppCompatActivity() {
     private fun writeNewBill(items: MutableList<Bill.Item>?, dateTime: String) {
         val bill = Bill(items, dateTime)
         mDataBase!!.child("bills").child(dateTime).setValue(bill)
+        billCount++
 
     }
 }
