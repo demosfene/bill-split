@@ -68,7 +68,7 @@ class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
             if (editTextInsert!!.text.isEmpty()){
                 editTextInsert!!.error = "Введите имя Вашего друга"
             } else {
-                insertItem(name, bill.dateTime)
+                insertItem(bill.dateTime)
                 editTextInsert!!.setText("")
             }
         }
