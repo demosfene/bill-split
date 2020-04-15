@@ -10,11 +10,12 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.dynamic.SupportFragmentWrapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
-class AddFriendFragment(private var bill: Bill) : Fragment(),OnCLickFriend {
+class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
 
     private var mAuth: FirebaseAuth? = null
 
@@ -55,7 +56,7 @@ class AddFriendFragment(private var bill: Bill) : Fragment(),OnCLickFriend {
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView!!.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = FriendAdapter(mFriendList)
+        mAdapter = FriendAdapter(mFriendList, this)
         mRecyclerView!!.layoutManager = mLayoutManager
         mRecyclerView!!.adapter = mAdapter
 
@@ -78,28 +79,28 @@ class AddFriendFragment(private var bill: Bill) : Fragment(),OnCLickFriend {
     private fun loadUserDB(dataSnapshot: DataSnapshot) {
         mFriendList?.clear()
         for (ds in dataSnapshot.children) {
-            val friend = ds.value!! as String
-            mFriendList!!.add(FriendItem(R.drawable.ic_android, friend))
-
+            val friends = ds.value as String
+            val key = ds.key
+            mFriendList!!.add(FriendItem(R.drawable.ic_android, friends, key))
+            mAdapter!!.notifyDataSetChanged()
         }
     }
 
 
 
 
-    fun insertItem(name: String, billTime: String) {
-        mFriendList?.add(FriendItem(R.drawable.ic_android, name))
-        mAdapter!!.notifyDataSetChanged()
+    private fun insertItem(billTime: String) {
         writeNewFriend(user!!.uid, billTime)
     }
 
     private fun writeNewFriend(userId: String, billCounter: String) {
-        mFriendListDB?.add(editTextInsert!!.text.toString())
         mDataBase!!.child("users").child(userId).child("friends").child(billCounter).push().setValue(editTextInsert!!.text.toString())
     }
 
     override fun clickFriend(number: Int) {
-        TODO("Not yet implemented")
+        activity?.let {
+            (it as BillActivity).clickFriend(bill, mFriendList!![number])
+        }
     }
 
 

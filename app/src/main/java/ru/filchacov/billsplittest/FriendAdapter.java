@@ -13,20 +13,11 @@ import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
     private ArrayList<FriendItem> mFriendList;
+    private OnCLickFriend onCLickFriend;
 
-    public static class FriendViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView1;
-
-        public FriendViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-        }
-    }
-
-    public FriendAdapter(ArrayList<FriendItem> friendList) {
+    public FriendAdapter(ArrayList<FriendItem> friendList, OnCLickFriend onCLickFriend) {
         mFriendList = friendList;
+        this.onCLickFriend = onCLickFriend;
     }
 
     @NonNull
@@ -43,10 +34,27 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
         holder.mImageView.setImageResource(currentItem.getmImageResource());
         holder.mTextView1.setText(currentItem.getmText1());
+        holder.bindClickFriend(position, onCLickFriend);
     }
 
     @Override
     public int getItemCount() {
         return mFriendList.size();
+    }
+
+
+    class FriendViewHolder extends RecyclerView.ViewHolder {
+        ImageView mImageView;
+        TextView mTextView1;
+
+        FriendViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextView1 = itemView.findViewById(R.id.textView);
+        }
+
+        void bindClickFriend(int position, OnCLickFriend onCLickFriend){
+            itemView.setOnClickListener(v -> onCLickFriend.clickFriend(position));
+        }
     }
 }

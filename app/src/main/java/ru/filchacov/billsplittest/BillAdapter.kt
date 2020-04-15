@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class BillAdapter(var items: List<Bill.Item>): RecyclerView.Adapter<BillAdapter.BillHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillHolder = BillHolder(LayoutInflater.from(parent.context).inflate(R.layout.bill_item, parent, false))
 
     override fun onBindViewHolder(holder: BillHolder, position: Int) {
@@ -16,6 +17,9 @@ class BillAdapter(var items: List<Bill.Item>): RecyclerView.Adapter<BillAdapter.
     }
 
     override fun getItemCount(): Int = items.size
+
+
+
 
     inner class BillHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -25,10 +29,12 @@ class BillAdapter(var items: List<Bill.Item>): RecyclerView.Adapter<BillAdapter.
 
 
        fun bind(item: Bill.Item){
-            itemName.text = item.name
+           itemName.text = item.name
            itemCount.text = item.quantity.toString()
-           itemPrice.text = item.price.toString()
+           itemPrice.text = ((item.price)!!.toDouble()/100).toString()
        }
+
+
 
     }
 }

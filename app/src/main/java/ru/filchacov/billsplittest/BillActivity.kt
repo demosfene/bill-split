@@ -1,6 +1,8 @@
 package ru.filchacov.billsplittest
 
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -17,12 +19,13 @@ import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import java.text.SimpleDateFormat
 
 
-class BillActivity : AppCompatActivity() {
+class BillActivity() : AppCompatActivity() {
 //    20200326T2909
 
 
     private var mDataBase: DatabaseReference? = null
     private var billFragment: Bill? = null
+
 
 
 
@@ -120,6 +123,20 @@ class BillActivity : AppCompatActivity() {
                 .replace(R.id.bill_activity, AddFriendFragment(bill))
                 .commit()
     }
+
+    private fun showBillForFriend(bill: Bill, friendItem: FriendItem){
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.bill_activity, BillListFragment(friendItem, bill))
+                .commit()
+    }
+
+
+    fun clickFriend(bill: Bill, friendItem: FriendItem) {
+        showBillForFriend(bill, friendItem)
+    }
+
+
 }
 
 
