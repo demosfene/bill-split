@@ -1,7 +1,6 @@
 package ru.filchacov.billsplittest;
 
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
+
+import ru.filchacov.billsplittest.User.User;
 
 public class AuthFragment extends Fragment {
     private FirebaseAuth mAuth;
@@ -82,38 +85,23 @@ public class AuthFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        buttonExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+        buttonExit.setOnClickListener(v -> signOut());
 
-        btnRead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickRead(v);
-            }
+        btnRead.setOnClickListener(v -> {
+            onClickRead(v);
         });
 
 
-        signButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
-                    signIn(ETemail.getText().toString(), ETpassword.getText().toString());
-            }
-
+        signButton.setOnClickListener(v -> {
+            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
+                signIn(ETemail.getText().toString(), ETpassword.getText().toString());
         });
 
 
 
-        regButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
-                    createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
-                }
+        regButton.setOnClickListener(v -> {
+            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
+                createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
             }
         });
 
@@ -122,31 +110,28 @@ public class AuthFragment extends Fragment {
         updateUI(currentUser);
     }
 
-    public void createAccount(String email, String password){
+    private void createAccount(String email, String password){
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getActivity(), "User "  + " with password" ,
-                                    Toast.LENGTH_LONG).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            writeNewUser(user.getUid(), user.getEmail());
-                            updateUI(user);
-                        } else {
-                            Toast.makeText(getActivity(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            // If sign in fails, display a message to the user.
-                            updateUI(null);
-                        }
-
+                .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getActivity(), "User "  + " with password" ,
+                                Toast.LENGTH_LONG).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        writeNewUser(user.getUid(), user.getEmail());
+                        updateUI(user);
+                    } else {
+                        Toast.makeText(getActivity(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        // If sign in fails, display a message to the user.
+                        updateUI(null);
                     }
+
                 });
     }
 
-    public void signOut(){
+    private void signOut(){
         mAuth.signOut();
         updateUI(null);
     }
@@ -156,26 +141,23 @@ public class AuthFragment extends Fragment {
         mDataBase.child("users").child(userId).setValue(user);
     }
 
-    public void signIn(String email, String password){
+    private void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getActivity(), "User "  + " with password" ,
-                                    Toast.LENGTH_LONG).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getActivity(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // ...
+                .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getActivity(), "User "  + " with password" ,
+                                Toast.LENGTH_LONG).show();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(getActivity(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
+
+                    // ...
                 });
     }
 
@@ -187,7 +169,7 @@ public class AuthFragment extends Fragment {
         else textView.setText("Войдите пожалуйста");
     }
 
-    public void onClickRead(View view) {
+    private void onClickRead(View view) {
         FragmentManager fm = getFragmentManager();
         assert fm != null;
         Fragment fragment = fm.findFragmentById(R.id.read_fragment);

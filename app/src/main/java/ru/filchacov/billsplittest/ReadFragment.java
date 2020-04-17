@@ -1,17 +1,11 @@
 package ru.filchacov.billsplittest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import ru.filchacov.billsplittest.User.User;
+import ru.filchacov.billsplittest.User.UserAdapter;
 
 public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener {
     private RecyclerView recyclerView;

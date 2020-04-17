@@ -10,12 +10,30 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.dynamic.SupportFragmentWrapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import ru.filchacov.billsplittest.AddFriend.FriendAdapter
+import ru.filchacov.billsplittest.AddFriend.FriendItem
+import ru.filchacov.billsplittest.AddFriend.OnCLickFriend
+import ru.filchacov.billsplittest.Bill.Bill
 
-class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
+class AddFriendFragment() : Fragment(), OnCLickFriend {
+
+
+    private var bill: Bill? = null
+
+
+    companion object{
+        val TAG: String? = "AddFriendFragment"
+
+        fun getNewInstance(args: Bundle?): AddFriendFragment{
+            val addFriendFragment = AddFriendFragment()
+            addFriendFragment.arguments = args
+            return addFriendFragment
+        }
+    }
+
 
     private var mAuth: FirebaseAuth? = null
 
@@ -36,14 +54,18 @@ class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.add_friends_fragment, container, false)
-
+        if (savedInstanceState != null){
+            bill = savedInstanceState.getParcelable("bill")
+        }else{
+            bill = arguments!!.getParcelable("bill")
+        }
         mAuth = FirebaseAuth.getInstance()
         mDataBase = FirebaseDatabase.getInstance().reference
         user = mAuth!!.currentUser
 
         mFriendListDB = ArrayList()
         mFriendList = ArrayList()
-        mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill.dateTime).addValueEventListener(object : ValueEventListener{
+        mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill!!.dateTime).addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 Log.d("list123", p0.toString())
             }
@@ -64,11 +86,10 @@ class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
         editTextInsert = view.findViewById(R.id.edittext_insert)
 
         buttonInsert!!.setOnClickListener {
-            val name = editTextInsert!!.text.toString()
             if (editTextInsert!!.text.isEmpty()){
                 editTextInsert!!.error = "Введите имя Вашего друга"
             } else {
-                insertItem(bill.dateTime)
+                insertItem(bill!!.dateTime)
                 editTextInsert!!.setText("")
             }
         }
@@ -79,15 +100,17 @@ class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
     private fun loadUserDB(dataSnapshot: DataSnapshot) {
         mFriendList?.clear()
         for (ds in dataSnapshot.children) {
-            val friends = ds.value as String
+            val friend = ds.value as String
             val key = ds.key
-            mFriendList!!.add(FriendItem(R.drawable.ic_android, friends, key))
+            mFriendList!!.add(FriendItem(R.drawable.ic_android, friend, key))
             mAdapter!!.notifyDataSetChanged()
         }
     }
 
+    override fun onStop() {
+        super.onStop()
 
-
+    }
 
     private fun insertItem(billTime: String) {
         writeNewFriend(user!!.uid, billTime)
@@ -99,8 +122,13 @@ class AddFriendFragment(private var bill: Bill) : Fragment(), OnCLickFriend{
 
     override fun clickFriend(number: Int) {
         activity?.let {
-            (it as BillActivity).clickFriend(bill, mFriendList!![number])
+            (it as BillActivity).clickFriend(bill!!, mFriendList!![number])
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("bill", bill)
     }
 
 

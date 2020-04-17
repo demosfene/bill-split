@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest;
+package ru.filchacov.billsplittest.AddFriend;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import ru.filchacov.billsplittest.R;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
     private ArrayList<FriendItem> mFriendList;
@@ -24,8 +26,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     @Override
     public FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
-        FriendViewHolder fvh = new FriendViewHolder(v);
-        return fvh;
+        return new FriendViewHolder(v);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         FriendItem currentItem = mFriendList.get(position);
 
         holder.mImageView.setImageResource(currentItem.getmImageResource());
-        holder.mTextView1.setText(currentItem.getmText1());
+        holder.mTextView1.setText(currentItem.getmText());
         holder.bindClickFriend(position, onCLickFriend);
     }
 

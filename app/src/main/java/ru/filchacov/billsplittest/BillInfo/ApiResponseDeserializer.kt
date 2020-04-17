@@ -3,7 +3,7 @@ package ru.filchacov.billsplittest.BillInfo
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import ru.filchacov.billsplittest.Bill
+import ru.filchacov.billsplittest.Bill.Bill
 
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

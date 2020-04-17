@@ -4,7 +4,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import ru.filchacov.billsplittest.Bill
+import ru.filchacov.billsplittest.Bill.Bill
 
 interface IProverochkaApi {
     @Headers(

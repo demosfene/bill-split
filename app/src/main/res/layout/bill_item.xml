@@ -1,75 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
+        app:layout_constraintHorizontal_bias="0.4"
         android:id="@+id/bill_item_name"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         tools:text="dfgfdgfdgdfgdfgdfgdfgfdgdfgdfgfdsgsfdgdfsg"
-        android:layout_margin="20dp"
-        android:layout_marginStart="5dp"
-        android:layout_weight="7"
-        android:textSize="18sp"/>
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guid_line1"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintHeight_default="spread"
+        />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guid_line1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"
+        />
 
     <TextView
         android:id="@+id/bill_item_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        app:layout_constraintHorizontal_weight="0.1"
         android:gravity="center"
-        android:layout_margin="20dp"
+        app:layout_constraintStart_toEndOf="@id/guid_line1"
+        app:layout_constraintEnd_toStartOf="@id/guid_line2"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         tools:text="555"
         />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guid_line2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+
 
 
     <Button
         android:id="@+id/minus"
+        app:layout_constraintHorizontal_weight="0.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="5dp"
-        android:maxWidth="15dp"
-        android:layout_weight="1"
+        android:minWidth="10dp"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toStartOf="@id/bill_user_count"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         android:text="-"/>
+
+
+
+
 
     <TextView
         android:id="@+id/bill_user_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        app:layout_constraintHorizontal_weight="0.1"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toEndOf="@id/guid_line2"
+        app:layout_constraintEnd_toStartOf="@id/guid_line5"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         android:text="0"/>
+
+
 
     <Button
         android:id="@+id/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="5dp"
-        android:maxWidth="15dp"
-        android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toEndOf="@id/bill_user_count"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         android:text="+"
         />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guid_line5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8"
+        />
+
     <TextView
         android:id="@+id/bill_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         tools:text="555"
-        android:layout_weight="1"
-        android:layout_margin="20dp"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toEndOf="@id/guid_line5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         />
 
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

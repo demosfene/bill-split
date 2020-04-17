@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest;
+package ru.filchacov.billsplittest.User;
 
 import androidx.annotation.Nullable;
 

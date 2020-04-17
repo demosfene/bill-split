@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest
+package ru.filchacov.billsplittest.AddFriend
 
 interface OnCLickFriend {
     fun clickFriend(number: Int)

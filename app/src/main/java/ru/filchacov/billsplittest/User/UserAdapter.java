@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest;
+package ru.filchacov.billsplittest.User;
 
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import ru.filchacov.billsplittest.R;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -51,7 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         TextView textEmail;
         OnNoteListener onNoteListener;
 
-        public UserViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+        UserViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
 
             textEmail = itemView.findViewById(R.id.text_email);

@@ -1,25 +1,25 @@
 package ru.filchacov.billsplittest
 
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.filchacov.billsplittest.AddFriend.FriendItem
+import ru.filchacov.billsplittest.Bill.Bill
 import ru.filchacov.billsplittest.BillInfo.BillService
 import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import java.text.SimpleDateFormat
 
 
-class BillActivity() : AppCompatActivity() {
+class BillActivity : AppCompatActivity() {
 //    20200326T2909
 
 
@@ -34,12 +34,7 @@ class BillActivity() : AppCompatActivity() {
         setContentView(R.layout.activity_bill)
         mDataBase = FirebaseDatabase.getInstance().reference
 
-    }
 
-
-
-    override fun onStart() {
-        super.onStart()
 
         var time = ""
 
@@ -58,7 +53,7 @@ class BillActivity() : AppCompatActivity() {
         }catch (e:Exception){
             Log.e("Internet1", e.message.toString())
             Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_LONG)
-                .show()
+                    .show()
         }
 
         try{
@@ -67,7 +62,7 @@ class BillActivity() : AppCompatActivity() {
         }catch (e:Exception) {
             Log.e("Internet2", e.message.toString())
             Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_LONG)
-                .show()
+                    .show()
         }
 
 
@@ -77,37 +72,46 @@ class BillActivity() : AppCompatActivity() {
         if (isNetworkAvailable.isNetworkAvailable(applicationContext)) {
             CoroutineScope(Dispatchers.Main).launch {
                 try{
-                val result = withContext(Dispatchers.IO) {
-                     checkService.api.checkGet(
-                        fn = qrInfo.getQueryParameter("fn")!!
-                        , fd = qrInfo.getQueryParameter("i")!!
-                        , fp = qrInfo.getQueryParameter("fp")!!
-                        , n = qrInfo.getQueryParameter("n")!!.toInt()
-                        , s = qrInfo.getQueryParameter("s")!!
-                        , t = time
-                        , qr = 0
-                    ).execute().body()!!
+                    val result = withContext(Dispatchers.IO) {
+                        checkService.api.checkGet(
+                                fn = qrInfo.getQueryParameter("fn")!!
+                                , fd = qrInfo.getQueryParameter("i")!!
+                                , fp = qrInfo.getQueryParameter("fp")!!
+                                , n = qrInfo.getQueryParameter("n")!!.toInt()
+                                , s = qrInfo.getQueryParameter("s")!!
+                                , t = time
+                                , qr = 0
+                        ).execute().body()!!
 
 
 
-                }
-                if (result.data != null) {
+                    }
+                    if (result.data != null) {
                         result.data?.dateTime?.let {
                             writeNewBill(result.data?.items, it)
                         }
 
-                    Log.e("gdetii", "corutine")
+                        Log.e("gdetii", "corutine")
 
-                    billFragment = result.data!!
-                    billFragment?.let { showFriendFragment(it) }
-                }
+                        billFragment = result.data!!
+                        if (savedInstanceState == null) {
+                            billFragment?.let { showFriendFragment(it) }
+                        }
+                    }
                 }catch (e:Exception) {
                     Log.e("Internet3", e.stackTrace.toString())
                     Snackbar.make(findViewById(android.R.id.content), e.stackTrace.toString(), Snackbar.LENGTH_LONG)
-                        .show()
-            }
+                            .show()
+                }
             }
         }
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+
 
     }
 
@@ -117,18 +121,25 @@ class BillActivity() : AppCompatActivity() {
         mDataBase!!.child("bills").child(dateTime).setValue(bill)
     }
 
-    private fun showFriendFragment(bill:Bill){
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.bill_activity, AddFriendFragment(bill))
-                .commit()
+
+
+    private fun showFriendFragment(bill: Bill) {
+        if (supportFragmentManager.findFragmentByTag(AddFriendFragment.TAG) == null){
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
+                    .commit()
+        }
     }
 
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem){
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.bill_activity, BillListFragment(friendItem, bill))
-                .commit()
+        if(supportFragmentManager.findFragmentByTag(BillListFragment.TAG) == null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.bill_activity, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
+                    .commit()
+        }
+
     }
 
 
@@ -136,7 +147,22 @@ class BillActivity() : AppCompatActivity() {
         showBillForFriend(bill, friendItem)
     }
 
+    private fun makeFragmentFriend(bill:Bill): Fragment{
+        val bundle = Bundle()
+        bundle.putParcelable("bill", bill)
+        return AddFriendFragment.getNewInstance(bundle)
+    }
+
+
+    private fun makeFragmentBill(bill: Bill, friendItem: FriendItem):Fragment{
+        val bandle = Bundle()
+        bandle.putParcelable("bill", bill)
+        bandle. putParcelable("friendItem", friendItem)
+        return BillListFragment.getNewInstance(bandle)
+    }
 
 }
+
+
 
 
