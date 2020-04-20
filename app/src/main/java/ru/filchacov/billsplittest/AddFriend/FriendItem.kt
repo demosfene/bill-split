@@ -3,12 +3,34 @@ package ru.filchacov.billsplittest.AddFriend
 import android.os.Parcel
 import android.os.Parcelable
 
-class FriendItem(private var mImageResource: Int, private var mText: String?, private var mUid: String?): Parcelable {
+class FriendItem(private var mImageResource: Int, private var mText: String?): Parcelable{
+
+    private var isSelected: Boolean = false
+
+    private var key: String = ""
 
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
-            parcel.readString(),
             parcel.readString()) {
+        isSelected = parcel.readByte() != 0.toByte()
+        key = parcel.readString()!!
+    }
+
+    fun getKey(): String{
+        return key
+    }
+
+    fun setKey(key: String){
+        this.key = key
+    }
+
+
+    fun getisSelected(): Boolean{
+        return isSelected
+    }
+
+    fun setisSelected(isSelected: Boolean){
+        this.isSelected = isSelected
     }
 
     fun getmImageResource(): Int {
@@ -19,14 +41,11 @@ class FriendItem(private var mImageResource: Int, private var mText: String?, pr
         return mText
     }
 
-    fun getmUid(): String? {
-        return mUid
-    }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(mImageResource)
         parcel.writeString(mText)
-        parcel.writeString(mUid)
+        parcel.writeByte(if (isSelected) 1 else 0)
+        parcel.writeString(key)
     }
 
     override fun describeContents(): Int {
@@ -42,5 +61,6 @@ class FriendItem(private var mImageResource: Int, private var mText: String?, pr
             return arrayOfNulls(size)
         }
     }
+
 
 }

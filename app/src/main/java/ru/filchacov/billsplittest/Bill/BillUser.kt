@@ -7,7 +7,7 @@ import android.os.Parcelable
 class BillUser() : Parcelable {
 
     var item: Bill.Item? = null
-    var amount = 0
+    var amount: Int = 0
 
     constructor(parcel: Parcel) : this() {
         item = parcel.readParcelable(Bill.Item::class.java.classLoader)
@@ -35,6 +35,7 @@ class BillUser() : Parcelable {
         override fun newArray(size: Int): Array<BillUser?> {
             return arrayOfNulls(size)
         }
+
     }
 
 }

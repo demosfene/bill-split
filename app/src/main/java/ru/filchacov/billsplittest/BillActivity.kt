@@ -107,36 +107,27 @@ class BillActivity : AppCompatActivity() {
         }
     }
 
-
-
-    override fun onStart() {
-        super.onStart()
-
-
-    }
-
-
     private fun writeNewBill(items: MutableList<Bill.Item>?, dateTime: String) {
         val bill = Bill(items, dateTime)
         mDataBase!!.child("bills").child(dateTime).setValue(bill)
     }
 
+    fun showFriendFragment(bill: Bill) {
 
-
-    private fun showFriendFragment(bill: Bill) {
-        if (supportFragmentManager.findFragmentByTag(AddFriendFragment.TAG) == null){
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
+                    .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
                     .commit()
-        }
+
     }
+
 
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem){
         if(supportFragmentManager.findFragmentByTag(BillListFragment.TAG) == null) {
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.bill_activity, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
+                    .addToBackStack(null)
                     .commit()
         }
 
@@ -155,11 +146,12 @@ class BillActivity : AppCompatActivity() {
 
 
     private fun makeFragmentBill(bill: Bill, friendItem: FriendItem):Fragment{
-        val bandle = Bundle()
-        bandle.putParcelable("bill", bill)
-        bandle. putParcelable("friendItem", friendItem)
-        return BillListFragment.getNewInstance(bandle)
+        val bundle = Bundle()
+        bundle.putParcelable("bill", bill)
+        bundle. putParcelable("friendItem", friendItem)
+        return BillListFragment.getNewInstance(bundle)
     }
+
 
 }
 

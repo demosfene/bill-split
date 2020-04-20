@@ -44,7 +44,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     }
 
 
-    class FriendViewHolder extends RecyclerView.ViewHolder {
+    static class FriendViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageView;
         TextView mTextView1;
 
