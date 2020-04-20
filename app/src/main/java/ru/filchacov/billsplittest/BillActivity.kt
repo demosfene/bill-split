@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -113,23 +114,18 @@ class BillActivity : AppCompatActivity() {
     }
 
     fun showFriendFragment(bill: Bill) {
-
             supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
                     .commit()
-
     }
 
-
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem){
-        if(supportFragmentManager.findFragmentByTag(BillListFragment.TAG) == null) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.bill_activity, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
-                    .addToBackStack(null)
-                    .commit()
-        }
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.bill_activity, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
+                .addToBackStack(null)
+                .commit()
 
     }
 
@@ -144,14 +140,12 @@ class BillActivity : AppCompatActivity() {
         return AddFriendFragment.getNewInstance(bundle)
     }
 
-
     private fun makeFragmentBill(bill: Bill, friendItem: FriendItem):Fragment{
         val bundle = Bundle()
         bundle.putParcelable("bill", bill)
         bundle. putParcelable("friendItem", friendItem)
         return BillListFragment.getNewInstance(bundle)
     }
-
 
 }
 

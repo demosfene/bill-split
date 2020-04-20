@@ -78,6 +78,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
             mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill!!.dateTime).child(friendItem!!.getmText()!!).setValue(listBillDB)
             mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill!!.dateTime).child("savedFriends").child(friendItem!!.getKey()).child("isSelected").setValue(true)
             (activity as BillActivity).showFriendFragment(bill!!)
+
         })
 
         if (friendItem!!.getisSelected()){

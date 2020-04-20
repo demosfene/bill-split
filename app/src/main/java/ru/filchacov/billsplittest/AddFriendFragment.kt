@@ -27,7 +27,7 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
     private var bill: Bill? = null
 
 
-    companion object{
+    companion object {
         val TAG: String? = "AddFriendFragment"
 
         fun getNewInstance(args: Bundle?): AddFriendFragment{
@@ -132,9 +132,8 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
     }
 
     override fun clickFriend(number: Int) {
-        activity?.let {
-            (it as BillActivity).clickFriend(bill!!, mFriendList!![number])
-        }
+        (activity as BillActivity).clickFriend(bill!!, mFriendList!![number])
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
