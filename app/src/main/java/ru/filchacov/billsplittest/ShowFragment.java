@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 public class ShowFragment extends Fragment {
 
-    private TextView tvEmail, tvId;
+    private TextView tvDate;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,10 +24,8 @@ public class ShowFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show, container, false);
-        tvEmail = view.findViewById(R.id.tv_email);
-        tvId = view.findViewById(R.id.tv_id);
-        tvEmail.setText(getArguments().getString(Constant.USER_EMAIL));
-        tvId.setText(getArguments().getString(Constant.USER_ID));
+        tvDate = view.findViewById(R.id.tv_email);
+        tvDate.setText(getArguments().getString(Constant.USER_EMAIL));
 
         return view;
     }

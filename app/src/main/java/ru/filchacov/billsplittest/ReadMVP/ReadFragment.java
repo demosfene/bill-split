@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.Constant;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
@@ -65,8 +66,6 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
     }
 
     private void init() {
-        /*result = new ArrayList<>();
-        listTemp = new ArrayList<>();*/
         presenter = new ReadPresenter(this);
         adapter = new UserAdapter(presenter.result, this);
         presenter.initPresenter();
@@ -84,7 +83,7 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
 
     }
 
-    @Override
+    /*@Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
@@ -98,7 +97,7 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
         }
 
         return super.onContextItemSelected(item);
-    }
+    }*/
 
     public void updateData() {
         adapter.notifyDataSetChanged();
@@ -119,7 +118,7 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
 
     @Override
     public void onNoteClick(int position) {
-        User user = presenter.listTemp.get(position);
+        String bf = presenter.listTemp.get(position);
         FragmentManager fm = getFragmentManager();
         assert fm != null;
         Fragment fragment = fm.findFragmentById(R.id.show_fragment);
@@ -127,8 +126,7 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
         if (fragment == null) {
             fragment = new ShowFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(Constant.USER_EMAIL, user.email);
-            bundle.putString(Constant.USER_ID, user.id);
+            bundle.putString(Constant.USER_EMAIL, bf);
             fragment.setArguments(bundle);
         }
 

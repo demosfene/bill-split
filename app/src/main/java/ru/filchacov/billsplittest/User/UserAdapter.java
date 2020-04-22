@@ -15,10 +15,10 @@ import ru.filchacov.billsplittest.R;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private List<User> list;
+    private List<String> list;
     private OnNoteListener mOnNoteListener;
 
-    public UserAdapter(List<User> list, OnNoteListener onNoteListener) {
+    public UserAdapter(List<String> list, OnNoteListener onNoteListener) {
         this.list = list;
         this.mOnNoteListener = onNoteListener;
     }
@@ -31,16 +31,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user = list.get(position);
-        holder.textEmail.setText(user.email);
+        String bf = list.get(position);
+        holder.textEmail.setText(bf);
 
-        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+        /*holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 menu.add(holder.getAdapterPosition(), 0, 0, "Добавить в группу");
                 menu.add(holder.getAdapterPosition(), 1, 0, "Удалить");
             }
-        });
+        });*/
     }
 
     @Override

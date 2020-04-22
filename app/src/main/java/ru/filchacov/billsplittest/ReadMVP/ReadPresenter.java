@@ -1,49 +1,41 @@
 package ru.filchacov.billsplittest.ReadMVP;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.User.User;
 
 public class ReadPresenter {
 
-    public List<User> result = new ArrayList<>();
-    public List<User> listTemp = new ArrayList<>();
+    List<String> result = new ArrayList<>();
+    List<String> listTemp = new ArrayList<>();
 
-    ReadFragment view;
-    ModelDB model  = new ModelDB();
+    private ReadFragment view;
+    private ModelDB model  = new ModelDB();
 
-    public ReadPresenter(ReadFragment view) {
+    ReadPresenter(ReadFragment view) {
         this.view = view;
     }
 
-    public void initPresenter() {
+    void initPresenter() {
         model.initModel();
         getDataFromDB();
-        updateList();
+        //updateList();
     }
 
-    public void updateData() {
+    private void updateData() {
         view.updateData();
     }
-
+/*
     public void removeData(int index) {
         view.removeItem(index);
     }
 
     void removeUser(int position) {
-        model.getReference().child(result.get(position).id).removeValue();
+        model.getReference().child(result.get(position)).removeValue();
     }
 
     void addUser(int position) {
@@ -51,38 +43,43 @@ public class ReadPresenter {
         toast.show();
     }
 
-    public int getItemIndex(User user) {
+    public int getItemIndex(String bill) {
         int index = -1;
 
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).id.equals(user.id)){
+            if (result.get(i).equals(bill)){
                 index = i;
                 break;
             }
         }
         return index;
-    }
-    public void updateList() {
+    }*/
+
+   /* public void updateList() {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                result.add(dataSnapshot.getValue(User.class));
-                updateData();
-                view.checkIfEmpty();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    result.add(ds.getKey());
+                    updateData();
+                    view.checkIfEmpty();
+                }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                User user = dataSnapshot.getValue(User.class);
-                int index = getItemIndex(user);
-                result.set(index, user);
-                updateData();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String bf = ds.getKey();
+                    int index = getItemIndex(bf);
+                    result.set(index, bf);
+                    updateData();
+                }
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                int index = getItemIndex(user);
+                String bf = dataSnapshot.getValue(Bill.class);
+                int index = getItemIndex(bf);
                 result.remove(index);
                 removeData(index);
                 view.checkIfEmpty();
@@ -98,9 +95,9 @@ public class ReadPresenter {
 
             }
         };
-    }
+    }*/
 
-    public void getDataFromDB() {
+    private void getDataFromDB() {
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -111,10 +108,9 @@ public class ReadPresenter {
                     listTemp.clear();
                 }
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    User user = ds.getValue(User.class);
-                    assert user != null;
-                    result.add(user);
-                    listTemp.add(user);
+                    String bf = "Чек от " + ds.getKey();
+                    result.add(bf);
+                    listTemp.add(bf);
                 }
                 updateData();
             }
