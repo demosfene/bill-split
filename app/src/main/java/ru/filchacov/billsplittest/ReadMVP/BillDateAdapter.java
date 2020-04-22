@@ -1,6 +1,5 @@
-package ru.filchacov.billsplittest.User;
+package ru.filchacov.billsplittest.ReadMVP;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +12,24 @@ import java.util.List;
 
 import ru.filchacov.billsplittest.R;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDateViewHolder> {
 
     private List<String> list;
     private OnNoteListener mOnNoteListener;
 
-    public UserAdapter(List<String> list, OnNoteListener onNoteListener) {
+    public BillDateAdapter(List<String> list, OnNoteListener onNoteListener) {
         this.list = list;
         this.mOnNoteListener = onNoteListener;
     }
 
     @NonNull
     @Override
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new UserViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item, parent, false), mOnNoteListener);
+    public BillDateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new BillDateViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item, parent, false), mOnNoteListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BillDateViewHolder holder, int position) {
         String bf = list.get(position);
         holder.textEmail.setText(bf);
 
@@ -48,12 +47,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return list.size();
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BillDateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textEmail;
         OnNoteListener onNoteListener;
 
-        UserViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+        BillDateViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
 
             textEmail = itemView.findViewById(R.id.text_email);

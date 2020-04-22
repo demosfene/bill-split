@@ -3,7 +3,6 @@ package ru.filchacov.billsplittest.ReadMVP;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,17 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.Constant;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ShowFragment;
-import ru.filchacov.billsplittest.User.User;
-import ru.filchacov.billsplittest.User.UserAdapter;
 
-public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener {
+public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener {
     private RecyclerView recyclerView;
-    public UserAdapter adapter;
+    public BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
     ReadPresenter presenter;
 
@@ -67,7 +63,7 @@ public class ReadFragment extends Fragment implements UserAdapter.OnNoteListener
 
     private void init() {
         presenter = new ReadPresenter(this);
-        adapter = new UserAdapter(presenter.result, this);
+        adapter = new BillDateAdapter(presenter.result, this);
         presenter.initPresenter();
         recyclerView.setAdapter(adapter);
 
