@@ -7,14 +7,21 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ModelDB {
     private DatabaseReference reference;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public void initModel() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public DatabaseReference getBillsList() {
         assert user != null;
         reference = database.getReference("users").child(user.getUid()).child("friends");
+        return reference;
     }
+
+    public DatabaseReference getFriendsList(String dateTime){
+        return database.getReference("users").child(user.getUid()).child("friends").child(dateTime).child("savedFriends");
+    }
+
+
 
 
     public DatabaseReference getReference() {

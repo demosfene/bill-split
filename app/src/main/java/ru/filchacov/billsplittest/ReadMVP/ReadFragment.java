@@ -26,7 +26,7 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
     private RecyclerView recyclerView;
     public BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
-    ReadPresenter presenter;
+    private ReadPresenter presenter;
 
     private TextView emptyText;
 

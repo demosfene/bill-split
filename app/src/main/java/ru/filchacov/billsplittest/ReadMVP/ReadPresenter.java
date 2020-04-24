@@ -21,9 +21,9 @@ public class ReadPresenter {
     }
 
     void initPresenter() {
-        model.initModel();
+        /*model.initModel();*/
         getDataFromDB();
-        //updateList();
+        /*updateList();*/
     }
 
     private void updateData() {
@@ -120,6 +120,7 @@ public class ReadPresenter {
 
             }
         };
-        model.getReference().addValueEventListener(vListener);
+//        model.getReference().addValueEventListener(vListener);
+        model.getBillsList().addValueEventListener(vListener);
     }
 }
