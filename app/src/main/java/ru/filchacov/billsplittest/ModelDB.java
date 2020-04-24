@@ -21,10 +21,23 @@ public class ModelDB {
         return database.getReference("users").child(user.getUid()).child("friends").child(dateTime).child("savedFriends");
     }
 
-
-
-
     public DatabaseReference getReference() {
+        return reference;
+    }
+
+    //------------- Для аутентификации ----------------
+    public FirebaseUser getUser() {
+        user = mAuth.getCurrentUser();
+        return user;
+    }
+
+    public FirebaseAuth getAuth() {
+        return mAuth;
+    }
+
+    public DatabaseReference getAuthReference() {
+        assert  user != null;
+        reference = database.getReference();
         return reference;
     }
 }

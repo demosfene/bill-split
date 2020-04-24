@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest;
+package ru.filchacov.billsplittest.AuthMVP;
 
 
 import android.net.Uri;
@@ -24,29 +24,34 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
+import ru.filchacov.billsplittest.ModelDB;
+import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 import ru.filchacov.billsplittest.User.User;
 
 public class AuthFragment extends Fragment {
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     private EditText ETemail;
     private EditText ETpassword;
     private Button buttonExit;
     private Button signButton;
     private Button btnRead;
     private Button regButton;
-    private TextView textView;
+    TextView textView;
 
-    private DatabaseReference mDataBase;
+    private AuthPresenter presenter = new AuthPresenter(this);
+
+    //private DatabaseReference mDataBase;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        mDataBase = FirebaseDatabase.getInstance().getReference();
-        if (user != null) {
+        //mAuth = FirebaseAuth.getInstance();
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //mDataBase = FirebaseDatabase.getInstance().getReference();
+        presenter.init();
+        /*if (user != null) {
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
             String email = user.getEmail();
@@ -60,7 +65,7 @@ public class AuthFragment extends Fragment {
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
 
-        }
+        }*/
     }
 
 
@@ -83,32 +88,30 @@ public class AuthFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        buttonExit.setOnClickListener(v -> signOut());
+        buttonExit.setOnClickListener(v -> presenter.signOut());
 
-        btnRead.setOnClickListener(v -> {
-            onClickRead(v);
-        });
+        btnRead.setOnClickListener(this::onClickRead);
 
 
         signButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
-                signIn(ETemail.getText().toString(), ETpassword.getText().toString());
+                presenter.signIn(ETemail.getText().toString(), ETpassword.getText().toString());
         });
 
 
 
         regButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
-                createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
+                presenter.createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
             }
         });
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
+        presenter.updateUIfromPresenter();
     }
 
-    private void createAccount(String email, String password){
+   /* private void createAccount(String email, String password){
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
@@ -127,19 +130,15 @@ public class AuthFragment extends Fragment {
                     }
 
                 });
-    }
+    }*/
 
-    private void signOut(){
+    /*private void signOut(){
         mAuth.signOut();
         updateUI(null);
-    }
+    }*/
 
-    private void writeNewUser(String userId, String email) {
-        User user = new User(email, userId);
-        mDataBase.child("users").child(userId).setValue(user);
-    }
 
-    private void signIn(String email, String password){
+    /*private void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(getActivity()), task -> {
                     if (task.isSuccessful()) {
@@ -157,15 +156,15 @@ public class AuthFragment extends Fragment {
 
                     // ...
                 });
-    }
+    }*/
 
 
-    private void updateUI(FirebaseUser user) {
+    /*void updateUI(FirebaseUser user) {
 
         if(user!=null)
             textView.setText(user.getEmail());
         else textView.setText("Войдите пожалуйста");
-    }
+    }*/
 
     private void onClickRead(View view) {
         FragmentManager fm = getFragmentManager();
