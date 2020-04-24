@@ -57,11 +57,6 @@ class AuthPresenter {
                 });
     }
 
-    void signOut(){
-        model.getAuth().signOut();
-        updateUI(null);
-    }
-
     void signIn(String email, String password){
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {

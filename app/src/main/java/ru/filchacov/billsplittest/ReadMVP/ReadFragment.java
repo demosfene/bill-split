@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Constant;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
@@ -26,6 +28,7 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
     private RecyclerView recyclerView;
     public BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
+    private Button buttonExit;
     private ReadPresenter presenter;
 
     private TextView emptyText;
@@ -44,6 +47,7 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         recyclerView = view.findViewById(R.id.user_list);
         emptyText = view.findViewById(R.id.text_no_data);
         btnAdd = view.findViewById(R.id.addBill);
+        buttonExit = view.findViewById(R.id.button_exit);
         init();
         /*updateList();
         checkIfEmpty();*/
@@ -72,6 +76,20 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(llm);
+
+        buttonExit.setOnClickListener(v -> {
+            presenter.signOut();
+            FragmentManager fm = getFragmentManager();
+            assert fm != null;
+            Fragment fragment = fm.findFragmentById(R.id.auth_fragment);
+            if (fragment == null) {
+                fragment = new AuthFragment();
+            }
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
 
 
         /*database = FirebaseDatabase.getInstance();

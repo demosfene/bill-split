@@ -13,17 +13,6 @@
         android:layout_centerHorizontal="true"
         />
 
-    <Button
-        android:id="@+id/button_exit"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/Exit" />
-
     <EditText android:layout_width="250dp"
         android:layout_height="50dp"
         android:id="@+id/et_email"
@@ -65,12 +54,12 @@
         android:id="@+id/btn_read"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_exit"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="128dp"
-        android:text="Считать данные" />
+        android:text="@string/myBills" />
 
 </RelativeLayout>

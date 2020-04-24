@@ -14,4 +14,5 @@
     <string name="on_off_flashlight">On/Off flashlight</string>
     <string name="put_name">Ведите имя:</string>
     <string name="click_name">Нажмите на имя для выбора покупок</string>
+    <string name="myBills">Мои чеки</string>
 </resources>

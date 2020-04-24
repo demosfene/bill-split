@@ -29,6 +29,10 @@ public class ReadPresenter {
     private void updateData() {
         view.updateData();
     }
+
+    void signOut(){
+        model.getAuth().signOut();
+    }
 /*
     public void removeData(int index) {
         view.removeItem(index);

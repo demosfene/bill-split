@@ -33,7 +33,6 @@ public class AuthFragment extends Fragment {
     //private FirebaseAuth mAuth;
     private EditText ETemail;
     private EditText ETpassword;
-    private Button buttonExit;
     private Button signButton;
     private Button btnRead;
     private Button regButton;
@@ -75,7 +74,6 @@ public class AuthFragment extends Fragment {
             View view = inflater.inflate(R.layout.auth_fragment, container, false);
             ETemail = view.findViewById(R.id.et_email);
             ETpassword = view.findViewById(R.id.et_password);
-            buttonExit = view.findViewById(R.id.button_exit);
             signButton = view.findViewById(R.id.btn_sign_in);
             btnRead = view.findViewById(R.id.btn_read);
             regButton = view.findViewById(R.id.btn_registration);
@@ -88,7 +86,6 @@ public class AuthFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        buttonExit.setOnClickListener(v -> presenter.signOut());
 
         btnRead.setOnClickListener(this::onClickRead);
 
