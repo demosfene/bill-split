@@ -87,15 +87,13 @@ public class AuthFragment extends Fragment {
         super.onStart();
 
 
-        btnRead.setOnClickListener(this::onClickRead);
+//        btnRead.setOnClickListener();
 
 
         signButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
                 presenter.signIn(ETemail.getText().toString(), ETpassword.getText().toString());
         });
-
-
 
         regButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
@@ -105,7 +103,7 @@ public class AuthFragment extends Fragment {
 
         // Check if user is signed in (non-null) and update UI accordingly.
 
-        presenter.updateUIfromPresenter();
+        presenter.updateUIFromPresenter();
     }
 
    /* private void createAccount(String email, String password){
@@ -163,7 +161,7 @@ public class AuthFragment extends Fragment {
         else textView.setText("Войдите пожалуйста");
     }*/
 
-    private void onClickRead(View view) {
+    public void onClickRead() {
         FragmentManager fm = getFragmentManager();
         assert fm != null;
         Fragment fragment = fm.findFragmentById(R.id.read_fragment);

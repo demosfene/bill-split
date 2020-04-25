@@ -33,7 +33,7 @@ class AuthPresenter {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = model.getUser().getUid();
-
+            view.onClickRead();
         }
     }
 
@@ -78,12 +78,14 @@ class AuthPresenter {
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user!=null)
+        if(user!=null) {
             view.textView.setText(user.getEmail());
+            view.onClickRead();
+        }
         else view.textView.setText("Войдите пожалуйста");
     }
 
-    void updateUIfromPresenter() {
+    void updateUIFromPresenter() {
         updateUI(model.getUser());
     }
 
