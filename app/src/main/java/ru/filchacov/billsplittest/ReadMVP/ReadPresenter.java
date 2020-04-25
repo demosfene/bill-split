@@ -3,16 +3,29 @@ package ru.filchacov.billsplittest.ReadMVP;
 import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import ru.filchacov.billsplittest.Bill.Bill;
+import ru.filchacov.billsplittest.ExitFromBill;
+import ru.filchacov.billsplittest.MainActivity;
 import ru.filchacov.billsplittest.ModelDB;
 
-public class ReadPresenter {
+public class ReadPresenter implements ExitFromBill {
 
     List<String> result = new ArrayList<>();
     List<String> listTemp = new ArrayList<>();
 
+    private Bill bill = new Bill();
     private ReadFragment view;
     private ModelDB model  = new ModelDB();
 
@@ -112,9 +125,9 @@ public class ReadPresenter {
                     listTemp.clear();
                 }
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String bf = "Чек от " + ds.getKey();
-                    result.add(bf);
-                    listTemp.add(bf);
+                    String BillDate = ds.getKey();
+                    result.add(BillDate);
+                    listTemp.add(BillDate);
                 }
                 updateData();
             }
@@ -127,4 +140,71 @@ public class ReadPresenter {
 //        model.getReference().addValueEventListener(vListener);
         model.getBillsList().addValueEventListener(vListener);
     }
+
+    public void onNoteClick(int position) {
+        model.getBill(listTemp.get(position))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Iterable<DataSnapshot> dataChildren = dataSnapshot.getChildren();
+                        Iterator<DataSnapshot> iter = dataChildren.iterator();
+                        HashMap map = new HashMap();
+                        while(iter.hasNext()) {
+                            DataSnapshot ds = iter.next();
+                            map.put(ds.getKey(), ds.getValue());
+                        }
+                        makeBillObject(map);
+                        exitBill(bill);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    private void makeBillObject(Map map){
+        bill.setReceiptCode(Integer.parseInt(Objects.requireNonNull(map.get("receiptCode")).toString()));
+        bill.setUser((String) Objects.requireNonNull(map.get("user")));
+        bill.setCashTotalSum(Integer.parseInt(Objects.requireNonNull(map.get("cashTotalSum")).toString()));
+        bill.setDateTime((String) Objects.requireNonNull(map.get("dateTime")));
+        bill.setEcashTotalSum(Integer.parseInt(Objects.requireNonNull(map.get("ecashTotalSum")).toString()));
+        bill.setShiftNumber(Integer.parseInt(Objects.requireNonNull(map.get("shiftNumber")).toString()));
+        bill.setTotalSum(Integer.parseInt(Objects.requireNonNull(map.get("totalSum")).toString()));
+        bill.setTaxationType(Integer.parseInt(Objects.requireNonNull(map.get("taxationType")).toString()));
+        bill.setNdsNo(Integer.parseInt((Objects.requireNonNull(map.get("ndsNo")).toString())));
+        bill.setFiscalDocumentNumber(Integer.parseInt(Objects.requireNonNull(map.get("fiscalDocumentNumber")).toString()));
+        bill.setFiscalDriveNumber(Objects.requireNonNull(map.get("fiscalDriveNumber")).toString());
+        bill.setFiscalSign(Integer.parseInt(Objects.requireNonNull(map.get("fiscalSign")).toString()));
+        bill.setUserInn((String) Objects.requireNonNull(map.get("userInn")));
+        bill.setOperationType(Integer.parseInt(Objects.requireNonNull(map.get("operationType")).toString()));
+        bill.setKktRegId((String) Objects.requireNonNull(map.get("kktRegId")));
+        bill.setRawData((String) Objects.requireNonNull(map.get("rawData")));
+        bill.setRequestNumber(Integer.parseInt(Objects.requireNonNull(map.get("requestNumber")).toString()));
+        bill.setOperator((String) Objects.requireNonNull(map.get("operator")));
+        ArrayList list = (ArrayList) map.get("items");
+        ArrayList<Bill.Item> listItem = new ArrayList<>();
+        assert list != null;
+        for (int i = 0; i < list.size(); i++){
+            HashMap mapItem = (HashMap) list.get(i);
+            Bill.Item item = new Bill.Item();
+            item.setName(Objects.requireNonNull(mapItem.get("name")).toString());
+            item.setPrice(Integer.parseInt(Objects.requireNonNull(mapItem.get("price")).toString()));
+            item.setQuantity(Integer.parseInt(Objects.requireNonNull(mapItem.get("quantity")).toString()));
+            item.setSum(Integer.parseInt(Objects.requireNonNull(mapItem.get("sum")).toString()));
+            listItem.add(item);
+        }
+        bill.setItems(listItem);
+    }
+
+    @Override
+    public void exitBill(@NotNull Bill bill) {
+        if(view.getActivity() instanceof ExitFromBill ){
+            ((ExitFromBill) view.getActivity()).exitBill(bill);
+        }
+    }
 }
+
+

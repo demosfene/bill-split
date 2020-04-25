@@ -19,7 +19,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
     companion object{
         const val TAG = "BillListFragment"
 
-        fun getNewInstance(args: Bundle): BillListFragment{
+        @JvmStatic fun getNewInstance(args: Bundle): BillListFragment{
             val billListFragment = BillListFragment()
             billListFragment.arguments = args
             return billListFragment

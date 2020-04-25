@@ -6,6 +6,7 @@ import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.BillActivity
 import ru.filchacov.billsplittest.BillListFragment
+import ru.filchacov.billsplittest.ExitFromBill
 import ru.filchacov.billsplittest.ModelDB
 
 class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendItem: FriendItem) {
@@ -26,7 +27,7 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
     fun saveBillForFriend(){
         model.setBillForFriend(bill.dateTime, friendItem.getmText().toString(), listBillDB)
         model.isSelected(bill.dateTime, friendItem.getKey())
-        (view.activity as BillActivity).showFriendFragment(bill)
+        (view.activity as ExitFromBill).exitBill(bill)
     }
 
 
@@ -61,7 +62,6 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
         if (item.amount > 0) {
             listBill[position].amount--
             view.updateAdapterAmount(position, item)
-
             val iterator = listBillDB.iterator()
             while (iterator.hasNext()) {
                 val iterItem = iterator.next()
@@ -74,7 +74,7 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
     }
 
     fun loadBillList() {
-        model.getBill(bill.dateTime, friendItem.getmText()!!)
+        model.getBillForFriend(bill.dateTime, friendItem.getmText()!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("Not yet implemented")

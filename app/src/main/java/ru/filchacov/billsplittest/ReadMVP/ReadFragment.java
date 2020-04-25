@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import ru.filchacov.billsplittest.AddFriendFragment;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Constant;
 import ru.filchacov.billsplittest.DecoderActivity;
@@ -26,7 +27,7 @@ import ru.filchacov.billsplittest.ShowFragment;
 
 public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener {
     private RecyclerView recyclerView;
-    public BillDateAdapter adapter;
+    private BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
     private Button buttonExit;
     private ReadPresenter presenter;
@@ -113,9 +114,10 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         return super.onContextItemSelected(item);
     }*/
 
-    public void updateData() {
+    void updateData() {
         adapter.notifyDataSetChanged();
     }
+
     public void removeItem(int index) {
         adapter.notifyItemRemoved(index);
     }
@@ -132,13 +134,14 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
 
     @Override
     public void onNoteClick(int position) {
+/*
         String bf = presenter.listTemp.get(position);
         FragmentManager fm = getFragmentManager();
         assert fm != null;
         Fragment fragment = fm.findFragmentById(R.id.show_fragment);
 
         if (fragment == null) {
-            fragment = new ShowFragment();
+            fragment = new AddFriendFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.USER_EMAIL, bf);
             fragment.setArguments(bundle);
@@ -148,6 +151,8 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         ft.replace(R.id.fragment_container, fragment);
         ft.addToBackStack(null);
         ft.commit();
+*/
+        presenter.onNoteClick(position);
     }
 
 

@@ -4,11 +4,8 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import ru.filchacov.billsplittest.AddFriendFragment
+import ru.filchacov.billsplittest.*
 import ru.filchacov.billsplittest.Bill.Bill
-import ru.filchacov.billsplittest.BillActivity
-import ru.filchacov.billsplittest.ModelDB
-import ru.filchacov.billsplittest.R
 
 class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
     var mFriendList: ArrayList<FriendItem>? = ArrayList()
@@ -45,7 +42,7 @@ class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
     }
 
     fun clickFriend(number: Int){
-        (view.activity as BillActivity).clickFriend(bill, mFriendList!![number])
+        (view.activity as OnClickFriendToBill).clickFriendToBill(bill, mFriendList!![number])
     }
 
 }

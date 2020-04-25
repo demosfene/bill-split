@@ -64,7 +64,7 @@ public class ModelDB {
                 .setValue(true);
     }
 
-    public DatabaseReference getBill(String dateTime, String friendName){
+    public DatabaseReference getBillForFriend(String dateTime, String friendName){
         return database.getReference("users")
                 .child(user.getUid())
                 .child("friends")
@@ -85,5 +85,10 @@ public class ModelDB {
         assert  user != null;
         return database.getReference();
 
+    }
+
+    public DatabaseReference getBill(String dateTime){
+        return database.getReference("bills")
+                .child(dateTime);
     }
 }

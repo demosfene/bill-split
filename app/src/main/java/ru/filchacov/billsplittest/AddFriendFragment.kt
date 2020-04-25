@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.filchacov.billsplittest.AddFriend.FriendAdapter
 import ru.filchacov.billsplittest.AddFriend.FriendPresenter
-import ru.filchacov.billsplittest.AddFriend.OnCLickFriend
 import ru.filchacov.billsplittest.Bill.Bill
 
 class AddFriendFragment() : Fragment(), OnCLickFriend {
@@ -20,9 +19,9 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
     private var presenter: FriendPresenter? = null
 
     companion object {
-        val TAG: String? = "AddFriendFragment"
+        @JvmStatic val TAG: String? = "AddFriendFragment"
 
-        fun getNewInstance(args: Bundle?): AddFriendFragment{
+        @JvmStatic fun getNewInstance(args: Bundle?): AddFriendFragment{
             val addFriendFragment = AddFriendFragment()
             addFriendFragment.arguments = args
             return addFriendFragment

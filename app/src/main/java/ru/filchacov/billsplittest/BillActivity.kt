@@ -19,7 +19,7 @@ import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import java.text.SimpleDateFormat
 
 
-class BillActivity : AppCompatActivity() {
+class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill{
 //    20200326T2909
 
 
@@ -88,7 +88,7 @@ class BillActivity : AppCompatActivity() {
                     }
                     if (result.data != null) {
                         result.data?.dateTime?.let {
-                            writeNewBill(result.data?.items, it)
+                            writeNewBill(result.data!!, it)
                         }
 
                         Log.e("gdetii", "corutine")
@@ -107,8 +107,7 @@ class BillActivity : AppCompatActivity() {
         }
     }
 
-    private fun writeNewBill(items: MutableList<Bill.Item>?, dateTime: String) {
-        val bill = Bill(items, dateTime)
+    private fun writeNewBill(bill: Bill, dateTime: String) {
         mDataBase!!.child("bills").child(dateTime).setValue(bill)
     }
 
@@ -128,11 +127,6 @@ class BillActivity : AppCompatActivity() {
 
     }
 
-
-    fun clickFriend(bill: Bill, friendItem: FriendItem) {
-        showBillForFriend(bill, friendItem)
-    }
-
     private fun makeFragmentFriend(bill:Bill): Fragment{
         val bundle = Bundle()
         bundle.putParcelable("bill", bill)
@@ -144,6 +138,14 @@ class BillActivity : AppCompatActivity() {
         bundle.putParcelable("bill", bill)
         bundle. putParcelable("friendItem", friendItem)
         return BillListFragment.getNewInstance(bundle)
+    }
+
+    override fun clickFriendToBill(bill: Bill, friendItem: FriendItem) {
+        showBillForFriend(bill, friendItem)
+    }
+
+    override fun exitBill(bill: Bill) {
+        showFriendFragment(bill)
     }
 
 }
