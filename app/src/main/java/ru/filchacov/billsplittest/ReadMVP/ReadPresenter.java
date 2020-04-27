@@ -37,8 +37,6 @@ public class ReadPresenter implements ExitFromBill {
         getDataFromDB();
         if (result.size() == 0){
             view.showTextEmptyList();
-        }else{
-            view.hideTextEmptyList();
         }
         /*updateList();*/
     }
@@ -132,6 +130,9 @@ public class ReadPresenter implements ExitFromBill {
                     String BillDate = ds.getKey();
                     result.add(BillDate);
                     listTemp.add(BillDate);
+                }
+                if(result.size() != 0){
+                    view.hideTextEmptyList();
                 }
                 updateData();
             }
