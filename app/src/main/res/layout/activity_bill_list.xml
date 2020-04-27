@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="сохранить"
+        android:text="@string/Save"
         android:layout_margin="20dp"/>
 
     <Button
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Отмена"
+        android:text="@string/cancel"
         android:layout_margin="20dp"/>
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/button_cancel"
-        android:text="Итоговая сумма:"
+        android:text="@string/sum"
         android:layout_margin="20dp"
         android:textSize="30sp"/>
 

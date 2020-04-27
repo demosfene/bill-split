@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toStartOf="@id/bill_user_count"
         app:layout_constraintTop_toTopOf="@id/bill_item_name"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        android:text="-"/>
+        android:text="@string/minus"/>
 
 
 
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toStartOf="@id/guid_line5"
         app:layout_constraintTop_toTopOf="@id/bill_item_name"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        android:text="0"/>
+        android:text="@string/_0"/>
 
 
 
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toEndOf="@id/bill_user_count"
         app:layout_constraintTop_toTopOf="@id/bill_item_name"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        android:text="+"
+        android:text="@string/plus"
         />
 
     <androidx.constraintlayout.widget.Guideline
