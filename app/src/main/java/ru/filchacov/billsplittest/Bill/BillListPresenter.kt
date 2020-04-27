@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
-import ru.filchacov.billsplittest.BillActivity
 import ru.filchacov.billsplittest.BillListFragment
 import ru.filchacov.billsplittest.ExitFromBill
 import ru.filchacov.billsplittest.ModelDB
@@ -24,23 +23,23 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
         }
     }
 
-    fun saveBillForFriend(){
+    fun saveBillForFriend() {
         model.setBillForFriend(bill.dateTime, friendItem.getmText().toString(), listBillDB)
         model.isSelected(bill.dateTime, friendItem.getKey())
-        (view.activity as ExitFromBill).exitBill(bill)
+        exitFromBill(bill)
     }
 
 
-    fun updateTotalSum(list: ArrayList<BillUser>){
+    fun updateTotalSum(list: ArrayList<BillUser>) {
         totalSum = 0
         for (item in list)
-            totalSum+= item.amount * item.item!!.price!!
-        view.updateTotalSum((totalSum.toDouble())/100)
+            totalSum += item.amount * item.item!!.price!!
+        view.updateTotalSum((totalSum.toDouble()) / 100)
     }
 
     fun plus(position: Int) {
         val item = listBill[position]
-        if(item.amount < item.item!!.quantity!!){
+        if (item.amount < item.item!!.quantity!!) {
             listBill[position].amount++
             view.updateAdapterAmount(position, item)
             var has = false
@@ -49,7 +48,7 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
                     has = true
                 }
             }
-            if (!has){
+            if (!has) {
                 listBillDB.add(item)
             }
             updateTotalSum(listBillDB)
@@ -103,5 +102,9 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
                     }
 
                 })
+    }
+
+    fun exitFromBill(bill: Bill) {
+        (view.activity as ExitFromBill).exitBill(bill)
     }
 }

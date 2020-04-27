@@ -11,7 +11,7 @@ class BillService {
 
     val gson = GsonBuilder().apply {
         registerTypeAdapter(ApiResponse::class.java,
-            ApiResponseDeserializer()
+                ApiResponseDeserializer()
         )
     }.create()
     val converterFactory = GsonConverterFactory.create(gson)
@@ -34,6 +34,5 @@ class BillService {
 
     val api = retrofit.create(IProverochkaApi::class.java)
 
-    val s = "sss"
 }
 

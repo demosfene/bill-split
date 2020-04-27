@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
+import ru.filchacov.billsplittest.MainActivity;
 import ru.filchacov.billsplittest.ModelDB;
 import ru.filchacov.billsplittest.User.User;
 
@@ -37,13 +38,13 @@ class AuthPresenter {
         }
     }
 
-    void createAccount(String email, String password){
+    void createAccount(String email, String password) {
 
         model.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(view.getActivity(), "User "  + " with password" ,
+                        Toast.makeText(view.getActivity(), "User " + " with password",
                                 Toast.LENGTH_LONG).show();
                         writeNewUser(model.getUser().getUid(), model.getUser().getEmail());
                         updateUI(model.getUser());
@@ -57,12 +58,12 @@ class AuthPresenter {
                 });
     }
 
-    void signIn(String email, String password){
+    void signIn(String email, String password) {
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(view.getActivity(), "User "  + " with password" ,
+                        Toast.makeText(view.getActivity(), "User " + " with password",
                                 Toast.LENGTH_LONG).show();
                         FirebaseUser user = model.getAuth().getCurrentUser();
                         updateUI(user);
@@ -78,11 +79,12 @@ class AuthPresenter {
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user!=null) {
+        if (user != null) {
             view.textView.setText(user.getEmail());
-            view.onClickRead();
-        }
-        else view.textView.setText("Войдите пожалуйста");
+            if (view.getActivity() instanceof MainActivity) {
+                ((MainActivity) view.getActivity()).showMainFragment();
+            }
+        } else view.textView.setText("Войдите пожалуйста");
     }
 
     void updateUIFromPresenter() {

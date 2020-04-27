@@ -16,22 +16,24 @@ import ru.filchacov.billsplittest.Bill.*
 
 class BillListFragment : Fragment(), OnClickChangeAmount {
 
-    companion object{
+    companion object {
         const val TAG = "BillListFragment"
 
-        @JvmStatic fun getNewInstance(args: Bundle): BillListFragment{
+        @JvmStatic
+        fun getNewInstance(args: Bundle): BillListFragment {
             val billListFragment = BillListFragment()
             billListFragment.arguments = args
             return billListFragment
         }
     }
+
     private var presenter: BillListPresenter? = null
     private var totalSumView: TextView? = null
     private var friendItem: FriendItem? = null
     private var bill: Bill? = null
     private var adapter: BillAdapter? = null
     private var btnSave: Button? = null
-
+    private var btnCancel: Button? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,11 +53,15 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         btnSave!!.setOnClickListener {
             presenter!!.saveBillForFriend()
         }
+        btnCancel = view.findViewById(R.id.button_cancel)
+        btnCancel!!.setOnClickListener {
+            presenter!!.exitFromBill(bill!!)
+        }
 
-        if (friendItem!!.getisSelected()){
+        if (friendItem!!.getisSelected()) {
             btnSave!!.visibility = INVISIBLE
             presenter!!.loadBillList()
-        }else{
+        } else {
             presenter!!.initBillList()
         }
 
@@ -74,7 +80,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
 
     }
 
-    fun updateTotalSum(totalSum: Double){
+    fun updateTotalSum(totalSum: Double) {
         totalSumView!!.text = String.format("%.2f", totalSum)
     }
 
@@ -86,11 +92,11 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         presenter!!.minus(position)
     }
 
-    fun updateAdapterAmount(position: Int, billUer: BillUser){
+    fun updateAdapterAmount(position: Int, billUer: BillUser) {
         adapter!!.updateAmount(position, billUer)
     }
 
-    fun updateAdapter(){
+    fun updateAdapter() {
         adapter!!.notifyDataSetChanged()
     }
 }

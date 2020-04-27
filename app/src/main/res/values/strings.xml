@@ -26,4 +26,6 @@
     <string name="plus">+</string>
     <string name="image_avatar">image_avatar</string>
     <string name="user_1">User 1</string>
+    <string name="to_main_activity">на главную страницу</string>
+    <string name="friendName">friendName</string>
 </resources>

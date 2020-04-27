@@ -14,7 +14,7 @@ class BillUser() : Parcelable {
         amount = parcel.readInt()
     }
 
-    fun setBillItem(item: Bill.Item){
+    fun setBillItem(item: Bill.Item) {
         this.item = item
     }
 

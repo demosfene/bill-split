@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import ru.filchacov.billsplittest.AddFriend.FriendItem;
+import ru.filchacov.billsplittest.Bill.Bill;
 
 public class ModelDB {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -22,7 +23,7 @@ public class ModelDB {
 
     }
 
-    public DatabaseReference getFriendsList(String dateTime){
+    public DatabaseReference getFriendsList(String dateTime) {
         assert user != null;
         return database.getReference("users")
                 .child(user.getUid())
@@ -32,7 +33,7 @@ public class ModelDB {
     }
 
 
-    public void setBillForFriend(String dateTime, String friendName, ArrayList listBillDB){
+    public void setBillForFriend(String dateTime, String friendName, ArrayList listBillDB) {
         assert user != null;
         database.getReference("users")
                 .child(user.getUid())
@@ -42,7 +43,7 @@ public class ModelDB {
                 .setValue(listBillDB);
     }
 
-    public void setFriend(String dateTime, FriendItem friendItem){
+    public void setFriend(String dateTime, FriendItem friendItem) {
         assert user != null;
         database.getReference("users")
                 .child(user.getUid())
@@ -53,7 +54,7 @@ public class ModelDB {
                 .setValue(friendItem);
     }
 
-    public void isSelected(String dateTime, String friendUid){
+    public void isSelected(String dateTime, String friendUid) {
         database.getReference("users")
                 .child(user.getUid())
                 .child("friends")
@@ -64,7 +65,7 @@ public class ModelDB {
                 .setValue(true);
     }
 
-    public DatabaseReference getBillForFriend(String dateTime, String friendName){
+    public DatabaseReference getBillForFriend(String dateTime, String friendName) {
         return database.getReference("users")
                 .child(user.getUid())
                 .child("friends")
@@ -82,13 +83,29 @@ public class ModelDB {
     }
 
     public DatabaseReference getAuthReference() {
-        assert  user != null;
+        assert user != null;
         return database.getReference();
 
     }
 
-    public DatabaseReference getBill(String dateTime){
+    public DatabaseReference getBill(String dateTime) {
         return database.getReference("bills")
                 .child(dateTime);
     }
+
+    public void writeNewBill(Bill bill, String dateTime) {
+        database.getReference("bills")
+                .child(dateTime)
+                .setValue(bill);
+    }
+
+    public void writeNewBillToFriend(String dateTime) {
+        database.getReference("users")
+                .child(user.getUid())
+                .child("friends")
+                .child(dateTime)
+                .setValue("");
+    }
+
+
 }

@@ -18,12 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import ru.filchacov.billsplittest.AddFriendFragment;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
-import ru.filchacov.billsplittest.Constant;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
-import ru.filchacov.billsplittest.ShowFragment;
 
 public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener {
     private RecyclerView recyclerView;
@@ -117,11 +114,13 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
     void updateData() {
         adapter.notifyDataSetChanged();
     }
-
+/*
     public void removeItem(int index) {
         adapter.notifyItemRemoved(index);
     }
 
+ */
+/*
     void checkIfEmpty() {
         if (presenter.result.size() == 0) {
             recyclerView.setVisibility(View.INVISIBLE);
@@ -131,7 +130,7 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
             recyclerView.setVisibility(View.VISIBLE);
         }
     }
-
+*/
     @Override
     public void onNoteClick(int position) {
 /*
@@ -156,4 +155,12 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
     }
 
 
+    void showTextEmptyList() {
+        emptyText.setText("Список покупок пуст");
+        emptyText.setVisibility(View.VISIBLE);
+    }
+
+    void hideTextEmptyList() {
+        emptyText.setVisibility(View.INVISIBLE);
+    }
 }

@@ -13,15 +13,17 @@ import ru.filchacov.billsplittest.AddFriend.FriendAdapter
 import ru.filchacov.billsplittest.AddFriend.FriendPresenter
 import ru.filchacov.billsplittest.Bill.Bill
 
-class AddFriendFragment() : Fragment(), OnCLickFriend {
+class AddFriendFragment : Fragment(), OnCLickFriend {
 
     private var bill: Bill? = null
     private var presenter: FriendPresenter? = null
 
     companion object {
-        @JvmStatic val TAG: String? = "AddFriendFragment"
+        @JvmStatic
+        val TAG: String? = "AddFriendFragment"
 
-        @JvmStatic fun getNewInstance(args: Bundle?): AddFriendFragment{
+        @JvmStatic
+        fun getNewInstance(args: Bundle?): AddFriendFragment {
             val addFriendFragment = AddFriendFragment()
             addFriendFragment.arguments = args
             return addFriendFragment
@@ -34,18 +36,20 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
 
     private var buttonInsert: Button? = null
     private var editTextInsert: EditText? = null
+    private var btnToMainActivity: Button? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.add_friends_fragment, container, false)
-        bill = if (savedInstanceState != null){
+        bill = if (savedInstanceState != null) {
             savedInstanceState.getParcelable("bill")
-        }else{
+        } else {
             arguments!!.getParcelable("bill")
         }
         presenter = FriendPresenter(this, bill!!)
 
         presenter!!.getFriends()
 
+        btnToMainActivity = view.findViewById(R.id.btn_to_main_activity)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView!!.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
@@ -56,8 +60,12 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
         buttonInsert = view.findViewById(R.id.button_insert)
         editTextInsert = view.findViewById(R.id.edittext_insert)
 
+        btnToMainActivity!!.setOnClickListener {
+            presenter!!.goToMainActivity()
+        }
+
         buttonInsert!!.setOnClickListener {
-            if (editTextInsert!!.text.isEmpty()){
+            if (editTextInsert!!.text.isEmpty()) {
                 editTextInsert!!.error = "Введите имя Вашего друга"
             } else {
                 presenter!!.insertItem(editTextInsert!!.text.toString())

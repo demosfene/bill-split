@@ -17,7 +17,7 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
     private List<String> list;
     private OnNoteListener mOnNoteListener;
 
-    public BillDateAdapter(List<String> list, OnNoteListener onNoteListener) {
+    BillDateAdapter(List<String> list, OnNoteListener onNoteListener) {
         this.list = list;
         this.mOnNoteListener = onNoteListener;
     }
@@ -47,7 +47,7 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
         return list.size();
     }
 
-    class BillDateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class BillDateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textEmail;
         OnNoteListener onNoteListener;

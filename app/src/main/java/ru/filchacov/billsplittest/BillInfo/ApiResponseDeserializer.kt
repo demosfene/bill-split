@@ -8,11 +8,11 @@ import ru.filchacov.billsplittest.Bill.Bill
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class ApiResponseDeserializer: JsonDeserializer<ApiResponse<*>> {
+open class ApiResponseDeserializer : JsonDeserializer<ApiResponse<*>> {
     override fun deserialize(
-        json: JsonElement,
-        typeOfT: Type,
-        context: JsonDeserializationContext
+            json: JsonElement,
+            typeOfT: Type,
+            context: JsonDeserializationContext
     ): ApiResponse<*> {
         val realType = (typeOfT as ParameterizedType).actualTypeArguments[0]
         val tmp = json.asJsonObject
@@ -20,9 +20,9 @@ class ApiResponseDeserializer: JsonDeserializer<ApiResponse<*>> {
 
         return when (jsonCode) {
             1 -> createResponse(
-                realType,
-                jsonCode,
-                data = context.deserialize<Bill>(tmp.get("data").asJsonObject.get("json"), realType)
+                    realType,
+                    jsonCode,
+                    data = context.deserialize<Bill>(tmp.get("data").asJsonObject.get("json"), realType)
             )
             else -> createResponse(realType, jsonCode, error = tmp.get("data").asString)
         }

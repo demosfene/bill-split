@@ -55,7 +55,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
             mTextView1 = itemView.findViewById(R.id.textView);
         }
 
-        void bindClickFriend(int position, OnCLickFriend onCLickFriend){
+        void bindClickFriend(int position, OnCLickFriend onCLickFriend) {
             itemView.setOnClickListener(v -> onCLickFriend.clickFriend(position));
         }
     }

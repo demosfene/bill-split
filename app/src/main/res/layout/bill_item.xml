@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="horizontal">
 
     <TextView
-        app:layout_constraintHorizontal_bias="0.4"
         android:id="@+id/bill_item_name"
-        android:layout_height="wrap_content"
         android:layout_width="0dp"
-        tools:text="dfgfdgfdgdfgdfgdfgdfgfdgdfgdfgfdsgsfdgdfsg"
+        android:layout_height="wrap_content"
         android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guid_line1"
-        app:layout_constraintTop_toTopOf="parent"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/guid_line1"
         app:layout_constraintHeight_default="spread"
-        />
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -26,97 +24,84 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4"
-        />
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
         android:id="@+id/bill_item_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="0.1"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@id/guid_line1"
-        app:layout_constraintEnd_toStartOf="@id/guid_line2"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        tools:text="555"
-        />
+        app:layout_constraintEnd_toStartOf="@id/guid_line2"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@id/guid_line1"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        tools:text="555" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guid_line2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        />
-
-
+        app:layout_constraintGuide_percent="0.5" />
 
 
     <Button
         android:id="@+id/minus"
-        app:layout_constraintHorizontal_weight="0.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="10dp"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@id/bill_user_count"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        android:minWidth="10dp"
+        android:text="@string/minus"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        android:text="@string/minus"/>
-
-
-
+        app:layout_constraintEnd_toStartOf="@id/bill_user_count"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
 
 
     <TextView
         android:id="@+id/bill_user_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="0.1"
-        android:gravity="center"
         android:layout_margin="20dp"
-        app:layout_constraintStart_toEndOf="@id/guid_line2"
-        app:layout_constraintEnd_toStartOf="@id/guid_line5"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name"
+        android:gravity="center"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        android:text="@string/_0"/>
-
+        app:layout_constraintEnd_toStartOf="@id/guid_line5"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@id/guid_line2"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
 
 
     <Button
         android:id="@+id/plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="5dp"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@id/bill_user_count"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name"
-        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
+        android:minWidth="5dp"
         android:text="@string/plus"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
+        app:layout_constraintStart_toEndOf="@id/bill_user_count"
+        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guid_line5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8"
-        />
+        app:layout_constraintGuide_percent="0.8" />
 
     <TextView
         android:id="@+id/bill_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="555"
+        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="0.2"
         app:layout_constraintStart_toEndOf="@id/guid_line5"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/bill_item_name"
-        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        />
-
+        tools:text="555" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

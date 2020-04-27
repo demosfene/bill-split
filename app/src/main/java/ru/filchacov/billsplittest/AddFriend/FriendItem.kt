@@ -3,7 +3,7 @@ package ru.filchacov.billsplittest.AddFriend
 import android.os.Parcel
 import android.os.Parcelable
 
-class FriendItem(private var mImageResource: Int, private var mText: String?): Parcelable{
+class FriendItem(private var mImageResource: Int, private var mText: String?) : Parcelable {
 
     private var isSelected: Boolean = false
 
@@ -16,20 +16,20 @@ class FriendItem(private var mImageResource: Int, private var mText: String?): P
         key = parcel.readString()!!
     }
 
-    fun getKey(): String{
+    fun getKey(): String {
         return key
     }
 
-    fun setKey(key: String){
+    fun setKey(key: String) {
         this.key = key
     }
 
 
-    fun getisSelected(): Boolean{
+    fun getisSelected(): Boolean {
         return isSelected
     }
 
-    fun setisSelected(isSelected: Boolean){
+    fun setisSelected(isSelected: Boolean) {
         this.isSelected = isSelected
     }
 

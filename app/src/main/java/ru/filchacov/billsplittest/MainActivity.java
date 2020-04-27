@@ -3,12 +3,16 @@ package ru.filchacov.billsplittest;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.jetbrains.annotations.NotNull;
 
 import ru.filchacov.billsplittest.AddFriend.FriendItem;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
+import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 
 public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill {
 
@@ -16,12 +20,12 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             showAuthFragment();
         }
     }
 
-    private void showAuthFragment(){
+    private void showAuthFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, new AuthFragment())
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         return AddFriendFragment.getNewInstance(bundle);
     }
 
-    private void showBillForFriend(Bill bill, FriendItem friendItem){
+    private void showBillForFriend(Bill bill, FriendItem friendItem) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
@@ -49,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
                 .commit();
     }
 
-    private BillListFragment makeFragmentBill(Bill bill, FriendItem friendItem){
+    private BillListFragment makeFragmentBill(Bill bill, FriendItem friendItem) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("bill", bill);
-        bundle. putParcelable("friendItem", friendItem);
+        bundle.putParcelable("friendItem", friendItem);
         return BillListFragment.getNewInstance(bundle);
     }
 
@@ -64,5 +68,17 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     @Override
     public void exitBill(@NotNull Bill bill) {
         showFriendFragment(bill);
+    }
+
+    public void showMainFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.read_fragment);
+        if (fragment == null) {
+            fragment = new ReadFragment();
+        }
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

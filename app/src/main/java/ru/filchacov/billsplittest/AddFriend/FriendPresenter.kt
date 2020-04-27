@@ -13,7 +13,7 @@ class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
     private val model = ModelDB()
 
 
-    fun getFriends(){
+    fun getFriends() {
         model.getFriendsList(bill.dateTime).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.d("list123", databaseError.toString())
@@ -41,8 +41,16 @@ class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
         model.setFriend(bill.dateTime, FriendItem(R.drawable.ic_android, friendName))
     }
 
-    fun clickFriend(number: Int){
+    fun clickFriend(number: Int) {
         (view.activity as OnClickFriendToBill).clickFriendToBill(bill, mFriendList!![number])
+    }
+
+    fun goToMainActivity() {
+        if (view.activity is MainActivity)
+            (view.activity as MainActivity).showMainFragment()
+        else {
+            (view.activity as GoToMainActivity).goToMainActivity()
+        }
     }
 
 }

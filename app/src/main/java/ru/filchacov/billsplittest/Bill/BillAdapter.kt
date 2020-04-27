@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 
 import ru.filchacov.billsplittest.R
 
-class BillAdapter(var items: ArrayList<BillUser>, var onClickPlus: OnClickChangeAmount, var isSelected: Boolean): RecyclerView.Adapter<BillAdapter.BillHolder>() {
+class BillAdapter(var items: ArrayList<BillUser>, var onClickPlus: OnClickChangeAmount, var isSelected: Boolean) : RecyclerView.Adapter<BillAdapter.BillHolder>() {
 
     fun updateAmount(position: Int, billUser: BillUser) {
         items[position] = billUser
@@ -28,32 +28,29 @@ class BillAdapter(var items: ArrayList<BillUser>, var onClickPlus: OnClickChange
     override fun getItemCount(): Int = items.size
 
 
-
-
-
     inner class BillHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val itemName = itemView.findViewById<TextView>(R.id.bill_item_name)
         private val itemCount = itemView.findViewById<TextView>(R.id.bill_item_count)
         private val itemPrice = itemView.findViewById<TextView>(R.id.bill_item_price)
-        private val btnPlus= itemView.findViewById<Button>(R.id.plus)
+        private val btnPlus = itemView.findViewById<Button>(R.id.plus)
         private val btnMinus = itemView.findViewById<Button>(R.id.minus)
         private val itemUserCount = itemView.findViewById<TextView>(R.id.bill_user_count)
 
-        fun bind(billUser: BillUser, isSelected: Boolean){
-            if (isSelected){
+        fun bind(billUser: BillUser, isSelected: Boolean) {
+            if (isSelected) {
                 btnMinus.visibility = GONE
                 btnPlus.visibility = GONE
                 itemCount.visibility = GONE
             }
             itemName.text = billUser.item!!.name
             itemCount.text = billUser.item!!.quantity.toString()
-            itemPrice.text = String.format("%.2f", (billUser.item!!.price)!!.toDouble()/100)
+            itemPrice.text = String.format("%.2f", (billUser.item!!.price)!!.toDouble() / 100)
             itemUserCount.text = billUser.amount.toString()
 
         }
 
-        fun bindClickChangeAmount(position: Int, onClickChangeAmount: OnClickChangeAmount){
+        fun bindClickChangeAmount(position: Int, onClickChangeAmount: OnClickChangeAmount) {
             btnPlus.setOnClickListener {
                 onClickChangeAmount.clickPlus(position)
             }
@@ -61,7 +58,6 @@ class BillAdapter(var items: ArrayList<BillUser>, var onClickPlus: OnClickChange
                 onClickChangeAmount.clickMinus(position)
             }
         }
-
 
 
     }
