@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 
 public class ShowFragment extends Fragment {
 
-    private TextView tvDate;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +22,11 @@ public class ShowFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show, container, false);
-        tvDate = view.findViewById(R.id.tv_email);
+        TextView tvDate = view.findViewById(R.id.tv_email);
+        assert getArguments() != null;
         tvDate.setText(getArguments().getString(Constant.USER_EMAIL));
-
         return view;
+
     }
 
 }

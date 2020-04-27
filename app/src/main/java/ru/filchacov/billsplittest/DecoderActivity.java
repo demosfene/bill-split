@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import androidx.core.app.ActivityCompat;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView.OnQRCodeReadListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
 
 import ru.filchacov.billsplittest.QRReader.PointsOverlayView;
 
@@ -30,8 +28,6 @@ public class DecoderActivity extends AppCompatActivity
   private ViewGroup mainLayout;
 
   private QRCodeReaderView qrCodeReaderView;
-  private CheckBox flashlightCheckBox;
-  private CheckBox enableDecodingCheckBox;
   private PointsOverlayView pointsOverlayView;
 
   @Override
@@ -40,7 +36,7 @@ public class DecoderActivity extends AppCompatActivity
 
     setContentView(R.layout.activity_decoder);
 
-    mainLayout = (ViewGroup) findViewById(R.id.main_layout);
+    mainLayout = findViewById(R.id.main_layout);
 
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         == PackageManager.PERMISSION_GRANTED) {
@@ -95,14 +91,9 @@ public class DecoderActivity extends AppCompatActivity
   private void requestCameraPermission() {
     if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
       Snackbar.make(mainLayout, "Camera access is required to display the camera preview.",
-          Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          ActivityCompat.requestPermissions(DecoderActivity.this, new String[] {
+          Snackbar.LENGTH_INDEFINITE).setAction("OK", view -> ActivityCompat.requestPermissions(DecoderActivity.this, new String[] {
               Manifest.permission.CAMERA
-          }, MY_PERMISSION_REQUEST_CAMERA);
-        }
-      }).show();
+          }, MY_PERMISSION_REQUEST_CAMERA)).show();
     } else {
       Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.",
           Snackbar.LENGTH_SHORT).show();
@@ -115,26 +106,16 @@ public class DecoderActivity extends AppCompatActivity
   private void initQRCodeReaderView() {
     View content = getLayoutInflater().inflate(R.layout.content_decoder, mainLayout, true);
 
-    qrCodeReaderView = (QRCodeReaderView) content.findViewById(R.id.qrdecoderview);
-    flashlightCheckBox = (CheckBox) content.findViewById(R.id.flashlight_checkbox);
-    enableDecodingCheckBox = (CheckBox) content.findViewById(R.id.enable_decoding_checkbox);
-    pointsOverlayView = (PointsOverlayView) content.findViewById(R.id.points_overlay_view);
+    qrCodeReaderView = content.findViewById(R.id.qrdecoderview);
+    CheckBox flashlightCheckBox = content.findViewById(R.id.flashlight_checkbox);
+    CheckBox enableDecodingCheckBox = content.findViewById(R.id.enable_decoding_checkbox);
+    pointsOverlayView = content.findViewById(R.id.points_overlay_view);
 
     qrCodeReaderView.setAutofocusInterval(2000L);
     qrCodeReaderView.setOnQRCodeReadListener(this);
     qrCodeReaderView.setBackCamera();
-    flashlightCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        qrCodeReaderView.setTorchEnabled(isChecked);
-      }
-    });
-    enableDecodingCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        qrCodeReaderView.setQRDecodingEnabled(isChecked);
-      }
-    });
+    flashlightCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setTorchEnabled(isChecked));
+    enableDecodingCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setQRDecodingEnabled(isChecked));
     qrCodeReaderView.startCamera();
   }
 }

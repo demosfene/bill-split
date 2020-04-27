@@ -28,21 +28,12 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
         }
     }
 
-    /*private var mAuth: FirebaseAuth? = null
-    private var mDataBase: DatabaseReference? = null*/
-
     private var mRecyclerView: RecyclerView? = null
     private var mAdapter: RecyclerView.Adapter<*>? = null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
 
-/*    private var mFriendList: ArrayList<FriendItem>? = null
-    private var user: FirebaseUser? = null
-    private var mFriendListDB: ArrayList<String>? = null*/
-
     private var buttonInsert: Button? = null
     private var editTextInsert: EditText? = null
-
-//    var changedFriend: FriendItem? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.add_friends_fragment, container, false)
@@ -54,13 +45,6 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
         presenter = FriendPresenter(this, bill!!)
 
         presenter!!.getFriends()
-
-        /*mAuth = FirebaseAuth.getInstance()
-        mDataBase = FirebaseDatabase.getInstance().reference
-        user = mAuth!!.currentUser
-
-        mFriendListDB = ArrayList()
-        mFriendList = ArrayList()*/
 
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView!!.setHasFixedSize(true)
@@ -83,34 +67,6 @@ class AddFriendFragment() : Fragment(), OnCLickFriend {
 
         return view
     }
-
-    /*private fun loadUserDB(dataSnapshot: DataSnapshot) {
-        mFriendList!!.clear()
-        var dataChildren = dataSnapshot.children
-        var iter = dataChildren.iterator()
-        while (iter.hasNext()) {
-            var ds = iter.next()
-            val map = ds.value as Map<String, String>
-            var friend = FriendItem(R.drawable.ic_android, map["mText"])
-            friend.setisSelected(map.get("isSelected").toString().toBoolean())
-            friend.setKey(ds.key.toString())
-            mFriendList!!.add(friend)
-            mAdapter!!.notifyDataSetChanged()
-            }
-
-    }*/
-
-
-/*    private fun insertItem(billTime: String) {
-        val user = mAuth!!.currentUser
-        writeNewFriend(user!!.uid)
-    }*/
-
-  /*  private fun writeNewFriend(userId: String) {
-        var toDataBase = ToDataBase()
-        toDataBase.toDatabse(mDataBase, "вася", false, userId, bill!!.dateTime, FriendItem(R.drawable.ic_android, "Вася"))
-        mDataBase!!.child("users").child(userId).child("friends").child(bill!!.dateTime).child("savedFriends").push().setValue(FriendItem(R.drawable.ic_android, editTextInsert!!.text.toString()))
-    }*/
 
     override fun clickFriend(number: Int) {
         presenter!!.clickFriend(number)

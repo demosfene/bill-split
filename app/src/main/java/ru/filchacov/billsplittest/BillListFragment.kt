@@ -26,9 +26,6 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         }
     }
     private var presenter: BillListPresenter? = null
-    /*private var mAuth: FirebaseAuth? = null
-    private var mDataBase: DatabaseReference? = null
-    private var user: FirebaseUser? = null*/
     private var totalSumView: TextView? = null
     private var friendItem: FriendItem? = null
     private var bill: Bill? = null
@@ -48,50 +45,19 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         }
         presenter = BillListPresenter(this, bill!!, friendItem!!)
 
+        totalSumView = view.findViewById(R.id.sum)
 
-   /*     for(item in bill!!.items){
-            val billUser = BillUser()
-            billUser.setBillItem(item)
-            listBill.add(billUser)
-        }*/
-
-        totalSumView = view.findViewById<TextView>(R.id.sum)
-
-        btnSave = view.findViewById<Button>(R.id.button_save)
+        btnSave = view.findViewById(R.id.button_save)
         btnSave!!.setOnClickListener {
             presenter!!.saveBillForFriend()
-            /*mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill!!.dateTime).child(friendItem!!.getmText()!!).setValue(listBillDB)
-            mDataBase!!.child("users").child(user!!.uid).child("friends").child(bill!!.dateTime).child("savedFriends").child(friendItem!!.getKey()).child("isSelected").setValue(true)
-            (activity as BillActivity).showFriendFragment(bill!!)*/
-
         }
 
         if (friendItem!!.getisSelected()){
             btnSave!!.visibility = INVISIBLE
             presenter!!.loadBillList()
-            /*
-            mDataBase!!
-                    .child("users")
-                    .child(user!!.uid)
-                    .child("friends")
-                    .child(bill!!.dateTime)
-                    .child(friendItem!!.getmText()!!)
-                    .addListenerForSingleValueEvent(object : ValueEventListener{
-                        override fun onCancelled(p0: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            loadBillDB(p0)
-                        }
-
-                    } )*/
         }else{
             presenter!!.initBillList()
         }
-
-
-//        totalSumView!!.text = String.format("%.2f", ((bill!!.totalSum.toDouble())/100))
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.bill_list)
         val layoutManager = LinearLayoutManager(context)
@@ -113,66 +79,10 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
     }
 
     override fun clickPlus(position: Int) {
-       /* val item = listBill[position]
-        if(item.amount < item.item!!.quantity!!){
-            listBill[position].amount++
-            adapter!!.updateAmount(position, item)
-            var has = false
-            for (itemDB in listBillDB) {
-                if (itemDB == item) {
-                    has = true
-                }
-            }
-            if (!has){
-                listBillDB.add(item)
-            }
-            updateTotalSum(listBillDB)
-        }
-*/
         presenter!!.plus(position)
     }
 
     override fun clickMinus(position: Int) {
-        /*val item = listBill[position]
-        if (item.amount > 0) {
-            listBill[position].amount--
-            adapter!!.updateAmount(position, item)
-
-            val iterator = listBillDB.iterator()
-            while (iterator.hasNext()) {
-                val iterItem = iterator.next()
-                if (iterItem.amount == 0) {
-                    iterator.remove()
-                }
-                updateTotalSum(listBillDB)
-            }
-        }
-    }
-
-    private fun loadBillDB(dataSnapshot: DataSnapshot) {
-        listBill.clear()
-        var dataChildren = dataSnapshot.children
-        var iter = dataChildren.iterator()
-        while (iter.hasNext()) {
-            var ds = iter.next()
-            val map = ds.value as Map<String, String>
-            var billDB = BillUser()
-            billDB.amount = map["amount"].toString().toInt()
-            var itemMap = map["item"] as Map<String, String>
-            var billItem = Bill.Item()
-            billItem.price = itemMap.get("price").toString().toInt()
-            billItem.quantity = itemMap.get("quantity").toString().toInt()
-            billItem.name = itemMap["name"].toString()
-            billItem.sum = itemMap["sum"].toString().toInt()
-            billDB.item = billItem
-            listBill.add(billDB)
-        }
-        updateTotalSum(listBill)
-        adapter!!.notifyDataSetChanged()
-
-
-    }
-*/
         presenter!!.minus(position)
     }
 

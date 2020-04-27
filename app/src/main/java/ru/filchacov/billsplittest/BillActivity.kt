@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat
 
 
 class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill{
-//    20200326T2909
 
 
     private var mDataBase: DatabaseReference? = null
@@ -33,8 +32,6 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
         mDataBase = FirebaseDatabase.getInstance().reference
-
-
 
         var time = ""
 
@@ -65,8 +62,6 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill{
                     .show()
         }
 
-
-
         val checkService = BillService()
         //проверяет включен ли интернет
         if (isNetworkAvailable.isNetworkAvailable(applicationContext)) {
@@ -82,9 +77,6 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill{
                                 , t = time
                                 , qr = 0
                         ).execute().body()!!
-
-
-
                     }
                     if (result.data != null) {
                         result.data?.dateTime?.let {
