@@ -47,10 +47,6 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         btnAdd = view.findViewById(R.id.addBill);
         buttonExit = view.findViewById(R.id.button_exit);
         init();
-        /*updateList();
-        checkIfEmpty();*/
-        //getDataFromDB();
-
         return view;
     }
 
@@ -88,69 +84,14 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
             ft.addToBackStack(null);
             ft.commit();
         });
-
-
-        /*database = FirebaseDatabase.getInstance();
-        reference = database.getReference("users");*/
-
     }
-
-    /*@Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case 0:
-                presenter.addUser(item.getGroupId());
-                break;
-
-            case 1:
-                presenter.removeUser(item.getGroupId());
-                break;
-        }
-
-        return super.onContextItemSelected(item);
-    }*/
 
     void updateData() {
         adapter.notifyDataSetChanged();
     }
-/*
-    public void removeItem(int index) {
-        adapter.notifyItemRemoved(index);
-    }
 
- */
-/*
-    void checkIfEmpty() {
-        if (presenter.result.size() == 0) {
-            recyclerView.setVisibility(View.INVISIBLE);
-            emptyText.setVisibility(View.VISIBLE);
-        } else {
-            emptyText.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
-*/
     @Override
     public void onNoteClick(int position) {
-/*
-        String bf = presenter.listTemp.get(position);
-        FragmentManager fm = getFragmentManager();
-        assert fm != null;
-        Fragment fragment = fm.findFragmentById(R.id.show_fragment);
-
-        if (fragment == null) {
-            fragment = new AddFriendFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(Constant.USER_EMAIL, bf);
-            fragment.setArguments(bundle);
-        }
-
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragment_container, fragment);
-        ft.addToBackStack(null);
-        ft.commit();
-*/
         presenter.onNoteClick(position);
     }
 

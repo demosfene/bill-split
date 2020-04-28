@@ -54,12 +54,12 @@ public class AuthFragment extends Fragment {
 
         signButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
-                presenter.signIn(ETemail.getText().toString(), ETpassword.getText().toString());
+                presenter.signIn(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
         });
 
         regButton.setOnClickListener(v -> {
             if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
-                presenter.createAccount(ETemail.getText().toString(), ETpassword.getText().toString());
+                presenter.createAccount(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
             }
         });
 

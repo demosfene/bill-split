@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.*
 import ru.filchacov.billsplittest.Bill.Bill
+import java.util.*
 
 class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
     var mFriendList: ArrayList<FriendItem>? = ArrayList()
