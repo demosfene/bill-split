@@ -12,7 +12,7 @@ import ru.filchacov.billsplittest.Bill.Bill
 import java.lang.Exception
 
 
-class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity {
+class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment {
 
     private var mDataBase: DatabaseReference? = null
 
@@ -41,11 +41,11 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         startActivity(intent)
     }
 
-    fun showFriendFragment(bill: Bill) {
+    override fun showFriendFragment(bill: Bill) {
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
-                .commitAllowingStateLoss()
+                .commit()
     }
 
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem) {
@@ -75,7 +75,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     }
 
     override fun exitBill(bill: Bill) {
-        showFriendFragment(bill)
+        supportFragmentManager.popBackStack()
     }
 
 

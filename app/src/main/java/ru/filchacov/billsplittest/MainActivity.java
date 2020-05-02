@@ -14,7 +14,7 @@ import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 
-public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill {
+public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,6 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
                 .commit();
     }
 
-    private void showFriendFragment(Bill bill) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, makeFragmentFriend(bill), AddFriendFragment.getTAG())
-                .commit();
-    }
 
     private AddFriendFragment makeFragmentFriend(Bill bill) {
         Bundle bundle = new Bundle();
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
 
     @Override
     public void exitBill(@NotNull Bill bill) {
-        showFriendFragment(bill);
+        getSupportFragmentManager().popBackStack();
     }
 
     public void showMainFragment() {
@@ -80,5 +74,14 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         ft.replace(R.id.fragment_container, fragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void showFriendFragment(Bill bill) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, makeFragmentFriend(bill), AddFriendFragment.getTAG())
+                .addToBackStack(null)
+                .commit();
     }
 }

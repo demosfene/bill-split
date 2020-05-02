@@ -18,8 +18,9 @@ import java.util.Objects;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ExitFromBill;
 import ru.filchacov.billsplittest.ModelDB;
+import ru.filchacov.billsplittest.ShowFriendFragment;
 
-public class ReadPresenter implements ExitFromBill {
+public class ReadPresenter implements ShowFriendFragment {
 
     List<String> result = new ArrayList<>();
     private List<String> listTemp = new ArrayList<>();
@@ -159,7 +160,7 @@ public class ReadPresenter implements ExitFromBill {
                             map.put(ds.getKey(), ds.getValue());
                         }
                         makeBillObject(map);
-                        exitBill(bill);
+                        showFriendFragment(bill);
                     }
 
                     @Override
@@ -204,10 +205,11 @@ public class ReadPresenter implements ExitFromBill {
         bill.setItems(listItem);
     }
 
+
     @Override
-    public void exitBill(@NotNull Bill bill) {
-        if (view.getActivity() instanceof ExitFromBill) {
-            ((ExitFromBill) view.getActivity()).exitBill(bill);
+    public void showFriendFragment(Bill bill) {
+        if (view.getActivity() instanceof ShowFriendFragment) {
+            ((ShowFriendFragment) view.getActivity()).showFriendFragment(bill);
         }
     }
 }
