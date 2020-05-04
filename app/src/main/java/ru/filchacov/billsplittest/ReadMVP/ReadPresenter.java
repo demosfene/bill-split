@@ -1,7 +1,9 @@
 package ru.filchacov.billsplittest.ReadMVP;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -39,7 +41,7 @@ public class ReadPresenter implements ShowFriendFragment {
         if (result.size() == 0){
             view.showTextEmptyList();
         }
-        /*updateList();*/
+        //updateList();
     }
 
     private void updateData() {
@@ -49,21 +51,21 @@ public class ReadPresenter implements ShowFriendFragment {
     void signOut() {
         model.getAuth().signOut();
     }
-/*
-    public void removeData(int index) {
+
+   /* public void removeData(int index) {
         view.removeItem(index);
-    }
+    }*/
+    /*
+        void removeUser(int position) {
+            model.getReference().child(result.get(position)).removeValue();
+        }
 
-    void removeUser(int position) {
-        model.getReference().child(result.get(position)).removeValue();
-    }
-
-    void addUser(int position) {
-        Toast toast = Toast.makeText(view.getContext(), "Добавлено в группу", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    public int getItemIndex(String bill) {
+        void addUser(int position) {
+            Toast toast = Toast.makeText(view.getContext(), "Добавлено в группу", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    */
+    /*public int getItemIndex(String bill) {
         int index = -1;
 
         for (int i = 0; i < result.size(); i++) {
@@ -73,27 +75,24 @@ public class ReadPresenter implements ShowFriendFragment {
             }
         }
         return index;
-    }*/
+    }
 
-   /* public void updateList() {
+    public void updateList() {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     result.add(ds.getKey());
                     updateData();
-                    view.checkIfEmpty();
+                    if (result.size() == 0){
+                        view.showTextEmptyList();
+                    }
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String bf = ds.getKey();
-                    int index = getItemIndex(bf);
-                    result.set(index, bf);
-                    updateData();
-                }
+
             }
 
             @Override

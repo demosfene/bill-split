@@ -32,6 +32,13 @@ public class ModelDB {
                 .child("savedFriends");
     }
 
+    public DatabaseReference getPermanentFriendsList() {
+        assert user != null;
+        return database.getReference("users")
+                .child(user.getUid())
+                .child("permanentFriends");
+    }
+
 
     public void setBillForFriend(String dateTime, String friendName, ArrayList listBillDB) {
         assert user != null;
@@ -50,6 +57,15 @@ public class ModelDB {
                 .child("friends")
                 .child(dateTime)
                 .child("savedFriends")
+                .push()
+                .setValue(friendItem);
+    }
+
+    public void setPermanentFriend(FriendItem friendItem) {
+        assert user != null;
+        database.getReference("users")
+                .child(user.getUid())
+                .child("permanentFriends")
                 .push()
                 .setValue(friendItem);
     }

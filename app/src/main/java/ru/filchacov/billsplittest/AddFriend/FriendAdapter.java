@@ -39,6 +39,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         holder.bindClickFriend(position, onCLickFriend);
     }
 
+
     @Override
     public int getItemCount() {
         return mFriendList.size();
@@ -57,6 +58,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
         void bindClickFriend(int position, OnCLickFriend onCLickFriend) {
             itemView.setOnClickListener(v -> onCLickFriend.clickFriend(position));
+            /*itemView.setOnLongClickListener(v -> {
+                onCLickFriend.longClickFriend(position);
+                return true;
+            });*/
         }
     }
 }
