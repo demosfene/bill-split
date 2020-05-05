@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
+import ru.filchacov.billsplittest.RegistrationView;
 
 public class AuthFragment extends Fragment {
     private EditText ETemail;
@@ -58,9 +59,19 @@ public class AuthFragment extends Fragment {
         });
 
         regButton.setOnClickListener(v -> {
-            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
-                presenter.createAccount(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
+            FragmentManager fm = getFragmentManager();
+            assert fm != null;
+            Fragment fragment = fm.findFragmentById(R.id.registration_fragment);
+            if (fragment == null) {
+                fragment = new RegistrationView();
             }
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+            /*if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
+                //presenter.createAccount(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
+            }*/
         });
 
         presenter.updateUIFromPresenter();

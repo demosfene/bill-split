@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     private void showPermanentFriendFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, new AddPermanentFriendView())
+                .replace(R.id.fragment_container, AddPermanentFriendView.getNewInstance(), AddPermanentFriendView.TAG)
                 .addToBackStack(null)
                 .commit();
     }

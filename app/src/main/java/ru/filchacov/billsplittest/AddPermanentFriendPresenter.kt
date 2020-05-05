@@ -57,7 +57,7 @@ class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
                 var friendItem: FriendItem? = p0.getValue(FriendItem::class.java)
                 var index: Int = getItemIndex(friendItem!!)
                 mFriendList?.removeAt(index)
-                view.updateAdapter()
+                view.updateAdapterForDelete(index)
             }
 
         })
@@ -80,5 +80,9 @@ class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
             }
         }
         return index
+    }
+
+    fun getItemCount():Int {
+        return mFriendList!!.size
     }
 }

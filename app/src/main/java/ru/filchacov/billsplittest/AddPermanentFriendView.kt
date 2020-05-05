@@ -20,6 +20,16 @@ import ru.filchacov.billsplittest.Bill.Bill
 
 class AddPermanentFriendView : Fragment(), OnCLickFriend {
 
+    companion object {
+        const val TAG = "PermanentFriend"
+
+        @JvmStatic
+        fun getNewInstance(): AddPermanentFriendView {
+            val addPermanentFriendFragment = AddPermanentFriendView()
+            return addPermanentFriendFragment
+        }
+    }
+
     private var presenter: AddPermanentFriendPresenter? = null
     private var mRecyclerView: RecyclerView? = null
     private var mAdapter: RecyclerView.Adapter<*>? = null
@@ -60,8 +70,6 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
 
         }
 
-
-
         return view
     }
 
@@ -72,15 +80,12 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
         return super.onContextItemSelected(item)
     }
 
-
-
-    companion object {
-        @JvmStatic
-        val TAG: String? = "AddPermanentFriendFragment"
-    }
-
     fun updateAdapter() {
         mAdapter!!.notifyDataSetChanged()
+    }
+
+    fun updateAdapterForDelete(position: Int) {
+        mAdapter!!.notifyItemRangeRemoved(position, presenter!!.getItemCount())
     }
 
     override fun clickFriend(number: Int) {

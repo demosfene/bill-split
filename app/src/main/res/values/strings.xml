@@ -28,4 +28,11 @@
     <string name="user_1">User 1</string>
     <string name="to_main_activity">на главную страницу</string>
     <string name="friendName">friendName</string>
+    <string name="your_email">Your email</string>
+    <string name="your_name">Your name</string>
+    <string name="your_phone">Your phone</string>
+    <string name="your_password">Your password</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="sing_up">Sing up!</string>
+    <string name="registration">Registration</string>
 </resources>

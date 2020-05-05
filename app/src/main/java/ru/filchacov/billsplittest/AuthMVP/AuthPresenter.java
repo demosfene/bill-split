@@ -38,7 +38,7 @@ class AuthPresenter {
         }
     }
 
-    void createAccount(String email, String password) {
+    /*void createAccount(String email, String password) {
 
         model.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
@@ -56,16 +56,16 @@ class AuthPresenter {
                     }
 
                 });
-    }
+    }*/
 
     void signIn(String email, String password) {
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(view.getActivity(), "User " + " with password",
-                                Toast.LENGTH_LONG).show();
                         FirebaseUser user = model.getAuth().getCurrentUser();
+                        Toast.makeText(view.getActivity(), "User with password",
+                                Toast.LENGTH_LONG).show();
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -91,9 +91,5 @@ class AuthPresenter {
         updateUI(model.getUser());
     }
 
-    private void writeNewUser(String userId, String email) {
-        User user = new User(email, userId);
-        model.getAuthReference().child("users").child(userId).setValue(user);
-    }
 
 }
