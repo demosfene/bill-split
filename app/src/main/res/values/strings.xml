@@ -33,6 +33,6 @@
     <string name="your_phone">Your phone</string>
     <string name="your_password">Your password</string>
     <string name="confirm_your_password">Confirm your password</string>
-    <string name="sing_up">Sing up!</string>
+    <string name="sing_up">Sign up!</string>
     <string name="registration">Registration</string>
 </resources>
