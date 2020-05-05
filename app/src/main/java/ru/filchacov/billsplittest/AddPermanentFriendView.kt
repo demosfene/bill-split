@@ -3,6 +3,7 @@ package ru.filchacov.billsplittest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -36,6 +37,7 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
         presenter = AddPermanentFriendPresenter(this)
 
         presenter!!.getPermanentFriends()
+        presenter!!.updateList()
 
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView!!.setHasFixedSize(true)
@@ -58,7 +60,16 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
 
         }
 
+
+
         return view
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            0 -> presenter!!.removeItem(item.groupId)
+        }
+        return super.onContextItemSelected(item)
     }
 
 
@@ -75,5 +86,5 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
     override fun clickFriend(number: Int) {
         Toast.makeText(context, text, duration).show()
     }
-    
+
 }

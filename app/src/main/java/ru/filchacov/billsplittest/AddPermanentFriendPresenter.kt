@@ -1,11 +1,13 @@
 package ru.filchacov.billsplittest
 
 import android.util.Log
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
-import java.util.ArrayList
+import java.util.*
+
 
 class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
     var mFriendList: ArrayList<FriendItem>? = ArrayList()
@@ -35,7 +37,48 @@ class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
         })
     }
 
+    fun updateList() {
+        model.permanentFriendsList.addChildEventListener(object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                var friendItem: FriendItem? = p0.getValue(FriendItem::class.java)
+                var index: Int = getItemIndex(friendItem!!)
+                mFriendList?.removeAt(index)
+                view.updateAdapter()
+            }
+
+        })
+    }
+
     fun insertItem(friendName: String) {
         model.setPermanentFriend(FriendItem(R.drawable.ic_android, friendName))
+    }
+
+    fun removeItem(position: Int) {
+        model.permanentFriendsList.child(mFriendList!!.get(position).getKey()).removeValue()
+    }
+
+    fun getItemIndex(friendItem: FriendItem): Int {
+        var index = 0
+        for (i in 0 until mFriendList!!.size) {
+            if (mFriendList!!.get(i).getKey().equals(friendItem.getKey())) {
+                index = i
+                break
+            }
+        }
+        return index
     }
 }

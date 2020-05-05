@@ -3,11 +3,16 @@ package ru.filchacov.billsplittest.AddFriend
 import android.os.Parcel
 import android.os.Parcelable
 
-class FriendItem(private var mImageResource: Int, private var mText: String?) : Parcelable {
+class FriendItem(
+        private var mImageResource: Int = 0,
+        private var mText: String? = ""
+) : Parcelable {
+
 
     private var isSelected: Boolean = false
 
     private var key: String = ""
+
 
     constructor(parcel: Parcel) : this(
             parcel.readInt(),

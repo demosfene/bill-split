@@ -37,6 +37,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         holder.mImageView.setImageResource(currentItem.getmImageResource());
         holder.mTextView1.setText(currentItem.getmText());
         holder.bindClickFriend(position, onCLickFriend);
+        holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> menu.add(holder.getAdapterPosition(), 0, 0, "Удалить"));
     }
 
 
@@ -58,10 +59,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
         void bindClickFriend(int position, OnCLickFriend onCLickFriend) {
             itemView.setOnClickListener(v -> onCLickFriend.clickFriend(position));
-            /*itemView.setOnLongClickListener(v -> {
-                onCLickFriend.longClickFriend(position);
-                return true;
-            });*/
         }
     }
 }
