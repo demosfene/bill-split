@@ -4,14 +4,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
-import ru.filchacov.billsplittest.BillListFragment
-import ru.filchacov.billsplittest.ExitFromBill
 import ru.filchacov.billsplittest.ModelDB
 
-class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendItem: FriendItem) {
+class BillListPresenter(val view: BillLListInterface, val bill: Bill, private val friendItem: FriendItem) {
 
     var listBill = ArrayList<BillUser>()
-    var listBillDB = ArrayList<BillUser>()
+    private var listBillDB = ArrayList<BillUser>()
     private val model = ModelDB()
     private var totalSum = 0
 
@@ -26,7 +24,7 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
     fun saveBillForFriend() {
         model.setBillForFriend(bill.dateTime, friendItem.getmText().toString(), listBillDB)
         model.isSelected(bill.dateTime, friendItem.getKey())
-        exitFromBill(bill)
+        view.exitFromBill(bill)
     }
 
 
@@ -104,7 +102,4 @@ class BillListPresenter(val view: BillListFragment, val bill: Bill, val friendIt
                 })
     }
 
-    fun exitFromBill(bill: Bill) {
-        (view.activity as ExitFromBill).exitBill(bill)
-    }
 }

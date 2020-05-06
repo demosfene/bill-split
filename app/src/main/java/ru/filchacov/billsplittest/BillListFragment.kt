@@ -14,7 +14,7 @@ import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.Bill.*
 
 
-class BillListFragment : Fragment(), OnClickChangeAmount {
+class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
 
     companion object {
         const val TAG = "BillListFragment"
@@ -55,7 +55,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         }
         btnCancel = view.findViewById(R.id.button_cancel)
         btnCancel!!.setOnClickListener {
-            presenter!!.exitFromBill(bill!!)
+            exitFromBill(bill!!)
         }
 
         if (friendItem!!.getisSelected()) {
@@ -80,7 +80,8 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
 
     }
 
-    fun updateTotalSum(totalSum: Double) {
+
+    override fun updateTotalSum(totalSum: Double) {
         totalSumView!!.text = String.format("%.2f", totalSum)
     }
 
@@ -92,11 +93,15 @@ class BillListFragment : Fragment(), OnClickChangeAmount {
         presenter!!.minus(position)
     }
 
-    fun updateAdapterAmount(position: Int, billUer: BillUser) {
+    override fun updateAdapterAmount(position: Int, billUer: BillUser) {
         adapter!!.updateAmount(position, billUer)
     }
 
-    fun updateAdapter() {
+    override fun updateAdapter() {
         adapter!!.notifyDataSetChanged()
+    }
+
+    override fun exitFromBill(bill: Bill){
+        (activity as ExitFromBill).exitBill(bill)
     }
 }
