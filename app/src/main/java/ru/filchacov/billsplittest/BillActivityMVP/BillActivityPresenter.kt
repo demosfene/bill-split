@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest
+package ru.filchacov.billsplittest.BillActivityMVP
 
 import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
@@ -7,8 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.filchacov.billsplittest.Bill.Bill
+import ru.filchacov.billsplittest.BillActivity
 import ru.filchacov.billsplittest.BillInfo.BillService
 import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
+import ru.filchacov.billsplittest.ModelDB
 import java.text.SimpleDateFormat
 
 class BillActivityPresenter(billParameters: String, var view: BillActivity) {

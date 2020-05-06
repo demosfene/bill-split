@@ -6,19 +6,17 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.filchacov.billsplittest.AddFriend.FriendAdapter
-import ru.filchacov.billsplittest.AddFriend.FriendPresenter
-import ru.filchacov.billsplittest.Bill.Bill
+import ru.filchacov.billsplittest.PermanentFriend.AddPermanentFriendPresenter
+import ru.filchacov.billsplittest.PermanentFriend.PermanentFriendInterface
 
 
-
-class AddPermanentFriendView : Fragment(), OnCLickFriend {
+class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterface {
 
     companion object {
         const val TAG = "PermanentFriend"
@@ -80,11 +78,11 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend {
         return super.onContextItemSelected(item)
     }
 
-    fun updateAdapter() {
+    override fun updateAdapter() {
         mAdapter!!.notifyDataSetChanged()
     }
 
-    fun updateAdapterForDelete(position: Int) {
+    override fun updateAdapterForDelete(position: Int) {
         mAdapter!!.notifyItemRangeRemoved(position, presenter!!.getItemCount())
     }
 

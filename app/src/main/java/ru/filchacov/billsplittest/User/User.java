@@ -2,11 +2,9 @@ package ru.filchacov.billsplittest.User;
 
 import androidx.annotation.Nullable;
 
-import com.google.firebase.auth.FirebaseUser;
-
 public class User {
 
-    public String id, email, name, phone;
+    private String id, email, name, phone;
 
     public User() {
     }
@@ -14,6 +12,10 @@ public class User {
     public User(String email, String id) {
         this.email = email;
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public User(String email, String id, String name, String phone) {

@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest
+package ru.filchacov.billsplittest.PermanentFriend
 
 import android.util.Log
 import com.google.firebase.database.ChildEventListener
@@ -6,10 +6,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
+import ru.filchacov.billsplittest.AddPermanentFriendView
+import ru.filchacov.billsplittest.ModelDB
+import ru.filchacov.billsplittest.R
 import java.util.*
 
 
-class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
+class AddPermanentFriendPresenter(var view: PermanentFriendInterface) {
     var mFriendList: ArrayList<FriendItem>? = ArrayList()
     private val model = ModelDB()
 
@@ -54,8 +57,8 @@ class AddPermanentFriendPresenter(var view: AddPermanentFriendView) {
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
-                var friendItem: FriendItem? = p0.getValue(FriendItem::class.java)
-                var index: Int = getItemIndex(friendItem!!)
+                val friendItem: FriendItem? = p0.getValue(FriendItem::class.java)
+                val index: Int = getItemIndex(friendItem!!)
                 mFriendList?.removeAt(index)
                 view.updateAdapterForDelete(index)
             }

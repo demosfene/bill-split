@@ -2,7 +2,6 @@ package ru.filchacov.billsplittest;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,16 +13,19 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
-import ru.filchacov.billsplittest.ReadMVP.ReadPresenter;
+import ru.filchacov.billsplittest.Registration.RegistrationPresenter;
+import ru.filchacov.billsplittest.Registration.UserAuthInterface;
 import ru.tinkoff.decoro.Mask;
 import ru.tinkoff.decoro.MaskImpl;
 import ru.tinkoff.decoro.slots.PredefinedSlots;
 import ru.tinkoff.decoro.watchers.FormatWatcher;
 import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 
-public class RegistrationView extends Fragment {
+public class RegistrationView extends Fragment implements UserAuthInterface {
 
     private RegistrationPresenter presenter = new RegistrationPresenter(this);
 
@@ -69,12 +71,20 @@ public class RegistrationView extends Fragment {
             });
     }
 
-    void updateUI(FirebaseUser user) {
-        if (user != null) {
-            if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) Objects.requireNonNull(getActivity())).showMainFragment();
-            }
-        } else Toast.makeText(getActivity(), "Please sign up!",
+    @Override
+    public void userValid(@NotNull FirebaseUser user) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) Objects.requireNonNull(getActivity())).showMainFragment();
+        }
+        Toast.makeText(getActivity(), "Welcome " + name.getText() + "!",
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void userNotValid() {
+        Toast.makeText(getActivity(), "Authentication failed.",
+                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please sign up!",
                 Toast.LENGTH_SHORT).show();
     }
 }

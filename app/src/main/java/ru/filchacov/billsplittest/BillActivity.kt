@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.Bill.Bill
+import ru.filchacov.billsplittest.BillActivityMVP.BillActivityPresenter
 import java.lang.Exception
 
 
