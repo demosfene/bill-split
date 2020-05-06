@@ -9,11 +9,13 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.filchacov.billsplittest.AddFriend.AddFriendInterface
 import ru.filchacov.billsplittest.AddFriend.FriendAdapter
+import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.AddFriend.FriendPresenter
 import ru.filchacov.billsplittest.Bill.Bill
 
-class AddFriendFragment : Fragment(), OnCLickFriend {
+class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
     private var bill: Bill? = null
     private var presenter: FriendPresenter? = null
@@ -61,7 +63,7 @@ class AddFriendFragment : Fragment(), OnCLickFriend {
         editTextInsert = view.findViewById(R.id.edittext_insert)
 
         btnToMainActivity!!.setOnClickListener {
-            presenter!!.goToMainActivity()
+            goToMainActivity()
         }
 
         buttonInsert!!.setOnClickListener {
@@ -78,17 +80,30 @@ class AddFriendFragment : Fragment(), OnCLickFriend {
 
     override fun clickFriend(number: Int) {
         presenter!!.clickFriend(number)
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putParcelable("bill", bill)
+        super.onSaveInstanceState(outState)
     }
 
-    fun updateAdapter() {
+    override fun goToMainActivity() {
+        if (activity is MainActivity)
+            (activity as MainActivity).showMainFragment()
+        else {
+            (activity as GoToMainActivity).goToMainActivity()
+        }
+    }
+
+    override fun clickFriend(bill: Bill, friendItem: FriendItem) {
+        (activity as OnClickFriendToBill).clickFriendToBill(bill, friendItem)
+    }
+
+    override fun updateAdapter() {
         mAdapter!!.notifyDataSetChanged()
     }
+
+
 
 
 }

@@ -45,7 +45,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
-                .commit()
+                .commitAllowingStateLoss()
     }
 
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem) {

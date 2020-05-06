@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,16 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseUser;
+
+import ru.filchacov.billsplittest.MainActivity;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 import ru.filchacov.billsplittest.RegistrationView;
 
-public class AuthFragment extends Fragment {
+public class AuthFragment extends Fragment implements AuthInterface {
     private EditText ETemail;
     private EditText ETpassword;
     private Button signButton;
     private Button regButton;
-    TextView textView;
+    private TextView textView;
 
     private AuthPresenter presenter = new AuthPresenter(this);
 
@@ -77,7 +81,8 @@ public class AuthFragment extends Fragment {
         presenter.updateUIFromPresenter();
     }
 
-    void onClickRead() {
+    @Override
+    public void onClickRead() {
         FragmentManager fm = getFragmentManager();
         assert fm != null;
         Fragment fragment = fm.findFragmentById(R.id.read_fragment);
@@ -88,6 +93,21 @@ public class AuthFragment extends Fragment {
         ft.replace(R.id.fragment_container, fragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void userValid(FirebaseUser user) {
+        textView.setText(user.getEmail());
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).showMainFragment();
+        }
+    }
+
+    @Override
+    public void userNotValid() {
+        textView.setText("Войдите пожалуйста");
+        Toast.makeText(getActivity(), "Authentication failed.",
+               Toast.LENGTH_SHORT).show();
     }
 
 }

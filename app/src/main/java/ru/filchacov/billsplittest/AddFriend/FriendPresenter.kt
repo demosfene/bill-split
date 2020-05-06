@@ -8,11 +8,10 @@ import ru.filchacov.billsplittest.*
 import ru.filchacov.billsplittest.Bill.Bill
 import java.util.*
 
-class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
+class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
     var mFriendList: ArrayList<FriendItem>? = ArrayList()
 
     private val model = ModelDB()
-
 
     fun getFriends() {
         model.getFriendsList(bill.dateTime).addValueEventListener(object : ValueEventListener {
@@ -43,15 +42,7 @@ class FriendPresenter(var view: AddFriendFragment, var bill: Bill) {
     }
 
     fun clickFriend(number: Int) {
-        (view.activity as OnClickFriendToBill).clickFriendToBill(bill, mFriendList!![number])
-    }
-
-    fun goToMainActivity() {
-        if (view.activity is MainActivity)
-            (view.activity as MainActivity).showMainFragment()
-        else {
-            (view.activity as GoToMainActivity).goToMainActivity()
-        }
+        view.clickFriend(bill, mFriendList!![number])
     }
 
 }

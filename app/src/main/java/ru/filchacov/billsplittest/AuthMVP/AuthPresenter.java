@@ -3,6 +3,11 @@ package ru.filchacov.billsplittest.AuthMVP;
 import android.net.Uri;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
@@ -13,9 +18,9 @@ import ru.filchacov.billsplittest.User.User;
 
 class AuthPresenter {
     private ModelDB model = new ModelDB();
-    private AuthFragment view;
+    private AuthInterface view;
 
-    AuthPresenter(AuthFragment view) {
+    AuthPresenter(AuthInterface view) {
         this.view = view;
     }
 
@@ -60,7 +65,34 @@ class AuthPresenter {
 
     void signIn(String email, String password) {
         model.getAuth().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = model.getAuth().getCurrentUser();
+                       // Toast.makeText(view.getActivity(), "User with password",
+                                //Toast.LENGTH_LONG).show();
+                        updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        updateUI(null);
+                    }
+
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            view.userValid(user);
+        } else view.userNotValid();
+    }
+
+    void updateUIFromPresenter() {
+        updateUI(model.getUser());
+    }
+
+
+    /*
+    Objects.requireNonNull(view.getActivity()), task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = model.getAuth().getCurrentUser();
@@ -73,23 +105,7 @@ class AuthPresenter {
                                 Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
-
-                    // ...
-                });
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            view.textView.setText(user.getEmail());
-            if (view.getActivity() instanceof MainActivity) {
-                ((MainActivity) view.getActivity()).showMainFragment();
-            }
-        } else view.textView.setText("Войдите пожалуйста");
-    }
-
-    void updateUIFromPresenter() {
-        updateUI(model.getUser());
-    }
-
+                }
+     */
 
 }
