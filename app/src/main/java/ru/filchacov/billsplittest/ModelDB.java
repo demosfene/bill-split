@@ -123,5 +123,11 @@ public class ModelDB {
                 .setValue("");
     }
 
+    public DatabaseReference getUserBill(String dateTime) {
+        return database.getReference("users")
+                .child(user.getUid())
+                .child("friends")
+                .child(dateTime);
+    }
 
 }

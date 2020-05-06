@@ -1,7 +1,11 @@
 package ru.filchacov.billsplittest.BillActivityMVP
 
+import android.util.Log
 import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,6 +70,18 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
 
     private fun writeNewBill(bill: Bill, dateTime: String) {
         modelDB.writeNewBill(bill, dateTime)
-        modelDB.writeNewBillToFriend(dateTime)
+        modelDB.getUserBill(dateTime).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("DB Error", databaseError.message)
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val dataChildren = dataSnapshot.children
+                val iter = dataChildren.iterator()
+                if (!iter.hasNext()) {
+                    modelDB.writeNewBillToFriend(dateTime)
+                }
+            }
+        })
     }
 }
