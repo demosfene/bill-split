@@ -91,7 +91,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
         }
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
-        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -99,7 +98,7 @@ public class AuthFragment extends Fragment implements AuthInterface {
     public void userValid(FirebaseUser user) {
         textView.setText(user.getEmail());
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).showMainFragment();
+            ((MainActivity) getActivity()).showReadFragment();
         }
     }
 
