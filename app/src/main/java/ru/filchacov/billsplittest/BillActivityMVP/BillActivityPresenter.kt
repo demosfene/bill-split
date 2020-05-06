@@ -18,6 +18,7 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
     private val qrInfo = ("?$billParameters").toUri()
     private var time = ""
     private val modelDB = ModelDB()
+    private var bill: Bill? = null
 
     fun getBillInfo() {
 
@@ -51,10 +52,9 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
                     ).execute().body()!!
                 }
                 if (result.data != null) {
-                    result.data?.dateTime?.let {
-                        writeNewBill(result.data!!, it)
-                    }
-                    view.showFriendFragment(result.data!!)
+                    bill = result.data!!
+                    writeNewBill(result.data!!, result.data!!.dateTime)
+                    view.showFriendFragment(bill!!)
                 }
             }
         } else {

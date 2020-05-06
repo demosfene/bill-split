@@ -29,6 +29,7 @@ public class DecoderActivity extends AppCompatActivity
 
     private QRCodeReaderView qrCodeReaderView;
     private PointsOverlayView pointsOverlayView;
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +83,13 @@ public class DecoderActivity extends AppCompatActivity
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        Intent intent = new Intent(this, BillActivity.class);
-        intent.putExtra("QRInfo", text);
-        startActivity(intent);
         pointsOverlayView.setPoints(points);
+        if (flag == 0) {
+            Intent intent = new Intent(this, BillActivity.class);
+            intent.putExtra("QRInfo", text);
+            startActivity(intent);
+            flag++;
+        }
     }
 
     private void requestCameraPermission() {

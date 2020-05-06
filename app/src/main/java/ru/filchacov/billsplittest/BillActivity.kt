@@ -10,7 +10,6 @@ import com.google.firebase.database.FirebaseDatabase
 import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.Bill.Bill
 import ru.filchacov.billsplittest.BillActivityMVP.BillActivityPresenter
-import java.lang.Exception
 
 
 class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment {
@@ -43,10 +42,12 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     }
 
     override fun showFriendFragment(bill: Bill) {
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
-                .commitAllowingStateLoss()
+        if (supportFragmentManager.findFragmentByTag(AddFriendFragment.TAG) == null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
+                    .commit()
+        }
     }
 
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem) {
