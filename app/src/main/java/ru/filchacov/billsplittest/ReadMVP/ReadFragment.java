@@ -93,7 +93,6 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
             }
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragment_container, fragment);
-            ft.addToBackStack(null);
             ft.commit();
         });
     }

@@ -84,6 +84,17 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         ft.commit();
     }
 
+    public void showReadFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.read_fragment);
+        if (fragment == null) {
+            fragment = new ReadFragment();
+        }
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
+    }
+
     @Override
     public void showFriendFragment(Bill bill) {
         getSupportFragmentManager()
