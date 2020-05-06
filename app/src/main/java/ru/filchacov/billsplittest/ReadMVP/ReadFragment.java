@@ -22,10 +22,12 @@ import java.util.Objects;
 
 import ru.filchacov.billsplittest.AddPermanentFriendView;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
+import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
+import ru.filchacov.billsplittest.ShowFriendFragment;
 
-public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener {
+public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener, ReadInterface {
     private RecyclerView recyclerView;
     private BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
@@ -62,13 +64,11 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
             Intent intent = new Intent(getActivity(), DecoderActivity.class);
             startActivity(intent);
         });
-        btnAddNewFriend.setOnClickListener(v -> {
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new AddPermanentFriendView())
-                    .addToBackStack(null)
-                    .commit();
-        });
+        btnAddNewFriend.setOnClickListener(v -> Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new AddPermanentFriendView())
+                .addToBackStack(null)
+                .commit());
     }
 
     private void init() {
@@ -98,7 +98,8 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         });
     }
 
-    void updateData() {
+    @Override
+    public void updateData() {
         adapter.notifyDataSetChanged();
     }
 
@@ -107,13 +108,21 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
         presenter.onNoteClick(position);
     }
 
-
-    void showTextEmptyList() {
+    @Override
+    public void showTextEmptyList() {
         emptyText.setText("Список покупок пуст");
         emptyText.setVisibility(View.VISIBLE);
     }
 
-    void hideTextEmptyList() {
+    @Override
+    public void hideTextEmptyList() {
         emptyText.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showFriendFragment(Bill bill) {
+        if (getActivity() instanceof ShowFriendFragment) {
+            ((ShowFriendFragment) getActivity()).showFriendFragment(bill);
+        }
     }
 }

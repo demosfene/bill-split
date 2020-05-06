@@ -1,14 +1,10 @@
 package ru.filchacov.billsplittest.ReadMVP;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,27 +14,25 @@ import java.util.Map;
 import java.util.Objects;
 
 import ru.filchacov.billsplittest.Bill.Bill;
-import ru.filchacov.billsplittest.ExitFromBill;
 import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.ShowFriendFragment;
 
-public class ReadPresenter implements ShowFriendFragment {
+public class ReadPresenter {
 
     List<String> result = new ArrayList<>();
     private List<String> listTemp = new ArrayList<>();
 
     private Bill bill = new Bill();
-    private ReadFragment view;
+    private ReadInterface view;
     private ModelDB model = new ModelDB();
 
-    ReadPresenter(ReadFragment view) {
+    ReadPresenter(ReadInterface view) {
         this.view = view;
     }
 
     void initPresenter() {
         /*model.initModel();*/
         getDataFromDB();
-        if (result.size() == 0){
+        if (result.size() == 0) {
             view.showTextEmptyList();
         }
         //updateList();
@@ -131,7 +125,7 @@ public class ReadPresenter implements ShowFriendFragment {
                     result.add(BillDate);
                     listTemp.add(BillDate);
                 }
-                if(result.size() != 0){
+                if (result.size() != 0) {
                     view.hideTextEmptyList();
                 }
                 updateData();
@@ -159,7 +153,7 @@ public class ReadPresenter implements ShowFriendFragment {
                             map.put(ds.getKey(), ds.getValue());
                         }
                         makeBillObject(map);
-                        showFriendFragment(bill);
+                        view.showFriendFragment(bill);
                     }
 
                     @Override
@@ -204,13 +198,6 @@ public class ReadPresenter implements ShowFriendFragment {
         bill.setItems(listItem);
     }
 
-
-    @Override
-    public void showFriendFragment(Bill bill) {
-        if (view.getActivity() instanceof ShowFriendFragment) {
-            ((ShowFriendFragment) view.getActivity()).showFriendFragment(bill);
-        }
-    }
 }
 
 
