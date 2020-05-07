@@ -2,7 +2,6 @@ package ru.filchacov.billsplittest.BillActivityMVP
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
@@ -13,11 +12,10 @@ class BillErrorDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage("Не удалось получить информацию из чека. Попробуйте позже")
-                    .setNegativeButton("Главное меню",
-                            DialogInterface.OnClickListener { dialog, id ->
-                                val intent = Intent(activity, MainActivity::class.java)
-                                startActivity(intent)
-                            })
+                    .setNegativeButton("Главное меню") { dialog, id ->
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
+                    }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
