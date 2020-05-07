@@ -3,22 +3,18 @@ package ru.filchacov.billsplittest.AuthMVP;
 import android.net.Uri;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Objects;
-
-import ru.filchacov.billsplittest.MainActivity;
+import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.User.User;
+import ru.filchacov.billsplittest.db.UserDB;
+import ru.filchacov.billsplittest.db.UserDao;
 
 class AuthPresenter {
     private ModelDB model = new ModelDB();
     private AuthInterface view;
+    private UserDB userDB = App.getInstance().getDatabase();
+    private UserDao userDao = userDB.getuserDao();
 
     AuthPresenter(AuthInterface view) {
         this.view = view;
@@ -41,6 +37,7 @@ class AuthPresenter {
             String uid = model.getUser().getUid();
             view.onClickRead();
         }
+
     }
 
     /*void createAccount(String email, String password) {
@@ -64,6 +61,9 @@ class AuthPresenter {
     }*/
 
     void signIn(String email, String password) {
+        if (userDao.getById(email) != null){
+            view.onLocalEnabled();
+        }
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -89,6 +89,8 @@ class AuthPresenter {
     void updateUIFromPresenter() {
         updateUI(model.getUser());
     }
+
+
 
 
     /*

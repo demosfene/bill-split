@@ -73,9 +73,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
             ft.replace(R.id.fragment_container, fragment);
             ft.addToBackStack(null);
             ft.commit();
-            /*if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
-                //presenter.createAccount(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
-            }*/
         });
 
         presenter.updateUIFromPresenter();
@@ -109,6 +106,10 @@ public class AuthFragment extends Fragment implements AuthInterface {
                Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onLocalEnabled() {
+        Toast.makeText(getActivity(), "Local DB is Enabled.", Toast.LENGTH_LONG).show();
+    }
 }
 
 
