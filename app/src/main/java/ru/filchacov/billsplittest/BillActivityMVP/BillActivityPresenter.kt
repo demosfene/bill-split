@@ -2,7 +2,6 @@ package ru.filchacov.billsplittest.BillActivityMVP
 
 import android.util.Log
 import androidx.core.net.toUri
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -11,13 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.filchacov.billsplittest.Bill.Bill
-import ru.filchacov.billsplittest.BillActivity
 import ru.filchacov.billsplittest.BillInfo.BillService
-import ru.filchacov.billsplittest.BillInfo.isNetworkAvailable
 import ru.filchacov.billsplittest.ModelDB
 import java.text.SimpleDateFormat
 
-class BillActivityPresenter(billParameters: String, var view: BillActivity) {
+class BillActivityPresenter(billParameters: String, var view: BillInterface) {
 
     private val qrInfo = ("?$billParameters").toUri()
     private var time = ""
@@ -41,9 +38,10 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
 
 
         val checkService = BillService()
-        //проверяет включен ли интернет
-        if (isNetworkAvailable.isNetworkAvailable(view.applicationContext)) {
-            CoroutineScope(Dispatchers.Main).launch {
+
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
                 val result = withContext(Dispatchers.IO) {
                     checkService.api.checkGet(
                             fn = qrInfo.getQueryParameter("fn")!!
@@ -58,14 +56,14 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
                 if (result.data != null) {
                     bill = result.data!!
                     writeNewBill(result.data!!, result.data!!.dateTime)
-                    view.showFriendFragment(bill!!)
+                    view.progressBarInvisible()
                 }
+            } catch (e: Exception) {
+                view.progressBarInvisible()
+                view.showErrorDialog()
             }
-        } else {
-            Snackbar.make(view.findViewById(android.R.id.content), "Интернет отключен", Snackbar.LENGTH_LONG)
-                    .show()
-            view.goToMainActivity()
         }
+
     }
 
     private fun writeNewBill(bill: Bill, dateTime: String) {
@@ -80,6 +78,9 @@ class BillActivityPresenter(billParameters: String, var view: BillActivity) {
                 val iter = dataChildren.iterator()
                 if (!iter.hasNext()) {
                     modelDB.writeNewBillToFriend(dateTime)
+                    view.showFriendFragment(bill)
+                } else {
+                    view.showBillIsDialog(bill)
                 }
             }
         })
