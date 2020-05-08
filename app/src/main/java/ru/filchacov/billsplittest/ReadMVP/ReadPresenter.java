@@ -13,8 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ModelDB;
+import ru.filchacov.billsplittest.db.User;
+import ru.filchacov.billsplittest.db.UserDB;
+import ru.filchacov.billsplittest.db.UserDao;
 
 public class ReadPresenter {
 
@@ -25,13 +29,18 @@ public class ReadPresenter {
     private ReadInterface view;
     private ModelDB model = new ModelDB();
 
+    private UserDB userDB = App.getInstance().getDatabase();
+    private UserDao userDao = userDB.getuserDao();
+
     ReadPresenter(ReadInterface view) {
         this.view = view;
     }
 
     void initPresenter() {
         /*model.initModel();*/
-        getDataFromDB();
+        if (model.getBillsList() != null){
+            getDataFromDB();
+        }
         if (result.size() == 0) {
             view.showTextEmptyList();
         }
@@ -44,6 +53,9 @@ public class ReadPresenter {
 
     void signOut() {
         model.getAuth().signOut();
+        User currentUser = userDao.getByCounter(userDao.getAll().size());
+        currentUser.setSignIn(false);
+        userDao.update(currentUser);
     }
 
    /* public void removeData(int index) {

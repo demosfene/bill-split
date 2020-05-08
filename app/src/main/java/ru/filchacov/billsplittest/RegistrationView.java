@@ -87,4 +87,11 @@ public class RegistrationView extends Fragment implements UserAuthInterface {
         Toast.makeText(getActivity(), "Please sign up!",
                 Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void userValidForLocalDB() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) Objects.requireNonNull(getActivity())).showMainFragment();
+        }
+    }
 }

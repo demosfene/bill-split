@@ -16,10 +16,11 @@ public class ModelDB {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public DatabaseReference getBillsList() {
-        assert user != null;
-        return database.getReference("users")
-                .child(user.getUid())
-                .child("friends");
+        if (user != null){
+            return database.getReference("users")
+                    .child(user.getUid())
+                    .child("friends");
+        } else return null;
 
     }
 

@@ -35,10 +35,11 @@ public class RegistrationPresenter {
     }
 
     private void writeNewUser(String userId, String name, String email, String phone) {
-        User user = new User(email,  userId, name, phone);
+        User user = new User(email,  userId, name, phone, true);
         UserDB userDB = App.getInstance().getDatabase();
         UserDao userDao = userDB.getuserDao();
         userDao.insert(user);
+        userDao.getByCounter(userDao.getAll().size()).isSignIn = true;
         model.getAuthReference().child("users").child(userId).setValue(user);
     }
 

@@ -27,7 +27,9 @@ import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ShowFriendFragment;
 
-public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteListener, ReadInterface {
+public class ReadFragment extends Fragment
+        implements BillDateAdapter.OnNoteListener, ReadInterface {
+
     private RecyclerView recyclerView;
     private BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
@@ -64,7 +66,9 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
             Intent intent = new Intent(getActivity(), DecoderActivity.class);
             startActivity(intent);
         });
-        btnAddNewFriend.setOnClickListener(v -> Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+        btnAddNewFriend.setOnClickListener(v ->
+                Objects.requireNonNull(getActivity())
+                .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, new AddPermanentFriendView())
                 .addToBackStack(null)
@@ -85,6 +89,7 @@ public class ReadFragment extends Fragment implements BillDateAdapter.OnNoteList
 
         buttonExit.setOnClickListener(v -> {
             presenter.signOut();
+
             FragmentManager fm = getFragmentManager();
             assert fm != null;
             Fragment fragment = fm.findFragmentById(R.id.auth_fragment);
