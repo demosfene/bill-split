@@ -29,9 +29,6 @@ public class ReadPresenter {
     private ReadInterface view;
     private ModelDB model = new ModelDB();
 
-    private UserDB userDB = App.getInstance().getDatabase();
-    private UserDao userDao = userDB.getuserDao();
-
     ReadPresenter(ReadInterface view) {
         this.view = view;
     }
@@ -51,12 +48,6 @@ public class ReadPresenter {
         view.updateData();
     }
 
-    void signOut() {
-        model.getAuth().signOut();
-        User currentUser = userDao.getByCounter(userDao.getAll().size());
-        currentUser.setSignIn(false);
-        userDao.update(currentUser);
-    }
 
    /* public void removeData(int index) {
         view.removeItem(index);

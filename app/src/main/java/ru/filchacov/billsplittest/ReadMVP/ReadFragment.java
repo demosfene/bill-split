@@ -18,9 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Objects;
-
-import ru.filchacov.billsplittest.AddPermanentFriendView;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.DecoderActivity;
@@ -33,8 +30,6 @@ public class ReadFragment extends Fragment
     private RecyclerView recyclerView;
     private BillDateAdapter adapter;
     private FloatingActionButton btnAdd;
-    private FloatingActionButton btnAddNewFriend;
-    private Button buttonExit;
     private ReadPresenter presenter;
 
     private TextView emptyText;
@@ -53,8 +48,6 @@ public class ReadFragment extends Fragment
         recyclerView = view.findViewById(R.id.user_list);
         emptyText = view.findViewById(R.id.text_no_data);
         btnAdd = view.findViewById(R.id.addBill);
-        btnAddNewFriend = view.findViewById(R.id.addPermanentFriend);
-        buttonExit = view.findViewById(R.id.button_exit);
         init();
         return view;
     }
@@ -66,13 +59,6 @@ public class ReadFragment extends Fragment
             Intent intent = new Intent(getActivity(), DecoderActivity.class);
             startActivity(intent);
         });
-        btnAddNewFriend.setOnClickListener(v ->
-                Objects.requireNonNull(getActivity())
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new AddPermanentFriendView())
-                .addToBackStack(null)
-                .commit());
     }
 
     private void init() {
@@ -87,19 +73,6 @@ public class ReadFragment extends Fragment
 
         recyclerView.setLayoutManager(llm);
 
-        buttonExit.setOnClickListener(v -> {
-            presenter.signOut();
-
-            FragmentManager fm = getFragmentManager();
-            assert fm != null;
-            Fragment fragment = fm.findFragmentById(R.id.auth_fragment);
-            if (fragment == null) {
-                fragment = new AuthFragment();
-            }
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment_container, fragment);
-            ft.commit();
-        });
     }
 
     @Override
