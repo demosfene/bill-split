@@ -95,7 +95,7 @@ class AuthPresenter {
                         //Toast.LENGTH_LONG).show();
                         Log.d("Local_DB", "signIn with Network");
                         updateUI(user);
-                    } else if (Objects.equals(userDao.getById(email).getEmail(), email)){
+                    } else if (userDao.getById(email) != null){
                         currentUser = userDao.getByCounter(userDao.getAll().size());
                         currentUser.setSignIn(true);
                         userDao.update(currentUser);
