@@ -18,10 +18,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import org.jetbrains.annotations.NotNull;
+
 import ru.filchacov.billsplittest.MainActivity;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 import ru.filchacov.billsplittest.RegistrationView;
+import ru.filchacov.billsplittest.db.User;
 
 public class AuthFragment extends Fragment implements AuthInterface {
     private EditText ETemail;
@@ -107,9 +110,18 @@ public class AuthFragment extends Fragment implements AuthInterface {
     }
 
     @Override
-    public void onLocalEnabled() {
-        Toast.makeText(getActivity(), "Local DB is Enabled.", Toast.LENGTH_LONG).show();
+    public void onLocalEnabled(String name) {
+        Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
     }
+
+
+    @Override
+    public void userValidForLocalDB() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).showReadFragment();
+        }
+    }
+
 }
 
 

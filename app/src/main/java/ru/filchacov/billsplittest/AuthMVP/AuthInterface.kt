@@ -4,5 +4,5 @@ import ru.filchacov.billsplittest.Registration.UserAuthInterface
 
 interface AuthInterface : UserAuthInterface {
     fun onClickRead()
-    fun onLocalEnabled()
+    fun onLocalEnabled(name: String)
 }

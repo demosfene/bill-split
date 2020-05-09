@@ -16,6 +16,9 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE email = :email")
     User getById(String email);
 
+    @Query("SELECT * FROM user WHERE counter = :counter")
+    User getByCounter(int counter);
+
     @Insert
     void insert(User user);
 
@@ -24,4 +27,5 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
 }
