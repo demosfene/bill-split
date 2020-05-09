@@ -103,7 +103,7 @@ public class AuthFragment extends Fragment implements AuthInterface {
     public void userNotValid() {
         textView.setText("Войдите пожалуйста");
         Toast.makeText(getActivity(), "Authentication failed.",
-               Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

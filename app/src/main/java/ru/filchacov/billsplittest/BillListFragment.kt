@@ -37,7 +37,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.activity_bill_list, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_bill_list, container, false)
         if (savedInstanceState != null) {
             bill = savedInstanceState.getParcelable("bill")
             friendItem = savedInstanceState.getParcelable("friendItem")

@@ -35,4 +35,11 @@
     <string name="confirm_your_password">Confirm your password</string>
     <string name="sing_up">Sign up!</string>
     <string name="registration">Registration</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="list_of_bill">Список чеков</string>
+    <string name="friends">Друзья</string>
+    <string name="exit">Выйти</string>
+    <string name="extra">Дополнительно</string>
 </resources>

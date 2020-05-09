@@ -1,11 +1,18 @@
 package ru.filchacov.billsplittest;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,14 +23,106 @@ import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 
 public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment {
 
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+    MainPresenter presenter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        nvDrawer = findViewById(R.id.navigation);
+        mDrawer = findViewById(R.id.mainActivity);
+        mDrawer = findViewById(R.id.mainActivity);
+        drawerToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(drawerToggle);
+        setupDrawerContent(nvDrawer);
+
+
         if (savedInstanceState == null) {
             showAuthFragment();
         }
+        presenter = new MainPresenter();
     }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NotNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Создать новый фрагмент и задать фрагмент для отображения
+        // на основе нажатия на элемент навигации
+        switch (menuItem.getItemId()) {
+            case R.id.permanent_friend:
+                showPermanentFriendFragment();
+                break;
+            case R.id.exit:
+                signOut();
+                break;
+            default:
+                showReadFragment();
+
+        }
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawer.closeDrawers();
+    }
+
+
+    private void signOut() {
+        presenter.signOut();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new AuthFragment())
+                .commit();
+
+//        FragmentManager fm = getFragmentManager();
+//        assert fm != null;
+//        Fragment fragment = fm.findFragmentById(R.id.auth_fragment);
+//        if (fragment == null) {
+//            fragment = new AuthFragment();
+//        }
+//        FragmentTransaction ft = fm.beginTransaction();
+//        ft.replace(R.id.fragment_container, fragment);
+//        ft.commit();
+    }
+
 
     private void showAuthFragment() {
         getSupportFragmentManager()

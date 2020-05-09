@@ -16,7 +16,7 @@ import java.util.Objects;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ModelDB;
 
-public class ReadPresenter {
+class ReadPresenter {
 
     List<String> result = new ArrayList<>();
     private List<String> listTemp = new ArrayList<>();
@@ -42,9 +42,6 @@ public class ReadPresenter {
         view.updateData();
     }
 
-    void signOut() {
-        model.getAuth().signOut();
-    }
 
    /* public void removeData(int index) {
         view.removeItem(index);
