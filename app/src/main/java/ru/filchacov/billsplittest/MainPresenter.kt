@@ -9,8 +9,6 @@ class MainPresenter {
 
     fun signOut() {
         model.auth.signOut()
-        val currentUser: User = userDao.getByCounter(userDao.all.size)
-        currentUser.setSignIn(false)
-        userDao.update(currentUser)
+        userDao.delete(userDao.getById("1"))
     }
 }

@@ -19,7 +19,7 @@ class AuthPresenter {
     private AuthInterface view;
     private UserDB userDB = App.getInstance().getDatabase();
     private UserDao userDao = userDB.getuserDao();
-    private User currentUser = userDao.getByCounter(userDao.getAll().size());
+    private User currentUser;
 
     AuthPresenter(AuthInterface view) {
         this.view = view;
@@ -27,10 +27,9 @@ class AuthPresenter {
 
     void init() {
         model.getAuthReference();
-        if (userDao.getByCounter(userDao.getAll().size()) != null
-                && userDao.getByCounter(userDao.getAll().size()).isSignIn) {
+        if (userDao.getById("1") != null) {
             // Name, email address, and profile photo Url
-            currentUser = userDao.getByCounter(userDao.getAll().size());
+            currentUser = userDao.getById("1");
             String name = currentUser.getName(); //model.getUser().getDisplayName();
             String email = currentUser.getEmail(); //model.getUser().getEmail();
             //Uri photoUrl = model.getUser().getPhotoUrl();
@@ -52,6 +51,7 @@ class AuthPresenter {
 
             // Check if user's email is verified
             boolean emailVerified = model.getUser().isEmailVerified();
+
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
@@ -93,14 +93,14 @@ class AuthPresenter {
                         FirebaseUser user = model.getAuth().getCurrentUser();
                         // Toast.makeText(view.getActivity(), "User with password",
                         //Toast.LENGTH_LONG).show();
+                        String name = user.getEmail();
+                        String id = "1";
+                        String phone = "000";
+                        User curUser = new User(email, id, name, phone);
+                        userDao.insert(curUser);
                         Log.d("Local_DB", "signIn with Network");
+                        userDao.update(curUser);
                         updateUI(user);
-                    } else if (userDao.getById(email) != null){
-                        currentUser = userDao.getByCounter(userDao.getAll().size());
-                        currentUser.setSignIn(true);
-                        userDao.update(currentUser);
-                        Log.d("Local_DB", "signIn with Local");
-                        updateUIForLocalDB(currentUser);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d("Local_DB", "signIn not completed");
