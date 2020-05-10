@@ -42,4 +42,10 @@
     <string name="friends">Друзья</string>
     <string name="exit">Выйти</string>
     <string name="extra">Дополнительно</string>
+    <string name="auth">Авторизация</string>
+    <string name="list_of_friends">Список участников</string>
+    <string name="permanent_friends">Мои друзья</string>
+    <string name="position_selection">Выбор покупок</string>
+    <string name="bill_qr_scaner">QR сканер чека</string>
+    <string name="list_of_bills">Список чеков</string>
 </resources>

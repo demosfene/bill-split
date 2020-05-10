@@ -21,10 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 import ru.filchacov.billsplittest.MainActivity;
+import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 import ru.filchacov.billsplittest.RegistrationView;
-import ru.filchacov.billsplittest.db.User;
+import ru.filchacov.billsplittest.ToolbarSettings;
 
 public class AuthFragment extends Fragment implements AuthInterface {
     private EditText ETemail;
@@ -38,7 +39,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         presenter.init();
     }
 
@@ -54,6 +54,18 @@ public class AuthFragment extends Fragment implements AuthInterface {
         textView = view.findViewById(R.id.text);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivityInterface) {
+            ((MainActivityInterface) getActivity()).navigationDrawerInvisible();
+            ((MainActivityInterface) getActivity()).hideDrawerIndicator();
+        }
+        if (getActivity() instanceof ToolbarSettings) {
+            ((ToolbarSettings) getActivity()).setToolbarTitle(R.string.auth);
+        }
     }
 
     @Override
@@ -110,7 +122,7 @@ public class AuthFragment extends Fragment implements AuthInterface {
     }
 
     @Override
-    public void onLocalEnabled(String name) {
+    public void onLocalEnabled(@NotNull String name) {
         Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
     }
 

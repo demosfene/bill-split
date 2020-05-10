@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.VISIBLE
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -20,13 +21,17 @@ import ru.filchacov.billsplittest.BillActivityMVP.BillInterface
 import ru.filchacov.billsplittest.BillActivityMVP.BillIsDialogFragment
 
 
-class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment, BillInterface {
+class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment, BillInterface, ShowUpButton, ToolbarSettings {
 
     private var mDataBase: DatabaseReference? = null
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         mDataBase = FirebaseDatabase.getInstance().reference
 
         val qrInfo = intent.getStringExtra("QRInfo")
@@ -43,7 +48,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
                 goToMainActivity()
             }
         }
-
+        showUpButton(true)
     }
 
     override fun goToMainActivity() {
@@ -55,7 +60,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         if (supportFragmentManager.findFragmentByTag(AddFriendFragment.TAG) == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.bill_activity, makeFragmentFriend(bill), AddFriendFragment.TAG)
+                    .replace(R.id.fragment_container, makeFragmentFriend(bill), AddFriendFragment.TAG)
                     .commit()
         }
     }
@@ -63,7 +68,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     private fun showBillForFriend(bill: Bill, friendItem: FriendItem) {
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.bill_activity, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
+                .replace(R.id.fragment_container, makeFragmentBill(bill, friendItem), BillListFragment.TAG)
                 .addToBackStack(null)
                 .commit()
 
@@ -106,6 +111,22 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         val bundle = Bundle()
         bundle.putParcelable("bill", bill)
         return BillIsDialogFragment.getNewInstance(bundle)
+    }
+
+    override fun showUpButton(boolean: Boolean) {
+        if (supportActionBar != null) {
+            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_action_back)
+            toolbar.setNavigationOnClickListener { onSupportNavigateUp() }
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun setToolbarTitle(res: Int) {
+        toolbar.setTitle(res)
     }
 }
 

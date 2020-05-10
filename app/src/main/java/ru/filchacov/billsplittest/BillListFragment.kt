@@ -42,8 +42,8 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
             bill = savedInstanceState.getParcelable("bill")
             friendItem = savedInstanceState.getParcelable("friendItem")
         } else {
-            bill = arguments!!.getParcelable("bill")
-            friendItem = arguments!!.getParcelable("friendItem")
+            bill = requireArguments().getParcelable("bill")
+            friendItem = requireArguments().getParcelable("friendItem")
         }
         presenter = BillListPresenter(this, bill!!, friendItem!!)
 
@@ -78,6 +78,13 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         outState.putParcelable("bill", bill)
         outState.putParcelable("friendItem", friendItem)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (activity is ToolbarSettings) {
+            (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.position_selection)
+        }
     }
 
 

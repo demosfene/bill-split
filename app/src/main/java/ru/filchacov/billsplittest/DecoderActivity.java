@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
@@ -21,7 +22,7 @@ import ru.filchacov.billsplittest.QRReader.PointsOverlayView;
 
 
 public class DecoderActivity extends AppCompatActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback, OnQRCodeReadListener {
+        implements ActivityCompat.OnRequestPermissionsResultCallback, OnQRCodeReadListener, ShowUpButton{
 
     private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
 
@@ -30,6 +31,7 @@ public class DecoderActivity extends AppCompatActivity
     private QRCodeReaderView qrCodeReaderView;
     private PointsOverlayView pointsOverlayView;
     private int flag = 0;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class DecoderActivity extends AppCompatActivity
         } else {
             requestCameraPermission();
         }
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.bill_qr_scaner);
+        showUpButton(true);
     }
 
     @Override
@@ -127,5 +133,19 @@ public class DecoderActivity extends AppCompatActivity
         flashlightCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setTorchEnabled(isChecked));
         enableDecodingCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setQRDecodingEnabled(isChecked));
         qrCodeReaderView.startCamera();
+    }
+
+    @Override
+    public void showUpButton(boolean b) {
+        if (getSupportActionBar() != null) {
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(v -> onSupportNavigateUp());
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

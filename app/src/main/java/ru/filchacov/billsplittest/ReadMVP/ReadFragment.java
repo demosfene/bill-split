@@ -21,8 +21,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.DecoderActivity;
+import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ShowFriendFragment;
+import ru.filchacov.billsplittest.ToolbarSettings;
 
 public class ReadFragment extends Fragment
         implements BillDateAdapter.OnNoteListener, ReadInterface {
@@ -59,6 +61,20 @@ public class ReadFragment extends Fragment
             Intent intent = new Intent(getActivity(), DecoderActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivityInterface) {
+            ((MainActivityInterface)getActivity()).setupDrawerContent();
+        }
+        if(getActivity() instanceof MainActivityInterface) {
+            ((MainActivityInterface) getActivity()).navigationDrawerVisible();
+        }
+        if (getActivity() instanceof ToolbarSettings) {
+            ((ToolbarSettings) getActivity()).setToolbarTitle(R.string.list_of_bills);
+        }
     }
 
     private void init() {

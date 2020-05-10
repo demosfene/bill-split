@@ -55,7 +55,22 @@ public class RegistrationView extends Fragment implements UserAuthInterface {
                 MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER) // маска для серии и номера
         );
         formatWatcher.installOn(phone);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof ShowUpButton) {
+            ((ShowUpButton)getActivity()).showUpButton(true);
+        }
+        if (getActivity() instanceof MainActivityInterface) {
+            (( MainActivityInterface)getActivity()).navigationDrawerInvisible();
+        }
+        if (getActivity() instanceof ToolbarSettings) {
+            ((ToolbarSettings) getActivity()).setToolbarTitle(R.string.registration);
+        }
     }
 
     @Override
@@ -74,7 +89,7 @@ public class RegistrationView extends Fragment implements UserAuthInterface {
     @Override
     public void userValid(@NotNull FirebaseUser user) {
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).showMainFragment();
+            ((MainActivity) getActivity()).showMainFragment();
         }
         Toast.makeText(getActivity(), "Welcome " + name.getText() + "!",
                 Toast.LENGTH_LONG).show();
@@ -91,7 +106,7 @@ public class RegistrationView extends Fragment implements UserAuthInterface {
     @Override
     public void userValidForLocalDB() {
         if (getActivity() instanceof MainActivity) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).showMainFragment();
+            ((MainActivity) getActivity()).showMainFragment();
         }
     }
 }

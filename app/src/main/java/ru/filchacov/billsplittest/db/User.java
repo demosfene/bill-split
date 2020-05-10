@@ -8,9 +8,10 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
 
+    @PrimaryKey
+    @NonNull
     private String email;
 
-    @PrimaryKey(autoGenerate = true)
     private int counter = 0;
 
     public boolean isSignIn;
@@ -70,12 +71,11 @@ public class User {
         return name;
     }
 
-    public User(String email, String id, String name, String phone, boolean isSignIn) {
+    public User(String email, String id, String name, String phone) {
         this.email = email;
         this.id = id;
         this.phone = phone;
         this.name = name;
-        this.isSignIn = isSignIn;
     }
 
     @Nullable

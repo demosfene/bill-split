@@ -78,6 +78,13 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterfa
         return super.onContextItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (activity is ToolbarSettings) {
+            (activity as ToolbarSettings).setToolbarTitle(R.string.permanent_friends)
+        }
+    }
+
     override fun updateAdapter() {
         mAdapter!!.notifyDataSetChanged()
     }

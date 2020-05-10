@@ -14,10 +14,16 @@ public interface UserDao {
     List<User> getAll();
 
     @Query("SELECT * FROM user WHERE email = :email")
-    User getById(String email);
+    User getByEmail(String email);
 
     @Query("SELECT * FROM user WHERE counter = :counter")
     User getByCounter(int counter);
+
+    @Query("SELECT * FROM user WHERE id = :id")
+    User getById(String id);
+
+    /*@Query("SELECT * FROM user WHERE counter = (SELECT MAX(counter)  FROM user")
+    User getLastUser();*/
 
     @Insert
     void insert(User user);

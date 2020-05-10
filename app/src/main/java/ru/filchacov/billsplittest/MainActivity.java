@@ -3,6 +3,7 @@ package ru.filchacov.billsplittest;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +22,10 @@ import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
 
-public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment {
+public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment, MainActivityInterface, ShowUpButton, ToolbarSettings {
 
     private DrawerLayout mDrawer;
-    private Toolbar toolbar;
+    public Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     MainPresenter presenter;
@@ -40,10 +41,9 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         nvDrawer = findViewById(R.id.navigation);
         mDrawer = findViewById(R.id.mainActivity);
         mDrawer = findViewById(R.id.mainActivity);
-        drawerToggle = setupDrawerToggle();
-        mDrawer.addDrawerListener(drawerToggle);
-        setupDrawerContent(nvDrawer);
 
+
+        setupDrawerContent();
 
         if (savedInstanceState == null) {
             showAuthFragment();
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
 
         }
         menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
     }
 
@@ -111,17 +110,9 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
                 .beginTransaction()
                 .replace(R.id.fragment_container, new AuthFragment())
                 .commit();
-
-//        FragmentManager fm = getFragmentManager();
-//        assert fm != null;
-//        Fragment fragment = fm.findFragmentById(R.id.auth_fragment);
-//        if (fragment == null) {
-//            fragment = new AuthFragment();
-//        }
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.replace(R.id.fragment_container, fragment);
-//        ft.commit();
     }
+
+
 
 
     private void showAuthFragment() {
@@ -201,5 +192,48 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
                 .replace(R.id.fragment_container, makeFragmentFriend(bill), AddFriendFragment.getTAG())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void navigationDrawerInvisible() {
+        mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    @Override
+    public void navigationDrawerVisible() {
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    @Override
+    public void showUpButton(boolean b) {
+        if (getSupportActionBar() != null) {
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(v -> onSupportNavigateUp());
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void setupDrawerContent() {
+        drawerToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(drawerToggle);
+        setupDrawerContent(nvDrawer);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void hideDrawerIndicator() {
+        toolbar.setNavigationIcon(null);
+    }
+
+    @Override
+    public void setToolbarTitle(int res) {
+        toolbar.setTitle(res);
     }
 }

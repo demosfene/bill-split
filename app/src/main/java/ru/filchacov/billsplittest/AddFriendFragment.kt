@@ -45,8 +45,9 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         bill = if (savedInstanceState != null) {
             savedInstanceState.getParcelable("bill")
         } else {
-            arguments!!.getParcelable("bill")
+            requireArguments().getParcelable("bill")
         }
+
         presenter = FriendPresenter(this, bill!!)
 
         presenter!!.getFriends()
@@ -76,6 +77,19 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (activity is ShowUpButton) {
+            (activity as ShowUpButton).showUpButton(true)
+        }
+        if (activity is MainActivityInterface) {
+            (activity as MainActivityInterface?)!!.navigationDrawerInvisible()
+        }
+        if (activity is ToolbarSettings) {
+            (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.list_of_friends)
+        }
     }
 
     override fun clickFriend(number: Int) {
