@@ -51,8 +51,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
         ETpassword = view.findViewById(R.id.et_password);
         signButton = view.findViewById(R.id.btn_sign_in);
         regButton = view.findViewById(R.id.btn_registration);
-        textView = view.findViewById(R.id.text);
-
         return view;
     }
 
@@ -107,8 +105,7 @@ public class AuthFragment extends Fragment implements AuthInterface {
     }
 
     @Override
-    public void userValid(FirebaseUser user) {
-        textView.setText(user.getEmail());
+    public void userValid(@NotNull FirebaseUser user) {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).showReadFragment();
         }
@@ -116,7 +113,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
 
     @Override
     public void userNotValid() {
-        textView.setText("Войдите пожалуйста");
         Toast.makeText(getActivity(), "Authentication failed.",
                 Toast.LENGTH_SHORT).show();
     }

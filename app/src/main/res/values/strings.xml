@@ -1,32 +1,28 @@
 <resources>
-    <string name="app_name">Bill split test</string>
+    <string name="app_name">Bill split</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="Auth">Авторизация</string>
-    <string name="reg">Регистрация</string>
-    <string name="Exit">Выйти</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="list_is_empty">Ваш список пуст</string>
+    <string name="list_is_empty">List is empty</string>
     <string name="this_field_for_email">this field for email</string>
-    <string name="on_off_qr_decoding">On/Off QR decoding</string>
     <string name="on_off_flashlight">On/Off flashlight</string>
-    <string name="put_name">Ведите имя:</string>
+    <string name="put_name">Enter name</string>
     <string name="click_name">Нажмите на имя для выбора покупок</string>
-    <string name="myBills">Мои чеки</string>
-    <string name="btn_continue">Продолжить</string>
+    <string name="myBills">My Bills</string>
+    <string name="btn_continue">Continue</string>
     <string name="add">add</string>
     <string name="name">Name</string>
-    <string name="Save">сохранить</string>
-    <string name="cancel">Отмена</string>
-    <string name="sum">Cумма:</string>
+    <string name="Save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="sum">Sum:</string>
     <string name="minus">-</string>
     <string name="_0">0</string>
     <string name="plus">+</string>
     <string name="image_avatar">image_avatar</string>
     <string name="user_1">User 1</string>
-    <string name="to_main_activity">на главную страницу</string>
+    <string name="to_main_activity">to main page</string>
     <string name="friendName">friendName</string>
     <string name="your_email">Your email</string>
     <string name="your_name">Your name</string>
@@ -38,14 +34,15 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="list_of_bill">Список чеков</string>
-    <string name="friends">Друзья</string>
-    <string name="exit">Выйти</string>
-    <string name="extra">Дополнительно</string>
-    <string name="auth">Авторизация</string>
-    <string name="list_of_friends">Список участников</string>
-    <string name="permanent_friends">Мои друзья</string>
-    <string name="position_selection">Выбор покупок</string>
-    <string name="bill_qr_scaner">QR сканер чека</string>
-    <string name="list_of_bills">Список чеков</string>
+    <string name="list_of_bill">List of bill</string>
+    <string name="friends">Friends</string>
+    <string name="exit">Exit</string>
+    <string name="extra">Extra</string>
+    <string name="auth">Authorization</string>
+    <string name="list_of_friends">List of friends</string>
+    <string name="permanent_friends">My friends</string>
+    <string name="position_selection">Shopping choice</string>
+    <string name="bill_qr_scaner">QR reader bill</string>
+    <string name="list_of_bills">List of bills</string>
+    <string name="receiving_data">Receiving data</string>
 </resources>

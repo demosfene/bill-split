@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
@@ -25,6 +26,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
 
     private var mDataBase: DatabaseReference? = null
     private lateinit var toolbar: Toolbar
+    private lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +43,8 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
             try {
                 presenter.getBillInfo()
                 val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+                textView = findViewById(R.id.progressBarMessage)
+                textView.visibility = VISIBLE
                 progressBar.visibility = VISIBLE
             } catch (e: Exception) {
                 Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_LONG)
@@ -96,7 +100,9 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     }
 
     override fun progressBarInvisible() {
+        textView.visibility = View.INVISIBLE
         progressBar.visibility = View.INVISIBLE
+
     }
 
     override fun showErrorDialog() {

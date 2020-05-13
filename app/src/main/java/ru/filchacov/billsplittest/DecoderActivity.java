@@ -124,14 +124,14 @@ public class DecoderActivity extends AppCompatActivity
 
         qrCodeReaderView = content.findViewById(R.id.qrdecoderview);
         CheckBox flashlightCheckBox = content.findViewById(R.id.flashlight_checkbox);
-        CheckBox enableDecodingCheckBox = content.findViewById(R.id.enable_decoding_checkbox);
+//        CheckBox enableDecodingCheckBox = content.findViewById(R.id.enable_decoding_checkbox);
         pointsOverlayView = content.findViewById(R.id.points_overlay_view);
 
         qrCodeReaderView.setAutofocusInterval(2000L);
         qrCodeReaderView.setOnQRCodeReadListener(this);
         qrCodeReaderView.setBackCamera();
         flashlightCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setTorchEnabled(isChecked));
-        enableDecodingCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setQRDecodingEnabled(isChecked));
+//        enableDecodingCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> qrCodeReaderView.setQRDecodingEnabled(isChecked));
         qrCodeReaderView.startCamera();
     }
 

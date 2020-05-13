@@ -39,16 +39,16 @@
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
-    <CheckBox
-        android:id="@+id/enable_decoding_checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/flashlight_checkbox"
-        android:background="#99000000"
-        android:checked="true"
-        android:padding="16dp"
-        android:text="@string/on_off_qr_decoding"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
+<!--    <CheckBox-->
+<!--        android:id="@+id/enable_decoding_checkbox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_above="@+id/flashlight_checkbox"-->
+<!--        android:background="#99000000"-->
+<!--        android:checked="true"-->
+<!--        android:padding="16dp"-->
+<!--        android:text="@string/on_off_qr_decoding"-->
+<!--        android:textColor="#ffffff"-->
+<!--        android:textSize="14sp" />-->
 
 </RelativeLayout>
