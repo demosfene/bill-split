@@ -72,18 +72,32 @@ public class RegistrationView extends Fragment implements UserAuthInterface {
             ((ToolbarSettings) getActivity()).setToolbarTitle(R.string.registration);
         }
     }
-
+ // &&
+ //                    email.getText().toString().trim().isEmpty() &&
+ //                    phone.getText().toString().trim().isEmpty() &&
+ //                    password.getText().toString().trim().isEmpty()
     @Override
     public void onStart() {
         super.onStart();
         signUp.setOnClickListener(v -> {
-            if (password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
-                presenter.createAccount(
-                        name.getText().toString().trim(), email.getText().toString().trim(),
-                        phone.getText().toString().trim(), password.getText().toString().trim());
-            } else Toast.makeText(getActivity(), "Please check your password!",
-                    Toast.LENGTH_SHORT).show();
+            if (name.getText().toString().trim().isEmpty()) {
+                name.setError("Пожалуйста, введите ваше имя!");
+            } else if (email.getText().toString().trim().isEmpty()){
+                email.setError("Пожалуйста, введите вашу почту!");
+            }else if (phone.getText().toString().trim().isEmpty()){
+                phone.setError("Пожалуйста, введите ваш номер телефона!");
+            }else if (password.getText().toString().trim().isEmpty()){
+                password.setError("Пожалуйста, придумайте пароль!");
+            } else {
+                if (password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())){
+                    presenter.createAccount(
+                            name.getText().toString().trim(), email.getText().toString().trim(),
+                            phone.getText().toString().trim(), password.getText().toString().trim());
+                } else Toast.makeText(getActivity(), "Пароли должны совпадать!",
+                        Toast.LENGTH_SHORT).show();
+                }
             });
+
     }
 
     @Override
