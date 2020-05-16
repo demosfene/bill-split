@@ -1,10 +1,12 @@
 package ru.filchacov.billsplittest.AuthMVP;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +34,6 @@ public class AuthFragment extends Fragment implements AuthInterface {
     private EditText ETpassword;
     private Button signButton;
     private Button regButton;
-    private TextView textView;
 
     private AuthPresenter presenter = new AuthPresenter(this);
 
@@ -71,8 +72,12 @@ public class AuthFragment extends Fragment implements AuthInterface {
         super.onStart();
 
         signButton.setOnClickListener(v -> {
-            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty())
+            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
                 presenter.signIn(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(signButton.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         });
 
         regButton.setOnClickListener(v -> {
