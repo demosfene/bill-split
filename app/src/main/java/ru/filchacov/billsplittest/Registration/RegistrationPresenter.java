@@ -40,7 +40,7 @@ public class RegistrationPresenter {
     private void writeNewUser(String userId, String name, String email, String phone) {
         User user = new User(email,  userId, name, phone);
         model.getAuthReference().child("users").child(userId).setValue(user);
-        userDao.insert(new User(email, "1", name, phone));
+        userDao.insert(new User(email, userId, name, phone));
     }
 
     private void updateUI(FirebaseUser user) {

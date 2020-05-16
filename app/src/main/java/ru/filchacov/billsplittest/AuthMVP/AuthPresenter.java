@@ -35,9 +35,9 @@ class AuthPresenter {
 
     void init() {
         model.getAuthReference();
-        if (userDao.getById("1") != null) {
+        if (userDao.getById(model.getAuth().getUid()) != null) {
             // Name, email address, and profile photo Url
-            currentUser = userDao.getById("1");
+            currentUser = userDao.getById(model.getAuth().getUid());
             String name = currentUser.getName(); //model.getUser().getDisplayName();
             String email = currentUser.getEmail(); //model.getUser().getEmail();
             //Uri photoUrl = model.getUser().getPhotoUrl();
@@ -115,13 +115,13 @@ class AuthPresenter {
                                                 String name = ((HashMap) ds.getValue()).get("name").toString();
                                                 String id = ((HashMap) ds.getValue()).get("id").toString();
                                                 String phone = ((HashMap) ds.getValue()).get("phone").toString();
-                                                User curUser = new User(user.getEmail(), id, name, phone);
+                                                User curUser = new User(email, id, name, phone);
                                                 userDao.insert(curUser);
                                                 Log.d("Local_DB", "signIn with Network");
                                                 userDao.update(curUser);
-                                                updateUI(user);
                                             }
                                         }
+                                        updateUI(user);
                                     }
 
                                     @Override

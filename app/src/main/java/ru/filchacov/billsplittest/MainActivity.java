@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserDB db = App.getInstance().getDatabase();
-        User userDB = db.getuserDao().getByEmail(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
-
+        //User userDB = db.getuserDao().getByEmail(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
 
 
         toolbar = findViewById(R.id.toolbar);

@@ -8,7 +8,9 @@ class MainPresenter {
     private val userDao = userDB.getuserDao()
 
     fun signOut() {
+        if(userDao.getByEmail(model.auth.currentUser?.email) != null){
+            userDao.delete(userDao.getByEmail(model.auth.currentUser?.email))
+        }
         model.auth.signOut()
-        userDao.delete(userDao.getById("1"))
     }
 }
