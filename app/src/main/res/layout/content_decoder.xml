@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/content_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DecoderActivity">
 
-    <LinearLayout
+
+    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+        android:id="@+id/qrdecoderview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-            android:id="@+id/qrdecoderview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <ru.filchacov.billsplittest.QRReader.PointsOverlayView
         android:id="@+id/points_overlay_view"
@@ -39,16 +29,16 @@
         android:textColor="#ffffff"
         android:textSize="14sp" />
 
-<!--    <CheckBox-->
-<!--        android:id="@+id/enable_decoding_checkbox"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@+id/flashlight_checkbox"-->
-<!--        android:background="#99000000"-->
-<!--        android:checked="true"-->
-<!--        android:padding="16dp"-->
-<!--        android:text="@string/on_off_qr_decoding"-->
-<!--        android:textColor="#ffffff"-->
-<!--        android:textSize="14sp" />-->
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/enable_decoding_checkbox"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_above="@+id/flashlight_checkbox"-->
+    <!--        android:background="#99000000"-->
+    <!--        android:checked="true"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:text="@string/on_off_qr_decoding"-->
+    <!--        android:textColor="#ffffff"-->
+    <!--        android:textSize="14sp" />-->
 
 </RelativeLayout>

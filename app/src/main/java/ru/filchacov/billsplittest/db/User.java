@@ -12,28 +12,8 @@ public class User {
     @NonNull
     private String email;
 
-    private int counter = 0;
-
-    public boolean isSignIn;
-
     String id, name, phone;
 
-
-    public void setSignIn(boolean signIn) {
-        isSignIn = signIn;
-    }
-
-    public boolean isSignIn() {
-        return isSignIn;
-    }
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
 
     public void setId(String id) {
         this.id = id;

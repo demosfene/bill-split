@@ -49,14 +49,13 @@ public class DecoderActivity extends AppCompatActivity
         }
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.bill_qr_scaner);
         showUpButton(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        toolbar.setTitle(R.string.bill_qr_scaner);
         if (qrCodeReaderView != null) {
             qrCodeReaderView.startCamera();
         }

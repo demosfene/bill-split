@@ -100,7 +100,7 @@ public class ModelDB {
     }
 
     public DatabaseReference getAuthReference() {
-        assert user != null;
+//        assert user != null;
         return database.getReference();
 
     }
