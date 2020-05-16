@@ -24,6 +24,10 @@ public class ModelDB {
 
     }
 
+    public DatabaseReference getUserData(){
+        return database.getReference("users");
+    }
+
     public DatabaseReference getFriendsList(String dateTime) {
         assert user != null;
         return database.getReference("users")
