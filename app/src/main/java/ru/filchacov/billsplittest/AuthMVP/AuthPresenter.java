@@ -1,11 +1,19 @@
 package ru.filchacov.billsplittest.AuthMVP;
 
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
+import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 
 import ru.filchacov.billsplittest.App;
@@ -92,15 +100,38 @@ class AuthPresenter {
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = model.getAuth().getCurrentUser();
                         // Toast.makeText(view.getActivity(), "User with password",
+
+                        model.getUserData()
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        Iterable<DataSnapshot> dataChildren = dataSnapshot.getChildren();
+                                        Iterator<DataSnapshot> iter = dataChildren.iterator();
+                                        HashMap map = new HashMap();
+                                        while (iter.hasNext()) {
+                                            DataSnapshot ds = iter.next();
+                                            String userFirebaseEmail = (String) ((HashMap) ds.getValue()).get("email");
+                                            if(user.getEmail().equals(userFirebaseEmail)){
+                                                String name = ((HashMap) ds.getValue()).get("name").toString();
+                                                String id = ((HashMap) ds.getValue()).get("id").toString();
+                                                String phone = ((HashMap) ds.getValue()).get("phone").toString();
+                                                User curUser = new User(user.getEmail(), id, name, phone);
+                                                userDao.insert(curUser);
+                                                Log.d("Local_DB", "signIn with Network");
+                                                userDao.update(curUser);
+                                                updateUI(user);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
                         //Toast.LENGTH_LONG).show();
-                        String name = user.getEmail();
-                        String id = "1";
-                        String phone = "000";
-                        User curUser = new User(email, id, name, phone);
-                        userDao.insert(curUser);
-                        Log.d("Local_DB", "signIn with Network");
-                        userDao.update(curUser);
-                        updateUI(user);
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d("Local_DB", "signIn not completed");

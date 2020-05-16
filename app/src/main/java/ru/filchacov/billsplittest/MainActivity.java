@@ -14,13 +14,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Objects;
 
 import ru.filchacov.billsplittest.AddFriend.FriendItem;
 import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
+import ru.filchacov.billsplittest.db.User;
+import ru.filchacov.billsplittest.db.UserDB;
 
 public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment, MainActivityInterface, ShowUpButton, ToolbarSettings {
 
@@ -35,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        UserDB db = App.getInstance().getDatabase();
+        User userDB = db.getuserDao().getByEmail(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
+
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
