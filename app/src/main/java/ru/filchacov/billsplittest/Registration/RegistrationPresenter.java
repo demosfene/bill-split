@@ -10,12 +10,15 @@ import ru.filchacov.billsplittest.db.UserDao;
 
 public class RegistrationPresenter {
 
+    private ModelDB model = new ModelDB();
+    private UserAuthInterface view;
+    private UserDB userDB = App.getInstance().getDatabase();
+    private UserDao userDao = userDB.getuserDao();
+
     public RegistrationPresenter(UserAuthInterface view) {
         this.view = view;
     }
 
-    private ModelDB model = new ModelDB();
-    private UserAuthInterface view;
     public void createAccount(String name, String email, String phone, String password) {
         model.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -37,6 +40,7 @@ public class RegistrationPresenter {
     private void writeNewUser(String userId, String name, String email, String phone) {
         User user = new User(email,  userId, name, phone);
         model.getAuthReference().child("users").child(userId).setValue(user);
+        userDao.insert(new User(email, "1", name, phone));
     }
 
     private void updateUI(FirebaseUser user) {
