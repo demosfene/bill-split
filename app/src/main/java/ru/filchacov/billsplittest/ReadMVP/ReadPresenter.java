@@ -13,12 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.Bill.Bill;
 import ru.filchacov.billsplittest.ModelDB;
 import ru.filchacov.billsplittest.db.User;
-import ru.filchacov.billsplittest.db.UserDB;
-import ru.filchacov.billsplittest.db.UserDao;
 
 public class ReadPresenter {
 

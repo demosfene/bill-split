@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         nvDrawer = findViewById(R.id.navigation);
-        mDrawer = findViewById(R.id.mainActivity);
         mDrawer = findViewById(R.id.mainActivity);
 
 

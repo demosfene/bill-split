@@ -1,7 +1,5 @@
 package ru.filchacov.billsplittest
 
-import ru.filchacov.billsplittest.db.User
-
 class MainPresenter {
     private val model = ModelDB()
     private val userDB = App.getInstance().database

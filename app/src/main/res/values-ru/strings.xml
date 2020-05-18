@@ -44,4 +44,5 @@
     <string name="bill_qr_scaner">QR сканер чека</string>
     <string name="list_of_bills">Список чеков</string>
     <string name="receiving_data">Получение данных</string>
+    <string name="saveButton">Сохранить</string>
 </resources>
