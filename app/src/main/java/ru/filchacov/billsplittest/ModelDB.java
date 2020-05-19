@@ -94,6 +94,12 @@ public class ModelDB {
                 .child(friendName);
     }
 
+    public DatabaseReference getInfoBill(String dateTime) {
+        return database.getReference("bills")
+                .child(dateTime)
+                .child("items");
+    }
+
     public FirebaseUser getUser() {
         user = mAuth.getCurrentUser();
         return user;

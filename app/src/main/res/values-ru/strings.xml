@@ -45,4 +45,5 @@
     <string name="list_of_bills">Список чеков</string>
     <string name="receiving_data">Получение данных</string>
     <string name="saveButton">Сохранить</string>
+    <string name="SplitText">Разделить чек</string>
 </resources>

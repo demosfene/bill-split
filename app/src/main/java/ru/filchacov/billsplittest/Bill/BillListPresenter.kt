@@ -6,7 +6,13 @@ import com.google.firebase.database.ValueEventListener
 import ru.filchacov.billsplittest.AddFriend.FriendItem
 import ru.filchacov.billsplittest.ModelDB
 
-class BillListPresenter(val view: BillLListInterface, val bill: Bill, private val friendItem: FriendItem) {
+class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
+
+    private var mFriendItem: FriendItem? = null
+
+    constructor(view: BillLListInterface, bill: Bill,  friendItem: FriendItem) : this(view, bill) {
+        mFriendItem = friendItem
+    }
 
     var listBill = ArrayList<BillUser>()
     private var listBillDB = ArrayList<BillUser>()
@@ -22,8 +28,8 @@ class BillListPresenter(val view: BillLListInterface, val bill: Bill, private va
     }
 
     fun saveBillForFriend() {
-        model.setBillForFriend(bill.dateTime, friendItem.getmText().toString(), listBillDB)
-        model.isSelected(bill.dateTime, friendItem.getKey())
+        model.setBillForFriend(bill.dateTime, mFriendItem?.getmText().toString(), listBillDB)
+        model.isSelected(bill.dateTime, mFriendItem?.getKey())
         view.exitFromBill(bill)
     }
 
@@ -71,7 +77,7 @@ class BillListPresenter(val view: BillLListInterface, val bill: Bill, private va
     }
 
     fun loadBillList() {
-        model.getBillForFriend(bill.dateTime, friendItem.getmText()!!)
+        model.getBillForFriend(bill.dateTime, mFriendItem?.getmText()!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("Not yet implemented")
@@ -96,6 +102,38 @@ class BillListPresenter(val view: BillLListInterface, val bill: Bill, private va
                             listBill.add(billDB)
                         }
                         updateTotalSum(listBill)
+                        view.updateAdapter()
+                    }
+
+                })
+    }
+
+    fun loadInfoBill() {
+        model.getInfoBill(bill.dateTime)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        listBill.clear()
+                        val dataChildren = dataSnapshot.children
+                        val iter = dataChildren.iterator()
+                        while (iter.hasNext()) {
+                            val ds = iter.next()
+                            val map = ds.value as Map<*, *>
+                            val billDB = BillUser()
+                            //billDB.amount = map["amount"].toString().toInt()
+                           // val itemMap = map["items"] as Map<*, *>
+                            val billItem = Bill.Item()
+                            billItem.price = map["price"].toString().toInt()
+                            billItem.quantity = map["quantity"].toString().toInt()
+                            billItem.name = map["name"].toString()
+                            billItem.sum = map["sum"].toString().toInt()
+                            billDB.item = billItem
+                            listBill.add(billDB)
+                        }
+                        //updateTotalSum(listBill)
                         view.updateAdapter()
                     }
 

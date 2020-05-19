@@ -77,7 +77,6 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         super.onSaveInstanceState(outState)
         outState.putParcelable("bill", bill)
         outState.putParcelable("friendItem", friendItem)
-
     }
 
     override fun onResume() {

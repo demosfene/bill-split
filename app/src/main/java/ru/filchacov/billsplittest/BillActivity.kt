@@ -20,6 +20,7 @@ import ru.filchacov.billsplittest.BillActivityMVP.BillActivityPresenter
 import ru.filchacov.billsplittest.BillActivityMVP.BillErrorDialogFragment
 import ru.filchacov.billsplittest.BillActivityMVP.BillInterface
 import ru.filchacov.billsplittest.BillActivityMVP.BillIsDialogFragment
+import ru.filchacov.billsplittest.InfoBillMVP.InfoBillView
 
 
 class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment, BillInterface, ShowUpButton, ToolbarSettings {
@@ -78,6 +79,15 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
 
     }
 
+    override fun showInfoBill(bill: Bill) {
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, makeFragmentInfoBill(bill), InfoBillView.TAG)
+                .addToBackStack(null)
+                .commit()
+
+    }
+
     private fun makeFragmentFriend(bill: Bill): Fragment {
         val bundle = Bundle()
         bundle.putParcelable("bill", bill)
@@ -89,6 +99,12 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         bundle.putParcelable("bill", bill)
         bundle.putParcelable("friendItem", friendItem)
         return BillListFragment.getNewInstance(bundle)
+    }
+
+    private fun makeFragmentInfoBill(bill: Bill): Fragment {
+        val bundle = Bundle()
+        bundle.putParcelable("bill", bill)
+        return InfoBillView.getNewInstance(bundle)
     }
 
     override fun clickFriendToBill(bill: Bill, friendItem: FriendItem) {

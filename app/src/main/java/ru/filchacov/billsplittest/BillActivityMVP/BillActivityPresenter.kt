@@ -78,7 +78,7 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
                 val iter = dataChildren.iterator()
                 if (!iter.hasNext()) {
                     modelDB.writeNewBillToFriend(dateTime)
-                    view.showFriendFragment(bill)
+                    view.showInfoBill(bill)
                 } else {
                     view.showBillIsDialog(bill)
                 }
