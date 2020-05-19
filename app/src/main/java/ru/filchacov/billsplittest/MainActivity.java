@@ -273,8 +273,4 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         headerEmail.setText(email);
     }
 
-    @Override
-    public void updateUserInfo() {
-        presenter.getUserEmail();
-    }
 }

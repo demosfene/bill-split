@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 class MainPresenter(val view: MainActivityInterface) {
     private val model = ModelDB()
     private val userDB = App.getInstance().database
-    private val userDao = userDB.getUserDao()
+    private val userDao = userDB.userDao
 
 
 
@@ -22,13 +22,17 @@ class MainPresenter(val view: MainActivityInterface) {
 
     fun getUserEmail() {
         CoroutineScope(Dispatchers.IO).launch {
-            val userEmail = withContext(Dispatchers.IO) {
-                userDao.getByUid(model.auth.currentUser?.uid).email
+            if(userDao.getByEmail(model.auth.currentUser?.email) != null) {
+                val userEmail = withContext(Dispatchers.IO) {
+                    userDao.getByUid(model.auth.currentUser?.uid).email
+                }
+
+                val userName = withContext(Dispatchers.IO) {
+                    userDao.getByUid(model.auth.currentUser?.uid).name
+                }
+                view.setHeaderEmail(userEmail, userName)
             }
-            val userName = withContext(Dispatchers.IO) {
-                userDao.getByUid(model.auth.currentUser?.uid).name
-            }
-            view.setHeaderEmail(userEmail, userName)
+
         }
     }
 }
