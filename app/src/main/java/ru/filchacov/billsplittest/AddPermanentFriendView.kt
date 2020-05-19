@@ -1,13 +1,13 @@
 package ru.filchacov.billsplittest
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -83,6 +83,7 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterfa
         if (activity is ToolbarSettings) {
             (activity as ToolbarSettings).setToolbarTitle(R.string.permanent_friends)
         }
+        if (activity is MainActivityInterface) (activity as MainActivityInterface).navHeaderInit()
     }
 
     override fun updateAdapter() {
