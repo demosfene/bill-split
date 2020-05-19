@@ -1,13 +1,17 @@
 package ru.filchacov.billsplittest.aboutUserMVP
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import ru.filchacov.billsplittest.MainActivityInterface
 import ru.filchacov.billsplittest.R
+import ru.filchacov.billsplittest.ShowUpButton
+import ru.filchacov.billsplittest.ToolbarSettings
 
 class AboutUserView : Fragment(), AboutUserInterface {
 
@@ -22,7 +26,7 @@ class AboutUserView : Fragment(), AboutUserInterface {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view= inflater.inflate(R.layout.fragment_about_user_view, container, false)
+        val view = inflater.inflate(R.layout.fragment_about_user_view, container, false)
         name = view.findViewById(R.id.aUName)
         email = view.findViewById(R.id.aUEmail)
         password = view.findViewById(R.id.aUPassword)
@@ -42,16 +46,32 @@ class AboutUserView : Fragment(), AboutUserInterface {
         }
     }
 
-    override fun init() {
-        name?.setText(presenter?.getName() + "")
-        email?.setText(presenter?.getEmail() + "")
-        phone?.setText(presenter?.getPhone() + "")
+    override fun onResume() {
+        super.onResume()
+        if (activity is ShowUpButton) {
+            (activity as ShowUpButton).showUpButton(true)
+        }
+        if (activity is MainActivityInterface) {
+            (activity as MainActivityInterface?)!!.navigationDrawerInvisible()
+        }
+        if (activity is ToolbarSettings) {
+            (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.user_info)
+        }
+    }
 
-        btnSave!!.setOnClickListener(View.OnClickListener {
+    override fun init() {
+        name?.setText("${presenter?.getName()}")
+        email?.setText("${presenter?.getEmail()}")
+        phone?.setText("${presenter?.getPhone()}")
+
+        btnSave!!.setOnClickListener {
             if (!(name!!.text.equals("") && email!!.text.equals("") && phone!!.text.equals(""))) {
                 presenter?.updateUser(name!!.text.toString().trim(), email!!.text.toString().trim(),
                         phone!!.text.toString().trim(), password!!.text.toString().trim())
+                Toast.makeText(activity?.applicationContext,
+                        "Изменеия сохранены", Toast.LENGTH_SHORT).show()
+                (activity as MainActivityInterface).setHeaderEmail(email = email!!.text.toString(), name = name!!.text.toString())
             }
-        })
+        }
     }
 }

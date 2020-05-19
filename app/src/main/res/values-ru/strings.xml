@@ -44,5 +44,6 @@
     <string name="saveButton">Сохранить</string>
     <string name="SplitText">Разделить чек</string>
     <string name="YourBill">Ваш чек</string>
+    <string name="user_info">Информация</string>
 
 </resources>

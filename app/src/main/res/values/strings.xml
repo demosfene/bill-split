@@ -45,4 +45,5 @@
     <string name="ContentDescriptionqr_code">QR Code</string>
     <string name="SplitText">Split bill</string>
     <string name="YourBill">Your bill</string>
+    <string name="user_info">User info</string>
 </resources>

@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import ru.filchacov.billsplittest.aboutUserMVP.AboutUserView;
-import ru.filchacov.billsplittest.bill.Bill;
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
 import ru.filchacov.billsplittest.ShowFriendFragment;
 import ru.filchacov.billsplittest.ToolbarSettings;
+import ru.filchacov.billsplittest.bill.Bill;
 
 public class ReadFragment extends Fragment
         implements BillDateAdapter.OnNoteListener, ReadInterface {
@@ -31,7 +30,6 @@ public class ReadFragment extends Fragment
     private FloatingActionButton btnAdd;
     private ReadPresenter presenter;
     private TextView emptyText;
-    private FloatingActionButton goToAboutUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,6 @@ public class ReadFragment extends Fragment
         recyclerView = view.findViewById(R.id.user_list);
         emptyText = view.findViewById(R.id.text_no_data);
         btnAdd = view.findViewById(R.id.addBill);
-        goToAboutUser = view.findViewById(R.id.btnAboutUser);
         init();
         return view;
     }
@@ -59,22 +56,15 @@ public class ReadFragment extends Fragment
             Intent intent = new Intent(getActivity(), DecoderActivity.class);
             startActivity(intent);
         });
-        goToAboutUser.setOnClickListener(v -> {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new AboutUserView())
-                    .addToBackStack(null)
-                    .commit();
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (getActivity() instanceof MainActivityInterface) {
-            ((MainActivityInterface)getActivity()).setupDrawerContent();
+            ((MainActivityInterface) getActivity()).setupDrawerContent();
         }
-        if(getActivity() instanceof MainActivityInterface) {
+        if (getActivity() instanceof MainActivityInterface) {
             ((MainActivityInterface) getActivity()).navigationDrawerVisible();
         }
         if (getActivity() instanceof ToolbarSettings) {

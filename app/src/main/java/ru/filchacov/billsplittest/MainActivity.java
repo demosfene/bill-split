@@ -3,7 +3,11 @@ package ru.filchacov.billsplittest;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.TextureView;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import ru.filchacov.billsplittest.aboutUserMVP.AboutUserView;
 import ru.filchacov.billsplittest.addFriend.FriendItem;
 import ru.filchacov.billsplittest.authMVP.AuthFragment;
 import ru.filchacov.billsplittest.bill.Bill;
@@ -29,15 +34,15 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     MainPresenter presenter;
+    private TextView headerName;
+    private View headerView;
+    private TextView headerEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UserDB db = App.getInstance().getDatabase();
-        //User userDB = db.getuserDao().getByEmail(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
-
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,7 +55,30 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         if (savedInstanceState == null) {
             showAuthFragment();
         }
-        presenter = new MainPresenter();
+        presenter = new MainPresenter(this);
+        presenter.init();
+        headerView = nvDrawer.getHeaderView(0);
+        headerName = headerView.findViewById(R.id.header_name);
+        headerEmail = headerView.findViewById(R.id.header_email);
+        headerView.setOnClickListener(v -> {
+            showAboutUser();
+            mDrawer.closeDrawers();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+
+    private void showAboutUser() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new AboutUserView(), AboutUserView.TAG)
+                .addToBackStack(null)
+                .commit();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -237,5 +265,16 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
     @Override
     public void setToolbarTitle(int res) {
         toolbar.setTitle(res);
+    }
+
+    @Override
+    public void setHeaderEmail(@NonNull String email, @NonNull String name) {
+        headerName.setText(name);
+        headerEmail.setText(email);
+    }
+
+    @Override
+    public void updateUserInfo() {
+        presenter.getUserEmail();
     }
 }
