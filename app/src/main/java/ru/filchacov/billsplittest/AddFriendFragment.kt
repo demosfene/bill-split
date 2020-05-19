@@ -9,11 +9,11 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.filchacov.billsplittest.AddFriend.AddFriendInterface
-import ru.filchacov.billsplittest.AddFriend.FriendAdapter
-import ru.filchacov.billsplittest.AddFriend.FriendItem
-import ru.filchacov.billsplittest.AddFriend.FriendPresenter
-import ru.filchacov.billsplittest.Bill.Bill
+import ru.filchacov.billsplittest.addFriend.AddFriendInterface
+import ru.filchacov.billsplittest.addFriend.FriendAdapter
+import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.addFriend.FriendPresenter
+import ru.filchacov.billsplittest.bill.Bill
 
 class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 

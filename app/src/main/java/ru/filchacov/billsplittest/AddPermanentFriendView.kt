@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import ru.filchacov.billsplittest.AddFriend.FriendAdapter
-import ru.filchacov.billsplittest.PermanentFriend.AddPermanentFriendPresenter
-import ru.filchacov.billsplittest.PermanentFriend.PermanentFriendInterface
+import ru.filchacov.billsplittest.addFriend.FriendAdapter
+import ru.filchacov.billsplittest.permanentFriend.AddPermanentFriendPresenter
+import ru.filchacov.billsplittest.permanentFriend.PermanentFriendInterface
 
 
 class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterface {

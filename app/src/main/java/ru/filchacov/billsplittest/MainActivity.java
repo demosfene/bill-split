@@ -3,8 +3,6 @@ package ru.filchacov.billsplittest;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,20 +13,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Objects;
-
-import ru.filchacov.billsplittest.AddFriend.FriendItem;
-import ru.filchacov.billsplittest.AuthMVP.AuthFragment;
-import ru.filchacov.billsplittest.Bill.Bill;
-import ru.filchacov.billsplittest.ReadMVP.ReadFragment;
-import ru.filchacov.billsplittest.db.User;
-import ru.filchacov.billsplittest.db.UserDB;
+import ru.filchacov.billsplittest.addFriend.FriendItem;
+import ru.filchacov.billsplittest.authMVP.AuthFragment;
+import ru.filchacov.billsplittest.bill.Bill;
+import ru.filchacov.billsplittest.readMVP.ReadFragment;
+import ru.filchacov.billsplittest.db.User.UserDB;
 
 public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment, MainActivityInterface, ShowUpButton, ToolbarSettings {
 

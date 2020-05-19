@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
-import ru.filchacov.billsplittest.Registration.RegistrationPresenter;
-import ru.filchacov.billsplittest.Registration.UserAuthInterface;
-import ru.tinkoff.decoro.Mask;
+import ru.filchacov.billsplittest.registration.RegistrationPresenter;
+import ru.filchacov.billsplittest.registration.UserAuthInterface;
 import ru.tinkoff.decoro.MaskImpl;
 import ru.tinkoff.decoro.slots.PredefinedSlots;
 import ru.tinkoff.decoro.watchers.FormatWatcher;

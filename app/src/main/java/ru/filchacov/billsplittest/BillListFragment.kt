@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.filchacov.billsplittest.AddFriend.FriendItem
-import ru.filchacov.billsplittest.Bill.*
+import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.bill.*
 
 
 class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {

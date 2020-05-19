@@ -4,14 +4,9 @@
     <string name="email">Email</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_is_empty">Ваш список пуст</string>
     <string name="this_field_for_email">this field for email</string>
     <string name="on_off_flashlight">Вкл/выкл вспышку</string>
-    <string name="put_name">Ведите имя:</string>
-    <string name="click_name">Нажмите на имя для выбора покупок</string>
-    <string name="myBills">Мои чеки</string>
-    <string name="btn_continue">Продолжить</string>
     <string name="add">Добавить</string>
     <string name="name">Имя</string>
     <string name="Save">сохранить</string>
@@ -44,6 +39,10 @@
     <string name="bill_qr_scaner">QR сканер чека</string>
     <string name="list_of_bills">Список чеков</string>
     <string name="receiving_data">Получение данных</string>
+    <string name="text_new_password">Новый пароль</string>
+    <string name="ContentDescriptionqr_code">QR Code</string>
     <string name="saveButton">Сохранить</string>
     <string name="SplitText">Разделить чек</string>
+    <string name="YourBill">Ваш чек</string>
+
 </resources>

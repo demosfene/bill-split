@@ -18,7 +18,7 @@ import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView.OnQRCodeReadListener;
 import com.google.android.material.snackbar.Snackbar;
 
-import ru.filchacov.billsplittest.QRReader.PointsOverlayView;
+import ru.filchacov.billsplittest.qrReader.PointsOverlayView;
 
 
 public class DecoderActivity extends AppCompatActivity

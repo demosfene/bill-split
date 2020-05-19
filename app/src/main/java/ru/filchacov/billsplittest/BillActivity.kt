@@ -13,14 +13,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_bill.*
-import ru.filchacov.billsplittest.AddFriend.FriendItem
-import ru.filchacov.billsplittest.Bill.Bill
-import ru.filchacov.billsplittest.BillActivityMVP.BillActivityPresenter
-import ru.filchacov.billsplittest.BillActivityMVP.BillErrorDialogFragment
-import ru.filchacov.billsplittest.BillActivityMVP.BillInterface
-import ru.filchacov.billsplittest.BillActivityMVP.BillIsDialogFragment
-import ru.filchacov.billsplittest.InfoBillMVP.InfoBillView
+import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.bill.Bill
+import ru.filchacov.billsplittest.billActivityMVP.BillActivityPresenter
+import ru.filchacov.billsplittest.billActivityMVP.BillErrorDialogFragment
+import ru.filchacov.billsplittest.billActivityMVP.BillInterface
+import ru.filchacov.billsplittest.billActivityMVP.BillIsDialogFragment
+import ru.filchacov.billsplittest.infoBillMVP.InfoBillView
 
 
 class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoToMainActivity, ShowFriendFragment, BillInterface, ShowUpButton, ToolbarSettings {
@@ -28,6 +27,7 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     private var mDataBase: DatabaseReference? = null
     private lateinit var toolbar: Toolbar
     private lateinit var textView: TextView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +41,12 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         val presenter = BillActivityPresenter(qrInfo!!, this)
 
         if (savedInstanceState == null) {
+            progressBar = findViewById(R.id.progressBar)
             try {
-                presenter.getBillInfo()
-                val progressBar = findViewById<ProgressBar>(R.id.progressBar)
                 textView = findViewById(R.id.progressBarMessage)
                 textView.visibility = VISIBLE
                 progressBar.visibility = VISIBLE
+                presenter.getBillInfo()
             } catch (e: Exception) {
                 Snackbar.make(findViewById(android.R.id.content), e.message.toString(), Snackbar.LENGTH_LONG)
                         .show()

@@ -7,8 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import ru.filchacov.billsplittest.AddFriend.FriendItem;
-import ru.filchacov.billsplittest.Bill.Bill;
+import ru.filchacov.billsplittest.addFriend.FriendItem;
+import ru.filchacov.billsplittest.bill.Bill;
 
 public class ModelDB {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -123,6 +123,7 @@ public class ModelDB {
     public void writeNewBill(Bill bill, String dateTime) {
         database.getReference("bills")
                 .child(dateTime)
+                .push()
                 .setValue(bill);
     }
 
