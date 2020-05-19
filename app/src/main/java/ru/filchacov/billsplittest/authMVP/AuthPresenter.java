@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import ru.filchacov.billsplittest.App;
@@ -118,6 +119,7 @@ class AuthPresenter {
                                                 }
                                                 String phone = Objects.requireNonNull(((HashMap) ds.getValue()).get("phone")).toString();
                                                 User curUser = new User(email, uid, name, phone);
+                                                List<User> list = userDao.getAll();
                                                 userDao.insert(curUser);
                                                 Log.d("Local_DB", "signIn with Network");
                                                 userDao.update(curUser);

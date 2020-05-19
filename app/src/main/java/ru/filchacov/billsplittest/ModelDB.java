@@ -123,7 +123,6 @@ public class ModelDB {
     public void writeNewBill(Bill bill, String dateTime) {
         database.getReference("bills")
                 .child(dateTime)
-                .push()
                 .setValue(bill);
     }
 
