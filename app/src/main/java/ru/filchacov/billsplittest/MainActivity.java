@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
             showAuthFragment();
         }
         presenter = new MainPresenter(this);
-        presenter.init();
         headerView = nvDrawer.getHeaderView(0);
         headerName = headerView.findViewById(R.id.header_name);
         headerEmail = headerView.findViewById(R.id.header_email);
@@ -273,4 +272,8 @@ public class MainActivity extends AppCompatActivity implements OnClickFriendToBi
         headerEmail.setText(email);
     }
 
+    @Override
+    public void navHeaderInit() {
+        presenter.init();
+    }
 }

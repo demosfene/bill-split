@@ -45,6 +45,8 @@ public class ReadFragment extends Fragment
         recyclerView = view.findViewById(R.id.user_list);
         emptyText = view.findViewById(R.id.text_no_data);
         btnAdd = view.findViewById(R.id.addBill);
+        if(getActivity() instanceof MainActivityInterface)
+            ((MainActivityInterface) getActivity()).navHeaderInit();
         init();
         return view;
     }

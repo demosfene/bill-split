@@ -6,4 +6,5 @@ interface MainActivityInterface {
     fun setupDrawerContent()
     fun hideDrawerIndicator()
     fun setHeaderEmail(email: String, name: String)
+    fun navHeaderInit()
 }
