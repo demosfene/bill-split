@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ru.filchacov.billsplittest.MainActivityInterface
@@ -19,6 +20,7 @@ class AboutUserView : Fragment(), AboutUserInterface {
     private var email: EditText? = null
     private var password: EditText? = null
     private var phone: EditText? = null
+    private var oldPassword: EditText? = null
     private var btnSave: Button? = null
 
     private var presenter: AboutUserPresenter? = AboutUserPresenter(this)
@@ -31,6 +33,7 @@ class AboutUserView : Fragment(), AboutUserInterface {
         email = view.findViewById(R.id.aUEmail)
         password = view.findViewById(R.id.aUPassword)
         phone = view.findViewById(R.id.aUPhone)
+        oldPassword = view.findViewById(R.id.aUOldPassword)
         btnSave = view.findViewById(R.id.aUSave)
 
         init()
@@ -66,8 +69,12 @@ class AboutUserView : Fragment(), AboutUserInterface {
 
         btnSave!!.setOnClickListener {
             if (!(name!!.text.equals("") && email!!.text.equals("") && phone!!.text.equals(""))) {
-                presenter?.updateUser(name!!.text.toString().trim(), email!!.text.toString().trim(),
-                        phone!!.text.toString().trim(), password!!.text.toString().trim())
+                presenter?.updateUser(
+                        name!!.text.toString().trim(),
+                        email!!.text.toString().trim(),
+                        phone!!.text.toString().trim(),
+                        password!!.text.toString().trim(),
+                        oldPassword!!.text.toString().trim())
                 Toast.makeText(activity?.applicationContext,
                         "Изменеия сохранены", Toast.LENGTH_SHORT).show()
                 (activity as MainActivityInterface).setHeaderEmail(email = email!!.text.toString(), name = name!!.text.toString())

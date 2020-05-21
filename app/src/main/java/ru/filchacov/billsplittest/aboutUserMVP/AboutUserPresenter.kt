@@ -1,9 +1,12 @@
 package ru.filchacov.billsplittest.aboutUserMVP
 
 import android.util.Log
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.*
 import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.ModelDB
+import ru.filchacov.billsplittest.db.User.User
 
 class AboutUserPresenter(var view: AboutUserInterface) {
 
@@ -31,10 +34,7 @@ class AboutUserPresenter(var view: AboutUserInterface) {
         return userDao.getByUid(model.user.uid).phone
     }
 
-    fun updateUser(name: String, email:String, phone: String, password: String) {
-        if (!password.equals("")) {
-            model.user.updatePassword(password)
-        }
+    fun updateUser(name: String, email:String, phone: String, password: String, oldPassword: String) {
         val newUser = userDao.getByUid(model.user.uid)
         userDao.delete(newUser)
         newUser.name = name
@@ -45,15 +45,40 @@ class AboutUserPresenter(var view: AboutUserInterface) {
         val testList = userDao.all
 
         // Редактирование в FireBase
-        model.user.updateEmail(email)
-        val updates = UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build()
-        model.user.updateProfile(updates).addOnCompleteListener { task ->
-            if (task.isSuccessful){
-                Log.d("UpdUser","Profile's updates")
-            } else Log.d("UpdUser","Profile's not updates")
+        updatePasswordEmail(password, email)
+        model.authReference.child("users").child(model.user.uid).setValue(
+                User(email, model.user.uid, name, phone))
+                .addOnCompleteListener {
+                    if (it.isSuccessful) Log.d("UpdUser", "FBDatabase update")
+                    else Log.d("UpdUser", it.exception.toString() + "FBDATABASE")
+                }
+    }
+
+    private fun updatePasswordEmail(password: String, email: String) {
+        if (!password.equals("")) {
+            model.user.updatePassword(password).addOnCompleteListener(object: OnCompleteListener<Void>{
+                override fun onComplete(p0: Task<Void>) {
+                    if (p0.isSuccessful) {
+                        Log.d("UpdUser", "Password update")
+                        var oldUser = FirebaseAuth.getInstance().currentUser
+                        var credential = model.user.email?.let {
+                            EmailAuthProvider .getCredential(it, password)
+                        }
+                        if (credential != null) {
+                            oldUser!!.reauthenticate(credential).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    Log.d("UpdUser", "User re-authenticated.")
+                                    oldUser.updateEmail(email).addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            Log.d("UpdUser", "Email update")
+                                        } else Log.d("UpdUser", it.exception.toString() + "EMAIL")
+                                    }
+                                } else Log.d("UpdUser", it.exception.toString() + "CREDENTIAL")
+                            }
+                        }
+                    } else Log.d("UpdUser", p0.exception.toString() + "PASSWORD")
+                }
+            })
         }
-        model.authReference.child("users").child(model.user.uid).child("phone").setValue(phone)
     }
 }
