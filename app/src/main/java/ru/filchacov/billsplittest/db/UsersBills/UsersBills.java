@@ -2,31 +2,36 @@ package ru.filchacov.billsplittest.db.UsersBills;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import ru.filchacov.billsplittest.db.User.User;
+import org.jetbrains.annotations.NotNull;
 
-@Entity()
+@Entity(indices = @Index(value = "billUID", unique = true))
 public class UsersBills {
-    private String id;
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     @NonNull
     private String billUID;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
+    @NotNull
     public String getBillUID() {
         return billUID;
     }
 
-    public void setBillUID(String billUID) {
+    public void setBillUID(@NotNull String billUID) {
+        this.billUID = billUID;
+    }
+
+    public UsersBills(@NonNull String billUID) {
         this.billUID = billUID;
     }
 }

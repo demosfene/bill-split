@@ -6,9 +6,13 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import ru.filchacov.billsplittest.db.Bill.Bill;
 
-@Entity(foreignKeys = @ForeignKey(entity = Bill.class, parentColumns = "savedFriend", childColumns = "id"),
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys = @ForeignKey(entity = Bill.class, parentColumns = "savedFriend", childColumns = "id", onDelete = CASCADE),
         indices = @Index(value = {"id"},unique = true))
 public class SavedFriends {
 
@@ -35,11 +39,12 @@ public class SavedFriends {
         this.isSelected = isSelected;
     }
 
+    @NotNull
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(@NotNull String key) {
         this.key = key;
     }
 

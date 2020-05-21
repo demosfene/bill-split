@@ -6,12 +6,16 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import ru.filchacov.billsplittest.db.UsersBills.UsersBills;
 
-@Entity(foreignKeys = @ForeignKey(entity = UsersBills.class, parentColumns = "billUID", childColumns = "billUid"),
-        indices = {@Index(value = "friendsIsChooseUid", unique = true), @Index(value = "savedFriend", unique = true)})
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys = @ForeignKey(entity = UsersBills.class, parentColumns = "billUID", childColumns = "billUid", onDelete = CASCADE),
+        indices = {@Index(value = "friendsIsChooseUid", unique = true),
+                   @Index(value = "savedFriend", unique = true)})
 public class Bill {
-    @NonNull
     @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
@@ -28,11 +32,12 @@ public class Bill {
         this.id = id;
     }
 
+    @NotNull
     public String getBillUid() {
         return billUid;
     }
 
-    public void setBillUid(String billUid) {
+    public void setBillUid(@NotNull String billUid) {
         this.billUid = billUid;
     }
 
@@ -44,11 +49,18 @@ public class Bill {
         this.savedFriend = savedFriend;
     }
 
+    @NotNull
     public String getFriendsIsChooseUid() {
         return friendsIsChooseUid;
     }
 
-    public void setFriendsIsChooseUid(String friendsIsChooseUid) {
+    public void setFriendsIsChooseUid(@NotNull String friendsIsChooseUid) {
+        this.friendsIsChooseUid = friendsIsChooseUid;
+    }
+
+    public Bill(@NonNull String billUid, String savedFriend, @NonNull String friendsIsChooseUid) {
+        this.billUid = billUid;
+        this.savedFriend = savedFriend;
         this.friendsIsChooseUid = friendsIsChooseUid;
     }
 }

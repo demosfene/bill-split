@@ -3,7 +3,6 @@ package ru.filchacov.billsplittest;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ import ru.filchacov.billsplittest.addFriend.FriendItem;
 import ru.filchacov.billsplittest.authMVP.AuthFragment;
 import ru.filchacov.billsplittest.bill.Bill;
 import ru.filchacov.billsplittest.readMVP.ReadFragment;
-import ru.filchacov.billsplittest.db.User.UserDB;
 
 public class MainActivity extends AppCompatActivity implements OnClickFriendToBill, ExitFromBill, ShowFriendFragment, MainActivityInterface, ShowUpButton, ToolbarSettings {
 

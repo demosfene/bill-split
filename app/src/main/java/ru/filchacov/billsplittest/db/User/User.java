@@ -3,18 +3,17 @@ package ru.filchacov.billsplittest.db.User;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
 @Entity(primaryKeys = {"email"})
 public class User {
     @NonNull
-    private String email;
+    public String email;
     @ColumnInfo(name = "user_uid")
-    private String userUid;
-    private String name;
-    private String phone;
+    public String userUid;
+    public String name;
+    public String phone;
 
     public String getUserUid() {
         return userUid;
@@ -52,10 +51,10 @@ public class User {
     public User() {
     }
 
-    public User(@NonNull String email, String userUid) {
-        this.email = email;
-        this.userUid = userUid;
-    }
+//    public User(@NonNull String email, String userUid) {
+//        this.email = email;
+//        this.userUid = userUid;
+//    }
 
     public User(@NonNull String email, String userUid, String name, String phone) {
         this.email = email;

@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.ModelDB;
 import ru.filchacov.billsplittest.db.User.User;
-import ru.filchacov.billsplittest.db.User.UserDB;
+import ru.filchacov.billsplittest.db.UserDB;
 import ru.filchacov.billsplittest.db.User.UserDao;
 
 public class RegistrationPresenter {

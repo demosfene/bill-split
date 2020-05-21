@@ -9,9 +9,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.bill.Bill
 import ru.filchacov.billsplittest.billInfo.BillService
 import ru.filchacov.billsplittest.ModelDB
+import ru.filchacov.billsplittest.addFriend.FriendItem
 import java.text.SimpleDateFormat
 
 class BillActivityPresenter(billParameters: String, var view: BillInterface) {
@@ -20,6 +22,8 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
     private var time = ""
     private val modelDB = ModelDB()
     private var bill: Bill? = null
+    private val userDB = App.getInstance().database
+    private val userDao = userDB.userDao
 
     fun getBillInfo() {
 
@@ -77,7 +81,9 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
                 val dataChildren = dataSnapshot.children
                 val iter = dataChildren.iterator()
                 if (!iter.hasNext()) {
-                    modelDB.writeNewBillToFriend(dateTime)
+                    if(userDao.getByEmail(modelDB.auth.currentUser?.email) != null) {
+                        modelDB.setFriend(dateTime, FriendItem(mText = userDao.getByUid(modelDB.auth.currentUser?.uid)?.name))
+                    }
                     view.showInfoBill(bill)
                 } else {
                     view.showBillIsDialog(bill)

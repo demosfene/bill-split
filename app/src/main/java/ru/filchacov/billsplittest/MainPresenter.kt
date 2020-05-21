@@ -6,6 +6,7 @@ class MainPresenter(val view: MainActivityInterface) {
     private val model = ModelDB()
     private val userDB = App.getInstance().database
     private val userDao = userDB.userDao
+    private val usersBillDao = userDB.usersBillsDao
 
 
 
@@ -14,13 +15,14 @@ class MainPresenter(val view: MainActivityInterface) {
             userDao.delete(userDao.getByEmail(model.auth.currentUser?.email))
         }
         model.auth.signOut()
+        usersBillDao.delete()
     }
 
     fun init(){
         getUserEmail()
     }
 
-    fun getUserEmail() {
+    private fun getUserEmail() {
         CoroutineScope(Dispatchers.IO).launch {
             if(userDao.getByEmail(model.auth.currentUser?.email) != null) {
                 val userEmail = withContext(Dispatchers.IO) {
@@ -30,7 +32,9 @@ class MainPresenter(val view: MainActivityInterface) {
                 val userName = withContext(Dispatchers.IO) {
                     userDao.getByUid(model.auth.currentUser?.uid).name
                 }
-                view.setHeaderEmail(userEmail, userName)
+                CoroutineScope(Dispatchers.Main).launch {
+                    view.setHeaderEmail(userEmail, userName)
+                }
             }
 
         }

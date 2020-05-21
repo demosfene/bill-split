@@ -6,7 +6,7 @@ import androidx.room.Room;
 
 import com.facebook.stetho.Stetho;
 
-import ru.filchacov.billsplittest.db.User.UserDB;
+import ru.filchacov.billsplittest.db.UserDB;
 
 public class App extends Application {
     public static App instance;
