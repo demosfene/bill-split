@@ -24,8 +24,8 @@
     <string name="your_phone">Номер телефона</string>
     <string name="your_password">Пароль</string>
     <string name="confirm_your_password">Повторите пароль</string>
-    <string name="sing_up">Войти</string>
-    <string name="registration">Регистрация</string>
+    <string name="sing_up">Зарегестрироваться</string>
+    <string name="registration"><u>Регистрация</u></string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="list_of_bill">Список чеков</string>
@@ -46,5 +46,6 @@
     <string name="YourBill">Ваш чек</string>
     <string name="user_info">Информация</string>
     <string name="old_password">Старый пароль</string>
+    <string name="registration_text">Регистрация</string>
 
 </resources>

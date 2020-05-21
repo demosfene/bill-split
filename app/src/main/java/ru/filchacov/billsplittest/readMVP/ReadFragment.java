@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,12 +77,12 @@ public class ReadFragment extends Fragment
 
     private void init() {
         presenter = new ReadPresenter(this);
-        adapter = new BillDateAdapter(presenter.result, this);
+        adapter = new BillDateAdapter(presenter.result, presenter.getSum(), this);
         presenter.initPresenter();
         recyclerView.setAdapter(adapter);
 
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(llm);

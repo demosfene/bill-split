@@ -20,9 +20,9 @@ public class ReadPresenter {
 
     List<String> result = new ArrayList<>();
     private List<String> listTemp = new ArrayList<>();
-
     private Bill bill = new Bill();
     private ReadInterface view;
+    String BillDate;
     private ModelDB model = new ModelDB();
 
     ReadPresenter(ReadInterface view) {
@@ -120,7 +120,7 @@ public class ReadPresenter {
                     listTemp.clear();
                 }
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String BillDate = ds.getKey();
+                    BillDate = ds.getKey();
                     result.add(BillDate);
                     listTemp.add(BillDate);
                 }
@@ -195,6 +195,10 @@ public class ReadPresenter {
             listItem.add(item);
         }
         bill.setItems(listItem);
+    }
+
+    public String getSum() {
+        return "0";
     }
 
 }

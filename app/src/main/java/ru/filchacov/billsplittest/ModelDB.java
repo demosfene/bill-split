@@ -1,5 +1,7 @@
 package ru.filchacov.billsplittest;
 
+import androidx.room.Database;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,7 @@ public class ModelDB {
         } else return null;
 
     }
+
 
     public DatabaseReference getUserData(){
         return database.getReference("users");

@@ -15,10 +15,12 @@ import ru.filchacov.billsplittest.R;
 public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDateViewHolder> {
 
     private List<String> list;
+    private String sum;
     private OnNoteListener mOnNoteListener;
 
-    BillDateAdapter(List<String> list, OnNoteListener onNoteListener) {
+    BillDateAdapter(List<String> list, String sum, OnNoteListener onNoteListener) {
         this.list = list;
+        this.sum = sum;
         this.mOnNoteListener = onNoteListener;
     }
 
@@ -32,6 +34,7 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
     public void onBindViewHolder(@NonNull BillDateViewHolder holder, int position) {
         String bf = list.get(position);
         holder.textEmail.setText(bf);
+        holder.textSum.setText(sum);
 
         /*holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -50,12 +53,14 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
     static class BillDateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textEmail;
+        TextView textSum;
         OnNoteListener onNoteListener;
 
         BillDateViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
 
             textEmail = itemView.findViewById(R.id.text_email);
+            textSum = itemView.findViewById(R.id.sum_text);
             this.onNoteListener = onNoteListener;
 
             itemView.setOnClickListener(this);
