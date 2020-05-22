@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.UsersBills;
+package ru.filchacov.billsplittest.db.usersBills;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

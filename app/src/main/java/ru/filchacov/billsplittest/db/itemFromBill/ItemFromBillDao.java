@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.ItemFromBill;
+package ru.filchacov.billsplittest.db.itemFromBill;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

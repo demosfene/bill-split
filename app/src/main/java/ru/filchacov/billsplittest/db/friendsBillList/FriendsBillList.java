@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.FriendsBillList;
+package ru.filchacov.billsplittest.db.friendsBillList;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-import ru.filchacov.billsplittest.db.FriendsIsChoose.FriendsIsChoose;
+import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChoose;
 
 import static androidx.room.ForeignKey.CASCADE;
 

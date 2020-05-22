@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.FriendsIsChoose;
+package ru.filchacov.billsplittest.db.friendsIsChoose;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

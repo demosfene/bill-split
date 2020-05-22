@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.filchacov.billsplittest.R;
+import ru.filchacov.billsplittest.db.usersBills.UsersBills;
 
 public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDateViewHolder> {
 
-    private List<String> list;
-    private String sum;
+    private List<UsersBills> list;
+    private List<String> sum;
     private OnNoteListener mOnNoteListener;
 
-    BillDateAdapter(List<String> list, String sum, OnNoteListener onNoteListener) {
+    BillDateAdapter(List<UsersBills> list, List<String> sum, OnNoteListener onNoteListener) {
         this.list = list;
         this.sum = sum;
         this.mOnNoteListener = onNoteListener;
@@ -32,9 +33,7 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
 
     @Override
     public void onBindViewHolder(@NonNull BillDateViewHolder holder, int position) {
-        String bf = list.get(position);
-        holder.textEmail.setText(bf);
-        holder.textSum.setText(sum);
+        holder.bind(list.get(position), sum.get(position));
 
         /*holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -65,6 +64,11 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
 
             itemView.setOnClickListener(this);
 
+        }
+
+        void bind (UsersBills usersBills, String sum){
+            textEmail.setText(usersBills.getBillUID());
+            textSum.setText(sum);
         }
 
         @Override

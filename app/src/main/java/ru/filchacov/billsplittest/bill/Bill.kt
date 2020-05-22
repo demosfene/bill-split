@@ -2,66 +2,73 @@ package ru.filchacov.billsplittest.bill
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import ru.filchacov.billsplittest.db.bill.BillDB
 import java.util.Collections.emptyList
 
-class Bill() : Parcelable {
+@Entity
+open class Bill() : Parcelable {
     @SerializedName("receiptCode")
     var receiptCode = 0
 
     @SerializedName("user")
-    var user = "" // Дата совершения покупки
+     var user = "" // Дата совершения покупки
 
     @SerializedName("items")
-    var items = emptyList<Item>() // Лист списка покупок (вся инфа по покупкам тут)
+    @Ignore
+     var items = emptyList<Item>() // Лист списка покупок (вся инфа по покупкам тут)
 
     @SerializedName("cashTotalSum")
-    var cashTotalSum: Int = 0
+     var cashTotalSum: Int = 0
 
     @SerializedName("shiftNumber")
-    var shiftNumber: Int = 0
+     var shiftNumber: Int = 0
 
     @SerializedName("totalSum")
-    var totalSum = 0 // Сумма чека
+     var totalSum = 0 // Сумма чека
 
     @SerializedName("ecashTotalSum")
-    var ecashTotalSum = 0 // Общая сумма покупки
+     var ecashTotalSum = 0 // Общая сумма покупки
 
     @SerializedName("taxationType")
-    var taxationType = 0
+     var taxationType = 0
 
     @SerializedName("ndsNo")
-    var ndsNo = 0
+     var ndsNo = 0
 
     @SerializedName("dateTime")
-    var dateTime = "" // Дата совершения покупки
+    @PrimaryKey
+     var dateTime = "" // Дата совершения покупки
 
     @SerializedName("fiscalDriveNumber")
-    var fiscalDriveNumber = "" // Фискальный накопитель
+     var fiscalDriveNumber = "" // Фискальный накопитель
 
     @SerializedName("fiscalDocumentNumber")
-    var fiscalDocumentNumber = 0 // Номер фискального документа
+     var fiscalDocumentNumber = 0 // Номер фискального документа
 
     @SerializedName("fiscalSign")
-    var fiscalSign = 0
+     var fiscalSign = 0
 
     @SerializedName("userInn")
-    var userInn = ""
+     var userInn = ""
 
     @SerializedName("operationType")
-    var operationType = 0
+     var operationType = 0
 
     @SerializedName("kktRegId")
-    var kktRegId = "" // РЕГ.НОМЕР ККТ
+     var kktRegId = "" // РЕГ.НОМЕР ККТ
 
     @SerializedName("rawData")
-    var rawData = ""
+     var rawData = ""
 
     @SerializedName("requestNumber")
-    var requestNumber = 0
+     var requestNumber = 0
 
     @SerializedName("operator")
-    var operator = ""
+     var operator = ""
 
     constructor(parcel: Parcel) : this() {
         receiptCode = parcel.readInt()

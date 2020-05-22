@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.ModelDB
-import ru.filchacov.billsplittest.db.User.User
+import ru.filchacov.billsplittest.db.user.User
 
 class AboutUserPresenter(var view: AboutUserInterface) {
 

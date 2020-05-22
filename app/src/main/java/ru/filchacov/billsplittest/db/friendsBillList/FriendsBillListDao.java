@@ -1,11 +1,9 @@
-package ru.filchacov.billsplittest.db.FriendsBillList;
+package ru.filchacov.billsplittest.db.friendsBillList;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Update;
-
-import ru.filchacov.billsplittest.db.FriendsIsChoose.FriendsIsChoose;
 
 @Dao
 public interface FriendsBillListDao {

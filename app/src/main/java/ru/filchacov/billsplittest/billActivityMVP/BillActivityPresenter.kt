@@ -10,11 +10,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.filchacov.billsplittest.App
-import ru.filchacov.billsplittest.bill.Bill
-import ru.filchacov.billsplittest.billInfo.BillService
 import ru.filchacov.billsplittest.ModelDB
 import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.bill.Bill
+import ru.filchacov.billsplittest.billInfo.BillService
+import ru.filchacov.billsplittest.db.bill.Item
+import ru.filchacov.billsplittest.db.billOfUser.BillOfUser
+import ru.filchacov.billsplittest.db.usersBills.UsersBills
 import java.text.SimpleDateFormat
+import java.util.*
 
 class BillActivityPresenter(billParameters: String, var view: BillInterface) {
 
@@ -24,6 +28,10 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
     private var bill: Bill? = null
     private val userDB = App.getInstance().database
     private val userDao = userDB.userDao
+    private val billDBDao = userDB.billDao
+    private val itemDao = userDB.itemDao
+    private val usersBillsDao = userDB.usersBillsDao
+    private val billOfUserDao = userDB.billOfUserDao
 
     fun getBillInfo() {
 
@@ -81,6 +89,15 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
                 val dataChildren = dataSnapshot.children
                 val iter = dataChildren.iterator()
                 if (!iter.hasNext()) {
+                    billDBDao.insert(bill)
+                    for (item in bill.items) {
+                        val itemDB = Item(bill.dateTime, item.name, item.quantity!!, item.sum!!, item.price!!)
+                        itemDao.insert(itemDB)
+                    }
+                    val usersBills = UsersBills(dateTime)
+                    usersBillsDao.insert(usersBills)
+                    val billOfUser = BillOfUser(dateTime, UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                    billOfUserDao.insert(billOfUser)
                     if(userDao.getByEmail(modelDB.auth.currentUser?.email) != null) {
                         modelDB.setFriend(dateTime, FriendItem(mText = userDao.getByUid(modelDB.auth.currentUser?.uid)?.name))
                     }

@@ -77,8 +77,8 @@ public class ReadFragment extends Fragment
 
     private void init() {
         presenter = new ReadPresenter(this);
-        adapter = new BillDateAdapter(presenter.result, presenter.getSum(), this);
         presenter.initPresenter();
+        adapter = new BillDateAdapter(presenter.result, presenter.getSum(), this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setHasFixedSize(true);

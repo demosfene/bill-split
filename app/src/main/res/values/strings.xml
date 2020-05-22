@@ -29,7 +29,7 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="list_of_bill">List of bill</string>
+    <string name="list_of_bill">List of billOfUser</string>
     <string name="friends">Friends</string>
     <string name="exit">Exit</string>
     <string name="extra">Extra</string>
@@ -37,14 +37,14 @@
     <string name="list_of_friends">List of friends</string>
     <string name="permanent_friends">My friends</string>
     <string name="position_selection">Shopping choice</string>
-    <string name="bill_qr_scaner">QR reader bill</string>
+    <string name="bill_qr_scaner">QR reader billOfUser</string>
     <string name="list_of_bills">List of bills</string>
     <string name="receiving_data">Receiving data</string>
     <string name="saveButton">Save</string>
     <string name="text_new_password">New password</string>
     <string name="ContentDescriptionqr_code">QR Code</string>
-    <string name="SplitText">Split bill</string>
-    <string name="YourBill">Your bill</string>
+    <string name="SplitText">Split billOfUser</string>
+    <string name="YourBill">Your billOfUser</string>
     <string name="user_info">User info</string>
     <string name="old_password">Old Password</string>
     <string name="registration_text">Registration</string>

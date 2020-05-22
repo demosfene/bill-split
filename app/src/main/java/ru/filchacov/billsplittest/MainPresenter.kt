@@ -7,6 +7,7 @@ class MainPresenter(val view: MainActivityInterface) {
     private val userDB = App.getInstance().database
     private val userDao = userDB.userDao
     private val usersBillDao = userDB.usersBillsDao
+    private val billDB = userDB.billDao
 
 
 
@@ -16,6 +17,8 @@ class MainPresenter(val view: MainActivityInterface) {
         }
         model.auth.signOut()
         usersBillDao.delete()
+        billDB.delete()
+
     }
 
     fun init(){

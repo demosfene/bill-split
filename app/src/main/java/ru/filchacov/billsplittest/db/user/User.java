@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.User;
+package ru.filchacov.billsplittest.db.user;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

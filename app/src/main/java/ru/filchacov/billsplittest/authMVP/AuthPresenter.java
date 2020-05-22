@@ -19,19 +19,24 @@ import java.util.UUID;
 
 import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.db.Bill.Bill;
-import ru.filchacov.billsplittest.db.Bill.BillDao;
-import ru.filchacov.billsplittest.db.FriendsBillList.FriendsBillList;
-import ru.filchacov.billsplittest.db.FriendsBillList.FriendsBillListDao;
-import ru.filchacov.billsplittest.db.FriendsIsChoose.FriendsIsChoose;
-import ru.filchacov.billsplittest.db.FriendsIsChoose.FriendsIsChooseDao;
-import ru.filchacov.billsplittest.db.ItemFromBill.ItemFromBill;
-import ru.filchacov.billsplittest.db.ItemFromBill.ItemFromBillDao;
-import ru.filchacov.billsplittest.db.User.User;
-import ru.filchacov.billsplittest.db.User.UserDao;
+import ru.filchacov.billsplittest.bill.Bill;
+import ru.filchacov.billsplittest.db.bill.BillDB;
+import ru.filchacov.billsplittest.db.bill.BillDao;
+import ru.filchacov.billsplittest.db.bill.Item;
+import ru.filchacov.billsplittest.db.bill.ItemDao;
+import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
+import ru.filchacov.billsplittest.db.billOfUser.BillOfUserDao;
+import ru.filchacov.billsplittest.db.friendsBillList.FriendsBillList;
+import ru.filchacov.billsplittest.db.friendsBillList.FriendsBillListDao;
+import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChoose;
+import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChooseDao;
+import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBill;
+import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBillDao;
+import ru.filchacov.billsplittest.db.user.User;
+import ru.filchacov.billsplittest.db.user.UserDao;
 import ru.filchacov.billsplittest.db.UserDB;
-import ru.filchacov.billsplittest.db.UsersBills.UsersBills;
-import ru.filchacov.billsplittest.db.UsersBills.UsersBillsDao;
+import ru.filchacov.billsplittest.db.usersBills.UsersBills;
+import ru.filchacov.billsplittest.db.usersBills.UsersBillsDao;
 
 class AuthPresenter {
     private ModelDB model = new ModelDB();
@@ -40,10 +45,12 @@ class AuthPresenter {
     private UserDao userDao = userDB.getUserDao();
     private User currentUser;
     private UsersBillsDao usersBillsDao = userDB.getUsersBillsDao();
-    private BillDao billDao = userDB.getBillDao();
+    private BillOfUserDao billDao = userDB.getBillOfUserDao();
     private FriendsIsChooseDao friendsIsChooseDao = userDB.getFriendsIsChooseDao();
     private FriendsBillListDao friendsBillListDao = userDB.getFriendsBillListDao();
     private ItemFromBillDao itemFromBillDao = userDB.getItemFromBillDao();
+    private BillDao billDBDao = userDB.getBillDao();
+    private ItemDao itemDao = userDB.getItemDao();
 
     AuthPresenter(AuthInterface view) {
         this.view = view;
@@ -52,64 +59,25 @@ class AuthPresenter {
     void init() {
         model.getAuthReference();
         if (userDao.getByUid(model.getAuth().getUid()) != null) {
-            // Name, email address, and profile photo Url
             currentUser = userDao.getByUid(model.getAuth().getUid());
             String name = currentUser.getName(); //model.getUser().getDisplayName();
             String email = currentUser.getEmail(); //model.getUser().getEmail();
-            //Uri photoUrl = model.getUser().getPhotoUrl();
-
-            // Check if user's email is verified
-            //boolean emailVerified = model.getUser().isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
             String uid = currentUser.getUserUid(); // model.getUser().getUid();
             view.onClickRead();
             view.onLocalEnabled(name);
         } else if (model.getUser() != null) {
-            // Name, email address, and profile photo Url
             String name = model.getUser().getDisplayName();
             String email = model.getUser().getEmail();
             Uri photoUrl = model.getUser().getPhotoUrl();
-
-            // Check if user's email is verified
             boolean emailVerified = model.getUser().isEmailVerified();
-
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
             String uid = model.getUser().getUid();
             view.onClickRead();
         }
 
     }
 
-    /*void createAccount(String email, String password) {
-
-        model.getAuth().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(Objects.requireNonNull(view.getActivity()), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(view.getActivity(), "User " + " with password",
-                                Toast.LENGTH_LONG).show();
-                        writeNewUser(model.getUser().getUid(), model.getUser().getEmail());
-                        updateUI(model.getUser());
-                    } else {
-                        Toast.makeText(view.getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                        // If sign in fails, display a message to the user.
-                        updateUI(null);
-                    }
-
-                });
-    }*/
 
     void signIn(String email, String password) {
-        /*if (userDao.getById(email) != null){
-            view.onLocalEnabled();
-        }*/
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -139,8 +107,24 @@ class AuthPresenter {
                                                     usersBillsDao.insert(usersBills);
                                                     UUID friendUuid = UUID.randomUUID();
                                                     UUID friendIsChooseUuid = UUID.randomUUID();
-                                                    Bill bill = new Bill(billUuid, friendUuid.toString(), friendIsChooseUuid.toString());
-                                                    billDao.insert(bill);
+                                                    BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString(), friendIsChooseUuid.toString());
+                                                    billDao.insert(billOfUser);
+                                                    model.getBill(billUuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            Bill bill = dataSnapshot.getValue(Bill.class);
+                                                            billDBDao.insert(bill);
+                                                            for(Bill.Item item : bill.getItems()){
+                                                                Item itemDB = new Item(bill.getDateTime(), item.getName(), item.getQuantity(), item.getSum(), item.getPrice());
+                                                                itemDao.insert(itemDB);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                        }
+                                                    });
                                                     HashMap billMap = friendsItem.getValue();
                                                     for (Object o : billMap.entrySet()) {
                                                         Map.Entry billMapItem = (Map.Entry) o;
@@ -215,24 +199,5 @@ class AuthPresenter {
         updateUI(model.getUser());
     }
 
-
-
-
-    /*
-    Objects.requireNonNull(view.getActivity()), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        FirebaseUser user = model.getAuth().getCurrentUser();
-                        Toast.makeText(view.getActivity(), "User with password",
-                                Toast.LENGTH_LONG).show();
-                        updateUI(user);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(view.getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                        updateUI(null);
-                    }
-                }
-     */
 
 }

@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.User;
+package ru.filchacov.billsplittest.db.user;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -10,6 +10,7 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
+
     @Query("SELECT * FROM user")
     List<User> getAll();
 

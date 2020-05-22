@@ -1,4 +1,4 @@
-package ru.filchacov.billsplittest.db.SavedFriends;
+package ru.filchacov.billsplittest.db.savedFriends;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-import ru.filchacov.billsplittest.db.Bill.Bill;
+import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(entity = Bill.class, parentColumns = "savedFriend", childColumns = "id", onDelete = CASCADE),
+@Entity(foreignKeys = @ForeignKey(entity = BillOfUser.class, parentColumns = "savedFriend", childColumns = "id", onDelete = CASCADE),
         indices = @Index(value = {"id"},unique = true))
 public class SavedFriends {
 
