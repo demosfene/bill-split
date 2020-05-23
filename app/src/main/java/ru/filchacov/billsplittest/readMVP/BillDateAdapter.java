@@ -70,7 +70,10 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
         }
 
         void bind(Bill bill) {
-            textEmail.setText(bill.getDateTime());
+            String[] bufDateTime = splitDateTime(bill);
+            String date = getDate(bufDateTime);
+            String time = getTime(bufDateTime);
+            textEmail.setText(date + time);
             String totalSum = String.valueOf(bill.getTotalSum());
             textSum.setText(String.format("%.2f", Double.parseDouble(totalSum) / 100));
         }
@@ -79,6 +82,68 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
         public void onClick(View v) {
             onNoteListener.onNoteClick(getAdapterPosition());
         }
+
+        private String[] splitDateTime(Bill bill) {
+            String dateTime = bill.getDateTime();
+            String delimeterDateTime = "T";
+            return dateTime.split(delimeterDateTime);
+        }
+
+        private String getDate(String[] bufDateTime) {
+            String month;
+            String date = bufDateTime[0];
+            String delimeterDayMonthYear = "-";
+            String[] values = date.split(delimeterDayMonthYear);
+            switch (values[1]) {
+                case ("01"):
+                    month = "Января";
+                    break;
+                case ("02") :
+                    month = "Февраля";
+                    break;
+                case ("03") :
+                    month = "Марта";
+                    break;
+                case ("04") :
+                    month = "Апреля";
+                    break;
+                case ("05") :
+                    month = "Мая";
+                    break;
+                case ("06") :
+                    month = "Июня";
+                    break;
+                case ("07") :
+                    month = "Июля";
+                    break;
+                case ("08") :
+                    month = "Августа";
+                    break;
+                case ("09") :
+                    month = "Сентября";
+                    break;
+                case ("10") :
+                    month = "Октября";
+                    break;
+                case ("11") :
+                    month = "Ноября";
+                    break;
+                case ("12") :
+                    month = "Декабря";
+                    break;
+                default: month = "ОшибОчка";
+                break;
+            }
+            return values[2]+ " " + month +  " ";
+        }
+
+        private String getTime(String[] bufDateTime) {
+            String time = bufDateTime[1];
+            String delimeterTime = ":";
+            String[] bufTime = time.split(delimeterTime);
+            return bufTime[0] + ":" + bufTime[1];
+        }
+
     }
 
     public interface OnNoteListener {
