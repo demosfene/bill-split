@@ -1,7 +1,5 @@
 package ru.filchacov.billsplittest;
 
-import androidx.room.Database;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -18,7 +16,7 @@ public class ModelDB {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public DatabaseReference getBillsList() {
-        if (user != null){
+        if (user != null) {
             return database.getReference("users")
                     .child(user.getUid())
                     .child("friends");
@@ -27,7 +25,7 @@ public class ModelDB {
     }
 
 
-    public DatabaseReference getUserData(){
+    public DatabaseReference getUserData() {
         return database.getReference("users");
     }
 

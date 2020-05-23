@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
@@ -46,7 +48,7 @@ public class ReadFragment extends Fragment
         recyclerView = view.findViewById(R.id.user_list);
         emptyText = view.findViewById(R.id.text_no_data);
         btnAdd = view.findViewById(R.id.addBill);
-        init();
+//        init();
         return view;
     }
 
@@ -60,9 +62,15 @@ public class ReadFragment extends Fragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        init();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        if(getActivity() instanceof MainActivityInterface)
+        if (getActivity() instanceof MainActivityInterface)
             ((MainActivityInterface) getActivity()).navHeaderInit();
         if (getActivity() instanceof MainActivityInterface) {
             ((MainActivityInterface) getActivity()).setupDrawerContent();
@@ -73,12 +81,13 @@ public class ReadFragment extends Fragment
         if (getActivity() instanceof ToolbarSettings) {
             ((ToolbarSettings) getActivity()).setToolbarTitle(R.string.list_of_bills);
         }
+//        init();
     }
 
     private void init() {
         presenter = new ReadPresenter(this);
         presenter.initPresenter();
-        adapter = new BillDateAdapter(presenter.result, presenter.getSum(), this);
+        adapter = new BillDateAdapter(presenter.getListTemp(), this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setHasFixedSize(true);
@@ -115,5 +124,10 @@ public class ReadFragment extends Fragment
         if (getActivity() instanceof ShowFriendFragment) {
             ((ShowFriendFragment) getActivity()).showFriendFragment(bill);
         }
+    }
+
+    @Override
+    public void addItemToAdapter(@NotNull Bill bill) {
+        adapter.add(bill);
     }
 }

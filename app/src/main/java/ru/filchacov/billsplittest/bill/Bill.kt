@@ -6,7 +6,6 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import ru.filchacov.billsplittest.db.bill.BillDB
 import java.util.Collections.emptyList
 
 @Entity
@@ -28,7 +27,7 @@ open class Bill() : Parcelable {
      var shiftNumber: Int = 0
 
     @SerializedName("totalSum")
-     var totalSum = 0 // Сумма чека
+     var totalSum: Int = 0 // Сумма чека
 
     @SerializedName("ecashTotalSum")
      var ecashTotalSum = 0 // Общая сумма покупки

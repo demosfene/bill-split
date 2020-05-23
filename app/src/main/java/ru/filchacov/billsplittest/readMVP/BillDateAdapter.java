@@ -11,18 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.filchacov.billsplittest.R;
-import ru.filchacov.billsplittest.db.usersBills.UsersBills;
+import ru.filchacov.billsplittest.bill.Bill;
 
 public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDateViewHolder> {
 
-    private List<UsersBills> list;
-    private List<String> sum;
+    private List<Bill> list;
     private OnNoteListener mOnNoteListener;
 
-    BillDateAdapter(List<UsersBills> list, List<String> sum, OnNoteListener onNoteListener) {
+    BillDateAdapter(List<Bill> list, OnNoteListener onNoteListener) {
         this.list = list;
-        this.sum = sum;
         this.mOnNoteListener = onNoteListener;
+    }
+
+    void add(Bill bill) {
+        list.add(bill);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     @NonNull
@@ -33,7 +36,7 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
 
     @Override
     public void onBindViewHolder(@NonNull BillDateViewHolder holder, int position) {
-        holder.bind(list.get(position), sum.get(position));
+        holder.bind(list.get(position));
 
         /*holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -66,9 +69,10 @@ public class BillDateAdapter extends RecyclerView.Adapter<BillDateAdapter.BillDa
 
         }
 
-        void bind (UsersBills usersBills, String sum){
-            textEmail.setText(usersBills.getBillUID());
-            textSum.setText(sum);
+        void bind(Bill bill) {
+            textEmail.setText(bill.getDateTime());
+            String totalSum = String.valueOf(bill.getTotalSum());
+            textSum.setText(String.format("%.2f", Double.parseDouble(totalSum) / 100));
         }
 
         @Override

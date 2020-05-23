@@ -19,10 +19,8 @@ import java.util.UUID;
 
 import ru.filchacov.billsplittest.App;
 import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.bill.Bill;
-import ru.filchacov.billsplittest.db.bill.BillDB;
+import ru.filchacov.billsplittest.db.UserDB;
 import ru.filchacov.billsplittest.db.bill.BillDao;
-import ru.filchacov.billsplittest.db.bill.Item;
 import ru.filchacov.billsplittest.db.bill.ItemDao;
 import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
 import ru.filchacov.billsplittest.db.billOfUser.BillOfUserDao;
@@ -32,9 +30,10 @@ import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChoose;
 import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChooseDao;
 import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBill;
 import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBillDao;
+import ru.filchacov.billsplittest.db.savedFriends.SavedFriends;
+import ru.filchacov.billsplittest.db.savedFriends.SavedFriendsDao;
 import ru.filchacov.billsplittest.db.user.User;
 import ru.filchacov.billsplittest.db.user.UserDao;
-import ru.filchacov.billsplittest.db.UserDB;
 import ru.filchacov.billsplittest.db.usersBills.UsersBills;
 import ru.filchacov.billsplittest.db.usersBills.UsersBillsDao;
 
@@ -51,6 +50,8 @@ class AuthPresenter {
     private ItemFromBillDao itemFromBillDao = userDB.getItemFromBillDao();
     private BillDao billDBDao = userDB.getBillDao();
     private ItemDao itemDao = userDB.getItemDao();
+    private SavedFriendsDao savedFriendsDao = userDB.getSavedFriendsDao();
+    private ArrayList listDateTime = new ArrayList<String>();
 
     AuthPresenter(AuthInterface view) {
         this.view = view;
@@ -78,6 +79,7 @@ class AuthPresenter {
 
 
     void signIn(String email, String password) {
+
         model.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -109,22 +111,7 @@ class AuthPresenter {
                                                     UUID friendIsChooseUuid = UUID.randomUUID();
                                                     BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString(), friendIsChooseUuid.toString());
                                                     billDao.insert(billOfUser);
-                                                    model.getBill(billUuid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                            Bill bill = dataSnapshot.getValue(Bill.class);
-                                                            billDBDao.insert(bill);
-                                                            for(Bill.Item item : bill.getItems()){
-                                                                Item itemDB = new Item(bill.getDateTime(), item.getName(), item.getQuantity(), item.getSum(), item.getPrice());
-                                                                itemDao.insert(itemDB);
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                        }
-                                                    });
+                                                    listDateTime.add(billUuid);
                                                     HashMap billMap = friendsItem.getValue();
                                                     for (Object o : billMap.entrySet()) {
                                                         Map.Entry billMapItem = (Map.Entry) o;
@@ -146,16 +133,22 @@ class AuthPresenter {
                                                                 ItemFromBill itemFromBill = new ItemFromBill(itemUUID.toString(), (String) itemFromBillMap.get("name"), Integer.parseInt(itemFromBillMap.get("price").toString()), Integer.parseInt(itemFromBillMap.get("quantity").toString()), Integer.parseInt(itemFromBillMap.get("sum").toString()));
                                                                 itemFromBillDao.insert(itemFromBill);
                                                             }
+                                                        } else {
+                                                            HashMap savedFriend = (HashMap) billMapItem.getValue();
+                                                            for (Object friend : savedFriend.entrySet()) {
+                                                                Map.Entry friendItem = (Map.Entry) friend;
+                                                                HashMap friendMap = (HashMap) friendItem.getValue();
+                                                                SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString());
+                                                                savedFriendsDao.insert(savedFriends);
+                                                            }
+                                                            billMapItem.getValue();
                                                         }
                                                     }
 
                                                 }
                                                 String phone = Objects.requireNonNull(((HashMap) ds.getValue()).get("phone")).toString();
                                                 User curUser = new User(email, uid, name, phone);
-
-
                                                 List<User> list = userDao.getAll();
-
                                                 userDao.insert(curUser);
                                                 Log.d("Local_DB", "signIn with Network");
                                                 userDao.update(curUser);
@@ -198,6 +191,5 @@ class AuthPresenter {
     void updateUIFromPresenter() {
         updateUI(model.getUser());
     }
-
 
 }

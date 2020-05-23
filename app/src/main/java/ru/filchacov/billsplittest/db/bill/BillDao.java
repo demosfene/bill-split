@@ -10,14 +10,9 @@ import ru.filchacov.billsplittest.bill.Bill;
 
 @Dao
 public interface BillDao {
-//    @Query("SELECT * FROM bill")
-//    List<BillOfUser> getAll();
-//
-//    @Insert
-//    void insert(BillDB billDB);
-//
-//    @Update
-//    void update(BillDB billDB);
+
+    @Query("SELECT EXISTS(SELECT * FROM bill WHERE dateTime = :dateTime LIMIT 1)")
+    int searchBill(String dateTime);
 
     @Insert
     void insert(Bill billDB);
@@ -30,9 +25,6 @@ public interface BillDao {
 
     @Query("SELECT * FROM bill WHERE dateTime = :dateTime")
     Bill getByDateTime(String dateTime);
-
-//    @Delete
-//    void delete(BillDB billDB);
 
     @Query("DELETE FROM bill")
     void delete();
