@@ -38,7 +38,7 @@
                 android:backgroundTint="@color/white"
                 android:hint="@string/your_name"
                 android:textColor="@color/white"
-                android:inputType="textCapSentences"
+                android:inputType="textCapWords"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"

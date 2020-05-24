@@ -39,7 +39,6 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
     private lateinit var buttonInsert: Button
     private lateinit var editTextInsert: EditText
-    private lateinit var btnToMainActivity: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +59,6 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
             (activity as BillInterface).progressBarInvisible()
         }
 
-        btnToMainActivity = view.findViewById(R.id.btn_to_main_activity)
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
@@ -71,9 +69,6 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         buttonInsert = view.findViewById(R.id.button_insert)
         editTextInsert = view.findViewById(R.id.edittext_insert)
 
-        btnToMainActivity.setOnClickListener {
-            goToMainActivity()
-        }
 
         buttonInsert.setOnClickListener {
             if (editTextInsert.text.isEmpty()) {
@@ -110,13 +105,6 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         outState.putParcelable("bill", bill)
     }
 
-    override fun goToMainActivity() {
-        if (activity is MainActivity)
-            (activity as MainActivity).showMainFragment()
-        else {
-            (activity as GoToMainActivity).goToMainActivity()
-        }
-    }
 
     override fun clickFriend(bill: Bill, friendItem: FriendItem) {
         (activity as OnClickFriendToBill).clickFriendToBill(bill, friendItem)

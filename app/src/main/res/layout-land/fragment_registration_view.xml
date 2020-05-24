@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:hint="@string/your_name"
-            android:inputType="textCapSentences"
+            android:inputType="textCapWords"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:textColorLink="@color/white"
