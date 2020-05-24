@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".infoBillMVP.InfoBillView"
-    android:background="#D5DAE3">
+    tools:context=".infoBillMVP.InfoBillView">
 
 
     <ScrollView
@@ -24,7 +23,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -37,14 +35,14 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="111dp"
+        android:layout_height="113dp"
+        android:contentDescription="@string/ContentDescriptionqr_code"
         android:src="@drawable/ic_iconfinder_68_qr_code_4243314"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/ContentDescriptionqr_code" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/split_button"
