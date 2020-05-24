@@ -17,8 +17,8 @@ import ru.filchacov.billsplittest.bill.Bill
 
 class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
-    private var bill: Bill? = null
-    private var presenter: FriendPresenter? = null
+    private lateinit var bill: Bill
+    private lateinit var presenter: FriendPresenter
 
     companion object {
         @JvmStatic
@@ -32,47 +32,52 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         }
     }
 
-    private var mRecyclerView: RecyclerView? = null
-    private var mAdapter: RecyclerView.Adapter<*>? = null
-    private var mLayoutManager: RecyclerView.LayoutManager? = null
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: RecyclerView.Adapter<*>
+    private lateinit var mLayoutManager: RecyclerView.LayoutManager
 
-    private var buttonInsert: Button? = null
-    private var editTextInsert: EditText? = null
-    private var btnToMainActivity: Button? = null
+    private lateinit var buttonInsert: Button
+    private lateinit var editTextInsert: EditText
+    private lateinit var btnToMainActivity: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bill = if (savedInstanceState != null) {
+            savedInstanceState.getParcelable("bill")!!
+        } else {
+            requireArguments().getParcelable("bill")!!
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.add_friends_fragment, container, false)
-        bill = if (savedInstanceState != null) {
-            savedInstanceState.getParcelable("bill")
-        } else {
-            requireArguments().getParcelable("bill")
-        }
 
-        presenter = FriendPresenter(this, bill!!)
+
+        presenter = FriendPresenter(this, bill)
 
 
 
         btnToMainActivity = view.findViewById(R.id.btn_to_main_activity)
         mRecyclerView = view.findViewById(R.id.recyclerView)
-        mRecyclerView!!.setHasFixedSize(true)
+        mRecyclerView.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = FriendAdapter(presenter!!.mFriendList, this)
-        mRecyclerView!!.layoutManager = mLayoutManager
-        mRecyclerView!!.adapter = mAdapter
+        mAdapter = FriendAdapter(presenter.mFriendList, this)
+        mRecyclerView.layoutManager = mLayoutManager
+        mRecyclerView.adapter = mAdapter
 
         buttonInsert = view.findViewById(R.id.button_insert)
         editTextInsert = view.findViewById(R.id.edittext_insert)
 
-        btnToMainActivity!!.setOnClickListener {
+        btnToMainActivity.setOnClickListener {
             goToMainActivity()
         }
 
-        buttonInsert!!.setOnClickListener {
-            if (editTextInsert!!.text.isEmpty()) {
-                editTextInsert!!.error = "Введите имя Вашего друга"
+        buttonInsert.setOnClickListener {
+            if (editTextInsert.text.isEmpty()) {
+                editTextInsert.error = "Введите имя Вашего друга"
             } else {
-                presenter!!.insertItem(editTextInsert!!.text.toString())
-                editTextInsert!!.setText("")
+                presenter.insertItem(editTextInsert.text.toString())
+                editTextInsert.setText("")
             }
         }
 
@@ -90,11 +95,11 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         if (activity is ToolbarSettings) {
             (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.list_of_friends)
         }
-        presenter!!.getFriends()
+        presenter.getFriends()
     }
 
     override fun clickFriend(number: Int) {
-        presenter!!.clickFriend(number)
+        presenter.clickFriend(number)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -115,10 +120,6 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
     }
 
     override fun updateAdapter() {
-        mAdapter!!.notifyDataSetChanged()
+        mAdapter.notifyDataSetChanged()
     }
-
-
-
-
 }
