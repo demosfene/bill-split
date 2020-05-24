@@ -70,7 +70,7 @@ public class Singleton {
                             uid = ((HashMap) ds.getValue()).get("id").toString();
                         }
                         String billUuid;
-                        if(((HashMap) ds.getValue()).get("friends") != null){
+                        if (((HashMap) ds.getValue()).get("friends") != null) {
                             HashMap friends = (HashMap) ((HashMap) ds.getValue()).get("friends");
                             for (Map.Entry<String, HashMap> friendsItem : (Iterable<Map.Entry<String, HashMap>>) friends.entrySet()) {
                                 billUuid = friendsItem.getKey();

@@ -53,7 +53,7 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
         val newFriendItem = FriendItem(R.drawable.ic_android, friendName)
         newFriendItem.setKey(UUID.randomUUID().toString())
         model.setFriend(bill.dateTime, newFriendItem.getKey(), newFriendItem)
-        val savedFriendDB = SavedFriends(billOfUser[0].savedFriend, false, newFriendItem.getKey(), newFriendItem.getmText(), newFriendItem.getSum())
+        val savedFriendDB = SavedFriends(billOfUser[0].billUid, false, newFriendItem.getKey(), newFriendItem.getmText(), newFriendItem.getSum())
         savedFriendsDao.insert(savedFriendDB)
         mFriendList.add(newFriendItem)
         view.updateAdapter()
