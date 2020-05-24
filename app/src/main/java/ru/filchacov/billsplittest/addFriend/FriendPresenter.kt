@@ -1,6 +1,7 @@
 package ru.filchacov.billsplittest.addFriend
 
 import ru.filchacov.billsplittest.App
+import ru.filchacov.billsplittest.MainActivity
 import ru.filchacov.billsplittest.ModelDB
 import ru.filchacov.billsplittest.R
 import ru.filchacov.billsplittest.bill.Bill
@@ -17,10 +18,10 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
     private val billOfUser = billOfUserDao.getBillOfUserByBillUid(bill.dateTime)
 
     fun getFriends() {
-        val savedFriendsList = savedFriendsDao.getFriendsById(billOfUser[0].savedFriend)
+        val savedFriendsList = savedFriendsDao.getFriendsById(billOfUser[0].billUid)
         for (friend in savedFriendsList) {
             val friendItem = FriendItem(R.drawable.ic_android, friend.name, friend.totalSum)
-            friendItem.setKey(friend.id)
+            friendItem.setKey(friend.key)
             friendItem.setisSelected(friend.isSelected)
             mFriendList.add(friendItem)
         }

@@ -70,21 +70,20 @@ public class Singleton {
                             uid = ((HashMap) ds.getValue()).get("id").toString();
                         }
                         String billUuid;
-                        HashMap friends = (HashMap) ((HashMap) ds.getValue()).get("friends");
-                        if (friends != null) {
+                        if(((HashMap) ds.getValue()).get("friends") != null){
+                            HashMap friends = (HashMap) ((HashMap) ds.getValue()).get("friends");
                             for (Map.Entry<String, HashMap> friendsItem : (Iterable<Map.Entry<String, HashMap>>) friends.entrySet()) {
                                 billUuid = friendsItem.getKey();
                                 UsersBills usersBills = new UsersBills(billUuid);
                                 usersBillsDao.insert(usersBills);
-                                UUID friendUuid = UUID.randomUUID();
-                                BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString());
+                                BillOfUser billOfUser = new BillOfUser(billUuid, billUuid);
                                 billDao.insert(billOfUser);
                                 HashMap billMap = friendsItem.getValue();
                                 for (Object o : billMap.entrySet()) {
                                     Map.Entry billMapItem = (Map.Entry) o;
                                     if (!billMapItem.getKey().equals("savedFriends")) {
                                         UUID chooseUUID = UUID.randomUUID();
-                                        FriendsIsChoose friendsIsChoose = new FriendsIsChoose(friendUuid.toString(), (String) billMapItem.getKey(), chooseUUID.toString());
+                                        FriendsIsChoose friendsIsChoose = new FriendsIsChoose(billUuid, (String) billMapItem.getKey(), chooseUUID.toString());
                                         friendsIsChooseDao.insert(friendsIsChoose);
                                         ArrayList chooseList = (ArrayList) billMapItem.getValue();
                                         for (int i = 0; i < chooseList.size(); i++) {
@@ -105,7 +104,7 @@ public class Singleton {
                                         for (Object friend : savedFriend.entrySet()) {
                                             Map.Entry friendItem = (Map.Entry) friend;
                                             HashMap friendMap = (HashMap) friendItem.getValue();
-                                            SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
+                                            SavedFriends savedFriends = new SavedFriends(billUuid, (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
                                             savedFriendsDao.insert(savedFriends);
                                         }
                                         billMapItem.getValue();

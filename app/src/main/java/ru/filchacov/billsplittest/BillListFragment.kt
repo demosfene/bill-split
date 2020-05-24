@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.View.INVISIBLE
-import android.widget.AdapterView.AdapterContextMenuInfo
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -89,7 +88,13 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
     override fun onResume() {
         super.onResume()
         if (activity is ToolbarSettings) {
-            (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.position_selection)
+            (activity as ToolbarSettings).setToolbarTitle(R.string.position_selection)
+        }
+        if (activity is ShowUpButton) {
+            (activity as ShowUpButton).showUpButton(true)
+        }
+        if (activity is MainActivityInterface) {
+            (activity as MainActivityInterface?)!!.navigationDrawerInvisible()
         }
     }
 

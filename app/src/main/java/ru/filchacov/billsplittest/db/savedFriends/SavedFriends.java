@@ -12,7 +12,7 @@ import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(entity = BillOfUser.class, parentColumns = "savedFriend", childColumns = "id", onDelete = CASCADE))
+@Entity(foreignKeys = @ForeignKey(entity = BillOfUser.class, parentColumns = "billUid", childColumns = "id", onDelete = CASCADE))
 public class SavedFriends {
 
     private String id;

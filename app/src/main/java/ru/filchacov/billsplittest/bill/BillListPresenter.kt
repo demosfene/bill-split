@@ -1,11 +1,12 @@
 package ru.filchacov.billsplittest.bill
 
-import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.ModelDB
+import ru.filchacov.billsplittest.addFriend.FriendItem
+import ru.filchacov.billsplittest.db.savedFriends.SavedFriends
 
 class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
 
@@ -15,10 +16,13 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
         mFriendItem = friendItem
     }
 
+    private val model = ModelDB()
+    private val userDB = App.getInstance().database
+    private val savedFriendsDao = userDB.savedFriendsDao
     var listBill = ArrayList<BillUser>()
     private var listBillDB = ArrayList<BillUser>()
-    private val model = ModelDB()
     private var totalSum = 0
+
 
     fun initBillList() {
         bill
@@ -34,6 +38,8 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
             model.setBillForFriend(bill.dateTime, mFriendItem?.getKey(), listBillDB)
             model.isSelected(bill.dateTime, mFriendItem?.getKey())
             model.setSumToFriend(bill.dateTime, mFriendItem?.getKey(), totalSum)
+            val updateFriend = SavedFriends(bill.dateTime, true, mFriendItem!!.getKey(), mFriendItem!!.getmText(), totalSum)
+            savedFriendsDao.update(updateFriend)
             view.exitFromBill(bill)
         }else{
             view.showSumZero()
@@ -84,7 +90,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
     }
 
     fun loadBillList() {
-        model.getBillForFriend(bill.dateTime, mFriendItem?.getmText()!!)
+        model.getBillForFriend(bill.dateTime, mFriendItem?.getKey())
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("Not yet implemented")

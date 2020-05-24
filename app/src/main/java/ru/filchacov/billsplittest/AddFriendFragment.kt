@@ -50,7 +50,7 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
         presenter = FriendPresenter(this, bill!!)
 
-        presenter!!.getFriends()
+
 
         btnToMainActivity = view.findViewById(R.id.btn_to_main_activity)
         mRecyclerView = view.findViewById(R.id.recyclerView)
@@ -90,6 +90,7 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         if (activity is ToolbarSettings) {
             (activity as ToolbarSettings?)!!.setToolbarTitle(R.string.list_of_friends)
         }
+        presenter!!.getFriends()
     }
 
     override fun clickFriend(number: Int) {
