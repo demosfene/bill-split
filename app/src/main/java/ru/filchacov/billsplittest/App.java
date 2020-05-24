@@ -10,6 +10,7 @@ import ru.filchacov.billsplittest.db.UserDB;
 
 public class App extends Application {
     public static App instance;
+    private Singleton singleton;
 
     private UserDB database;
 
@@ -20,8 +21,7 @@ public class App extends Application {
         database = Room.databaseBuilder(this, UserDB.class, "User.db")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries().build();
-
-
+        createSingleton();
         // Create an InitializerBuilder
         Stetho.InitializerBuilder initializerBuilder =
                 Stetho.newInitializerBuilder(this);
@@ -43,12 +43,20 @@ public class App extends Application {
         Stetho.initialize(initializer);
     }
 
+    private void createSingleton() {
+        singleton = new Singleton();
+    }
+
     public static App getInstance() {
         return instance;
     }
 
     public UserDB getDatabase() {
         return database;
+    }
+
+    public  Singleton getSingleton(){
+        return singleton;
     }
 
 }

@@ -3,6 +3,7 @@ package ru.filchacov.billsplittest.readMVP
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.ModelDB
 import ru.filchacov.billsplittest.bill.Bill
@@ -47,11 +48,12 @@ class ReadPresenter(private val view: ReadInterface) {
             while (listTemp.size != result.size) {
                 for (usersBills in result) {
                     if (billRepository.searchBill(usersBills.billUID) == 1) {
-                        CoroutineScope(Dispatchers.Main).launch {
+                        withContext(Dispatchers.Main) {
                             val bill = billRepository.getByDateTime(usersBills.billUID)
                             if (listTemp.none { it.dateTime == bill.dateTime }) {
                                 listTemp.add(bill)
                                 updateData()
+//                                view.addItemToAdapter(bill)
                             }
                         }
                     }
@@ -63,6 +65,8 @@ class ReadPresenter(private val view: ReadInterface) {
 
     fun onNoteClick(position: Int) {
         val bill = listTemp[position]
+        val items = itemDao.getItems(bill.dateTime)
+        bill.items = items
         view.showFriendFragment(bill)
     }
 
