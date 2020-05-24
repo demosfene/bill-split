@@ -28,6 +28,7 @@ public class SavedFriends {
         this.isSelected = isSelected;
         this.key = key;
         this.name = name;
+        this.totalSum = totalSum;
     }
 
     public int getTotalSum() {

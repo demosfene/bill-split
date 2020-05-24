@@ -56,14 +56,14 @@ public class ModelDB {
                 .setValue(listBillDB);
     }
 
-    public void setFriend(String dateTime, FriendItem friendItem) {
+    public void setFriend(String dateTime, String key, FriendItem friendItem) {
         assert user != null;
         database.getReference("users")
                 .child(user.getUid())
                 .child("friends")
                 .child(dateTime)
                 .child("savedFriends")
-                .push()
+                .child(key)
                 .setValue(friendItem);
     }
 

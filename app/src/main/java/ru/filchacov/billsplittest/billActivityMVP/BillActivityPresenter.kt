@@ -16,6 +16,7 @@ import ru.filchacov.billsplittest.bill.Bill
 import ru.filchacov.billsplittest.billInfo.BillService
 import ru.filchacov.billsplittest.db.bill.Item
 import ru.filchacov.billsplittest.db.billOfUser.BillOfUser
+import ru.filchacov.billsplittest.db.savedFriends.SavedFriends
 import ru.filchacov.billsplittest.db.usersBills.UsersBills
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +33,7 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
     private val itemDao = userDB.itemDao
     private val usersBillsDao = userDB.usersBillsDao
     private val billOfUserDao = userDB.billOfUserDao
+    private val savedFriendsDao = userDB.savedFriendsDao
 
     fun getBillInfo() {
 
@@ -96,10 +98,15 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
                     }
                     val usersBills = UsersBills(dateTime)
                     usersBillsDao.insert(usersBills)
-                    val billOfUser = BillOfUser(dateTime, UUID.randomUUID().toString())
+                    val billUUID = UUID.randomUUID().toString()
+                    val billOfUser = BillOfUser(dateTime, billUUID)
                     billOfUserDao.insert(billOfUser)
                     if(userDao.getByEmail(modelDB.auth.currentUser?.email) != null) {
-                        modelDB.setFriend(dateTime, FriendItem(mText = userDao.getByUid(modelDB.auth.currentUser?.uid)?.name))
+                        val friendKey = UUID.randomUUID().toString()
+                        val friendName = userDao.getByUid(modelDB.auth.currentUser?.uid)?.name
+                        modelDB.setFriend(dateTime, friendKey,FriendItem(mText = friendName))
+                        val savedFriendDB = SavedFriends(billUUID, false, friendKey, friendName, 0)
+                        savedFriendsDao.insert(savedFriendDB)
                     }
                     view.showInfoBill(bill)
                 } else {

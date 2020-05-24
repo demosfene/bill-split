@@ -7,7 +7,7 @@ class FriendItem(
         private var mImageResource: Int = 0,
         private var mText: String? = "",
         private var sum:Int = 0
-) : Parcelable {
+): Parcelable{
 
 
     private var isSelected: Boolean = false
@@ -22,7 +22,6 @@ class FriendItem(
         key = parcel.readString().toString()
     }
 
-
     fun getKey(): String {
         return key
     }
@@ -30,7 +29,6 @@ class FriendItem(
     fun setKey(key: String) {
         this.key = key
     }
-
 
     fun getisSelected(): Boolean {
         return isSelected
@@ -46,6 +44,14 @@ class FriendItem(
 
     fun getmText(): String? {
         return mText
+    }
+
+    fun setSum(sum: Int){
+        this.sum = sum
+    }
+
+    fun getSum(): Int{
+        return sum
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

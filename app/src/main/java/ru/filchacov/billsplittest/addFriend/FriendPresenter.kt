@@ -4,6 +4,7 @@ import ru.filchacov.billsplittest.App
 import ru.filchacov.billsplittest.ModelDB
 import ru.filchacov.billsplittest.R
 import ru.filchacov.billsplittest.bill.Bill
+import ru.filchacov.billsplittest.db.savedFriends.SavedFriends
 import java.util.*
 
 class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
@@ -13,9 +14,9 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
     private val userDB = App.getInstance().database
     private val savedFriendsDao = userDB.savedFriendsDao
     private val billOfUserDao = userDB.billOfUserDao
+    private val billOfUser = billOfUserDao.getBillOfUserByBillUid(bill.dateTime)
 
     fun getFriends() {
-        val billOfUser = billOfUserDao.getBillOfUserByBillUid(bill.dateTime)
         val savedFriendsList = savedFriendsDao.getFriendsById(billOfUser[0].savedFriend)
         for (friend in savedFriendsList) {
             val friendItem = FriendItem(R.drawable.ic_android, friend.name, friend.totalSum)
@@ -48,8 +49,11 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
     }
 
     fun insertItem(friendName: String) {
-        model.setFriend(bill.dateTime, FriendItem(R.drawable.ic_android, friendName))
-
+        val newFriendItem = FriendItem(R.drawable.ic_android, friendName)
+        newFriendItem.setKey(UUID.randomUUID().toString())
+        model.setFriend(bill.dateTime, newFriendItem.getKey(), newFriendItem)
+        val savedFriendDB = SavedFriends(billOfUser[0].savedFriend, false, newFriendItem.getKey(), newFriendItem.getmText(), newFriendItem.getSum())
+        savedFriendsDao.insert(savedFriendDB)
     }
 
     fun clickFriend(number: Int) {

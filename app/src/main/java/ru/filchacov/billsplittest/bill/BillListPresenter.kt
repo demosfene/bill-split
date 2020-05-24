@@ -30,7 +30,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
 
     fun saveBillForFriend() {
         if (totalSum != 0) {
-            model.setBillForFriend(bill.dateTime, mFriendItem?.getmText().toString(), listBillDB)
+            model.setBillForFriend(bill.dateTime, mFriendItem?.getKey(), listBillDB)
             model.isSelected(bill.dateTime, mFriendItem?.getKey())
             model.setSumToFriend(bill.dateTime, mFriendItem?.getKey(), totalSum)
             view.exitFromBill(bill)
