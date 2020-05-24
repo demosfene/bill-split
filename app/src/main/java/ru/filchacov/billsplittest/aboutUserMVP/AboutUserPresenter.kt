@@ -35,39 +35,24 @@ class AboutUserPresenter(var view: AboutUserInterface) {
     }
 
     fun updateUser(name: String, email:String, phone: String, password: String, oldPassword: String) {
-        val newUser = userDao.getByUid(model.user.uid)
-        userDao.delete(newUser)
-        newUser.name = name
-        newUser.email = email
-        newUser.phone = phone
-        userDao.insert(newUser)
-        val test = userDao.getByUid(model.user.uid)
-        val testList = userDao.all
-
         // Редактирование в FireBase
         if (email == "" && password != "") {
-            updatePassword(password)
+            updatePassword(password, email, name, phone)
         } else if (password == "" && email != ""){
-            updateEmail(email)
+            updateEmail(email, name, phone)
         } else if (!(password == "" && email == "")) {
-            updatePasswordEmail(password, email)
+            updatePasswordEmail(password, email, name, phone)
         }
-        model.authReference.child("users").child(model.user.uid).setValue(
-                User(email, model.user.uid, name, phone))
-                .addOnCompleteListener {
-                    if (it.isSuccessful) Log.d("UpdUser", "FBDatabase update")
-                    else Log.d("UpdUser", it.exception.toString() + "FBDATABASE")
-                }
     }
 
-    private fun updatePasswordEmail(password: String, email: String) {
+    private fun updatePasswordEmail(password: String, email: String, name: String, phone: String) {
         if (password != "") {
             model.user.updatePassword(password).addOnCompleteListener(object: OnCompleteListener<Void>{
                 override fun onComplete(p0: Task<Void>) {
                     if (p0.isSuccessful) {
                         Log.d("UpdUser", "Password update")
-                        var oldUser = FirebaseAuth.getInstance().currentUser
-                        var credential = model.user.email?.let {
+                        val oldUser = FirebaseAuth.getInstance().currentUser
+                        val credential = model.user.email?.let {
                             EmailAuthProvider .getCredential(it, password)
                         }
                         if (credential != null) {
@@ -77,7 +62,23 @@ class AboutUserPresenter(var view: AboutUserInterface) {
                                     oldUser.updateEmail(email).addOnCompleteListener {
                                         if (it.isSuccessful) {
                                             Log.d("UpdUser", "Email update")
-                                        } else Log.d("UpdUser", it.exception.toString() + "EMAIL")
+                                            model.authReference.child("users").child(model.user.uid).setValue(
+                                                    User(email, model.user.uid, name, phone))
+                                                    .addOnCompleteListener {
+                                                        if (it.isSuccessful) {
+                                                            Log.d("UpdUser", "FBDatabase update")
+                                                            val newUser = userDao.getByUid(model.user.uid)
+                                                            userDao.delete(newUser)
+                                                            newUser.name = name
+                                                            newUser.email = email
+                                                            newUser.phone = phone
+                                                            userDao.insert(newUser)
+                                                        }
+                                                        else Log.d("UpdUser", it.exception.toString() + "FBDATABASE")
+                                                    }
+                                        } else {
+                                            Log.d("UpdUser", it.exception.toString() + "EMAIL")
+                                        }
                                     }
                                 } else Log.d("UpdUser", it.exception.toString() + "CREDENTIAL")
                             }
@@ -88,17 +89,58 @@ class AboutUserPresenter(var view: AboutUserInterface) {
         }
     }
 
-    private fun updatePassword(password: String) {
+    private fun updatePassword(password: String, email: String, name: String, phone: String) {
         model.user.updatePassword(password).addOnCompleteListener {
-            if (it.isSuccessful)Log.d("UpdUser", "Password update")
+            if (it.isSuccessful) {
+                Log.d("UpdUser", "Password update")
+                model.authReference.child("users").child(model.user.uid).setValue(
+                        User(email, model.user.uid, name, phone))
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Log.d("UpdUser", "FBDatabase update")
+                                val newUser = userDao.getByUid(model.user.uid)
+                                userDao.delete(newUser)
+                                newUser.name = name
+                                newUser.email = email
+                                newUser.phone = phone
+                                userDao.insert(newUser)
+                            }
+                            else Log.d("UpdUser", it.exception.toString() + "FBDATABASE")
+                        }
+            }
             else Log.d("UpdUser", it.exception.toString() + "PASSWORD_SINGE")
         }
     }
 
-    private fun updateEmail(email: String) {
+    private fun updateEmail(email: String, name: String, phone: String) {
         model.user.updateEmail(email).addOnCompleteListener {
-            if (it.isSuccessful)Log.d("UpdUser", "Email update")
-            else Log.d("UpdUser", it.exception.toString() + "EMAIL_SINGE")
+            if (it.isSuccessful) {
+                Log.d("UpdUser", "Email update")
+                model.authReference.child("users").child(model.user.uid).setValue(
+                        User(email, model.user.uid, name, phone))
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Log.d("UpdUser", "FBDatabase update")
+                                val newUser = userDao.getByUid(model.user.uid)
+                                userDao.delete(newUser)
+                                newUser.name = name
+                                newUser.email = email
+                                newUser.phone = phone
+                                userDao.insert(newUser)
+                            }
+                            else {
+                                Log.d("UpdUser", it.exception.toString() + "FBDATABASE")
+                            }
+                        }
+            }
+            else{
+                Log.d("UpdUser", it.exception.toString() + "EMAIL_SINGE")
+                if (it.exception.toString()
+                                .equals("com.google.firebase.auth.FirebaseAuthUserCollisionException:" +
+                                        " The email address is already in use by another account.")) {
+                    view.errorUpdateEmail()
+                }
+            }
         }
     }
 }

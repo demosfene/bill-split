@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@drawable/back_registration"
     tools:context=".aboutUserMVP.AboutUserView">
 
     <ImageView
@@ -34,7 +34,6 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:elevation="2dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -46,6 +45,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:backgroundTint="@color/white"
                 android:ems="10" />
 
 
@@ -56,6 +58,9 @@
                 android:layout_marginBottom="30dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +74,10 @@
                 android:layout_marginBottom="30dp"
                 android:hint="@string/old_password"
                 android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:backgroundTint="@color/white"
                 android:ems="10" />
 
             <EditText
@@ -79,6 +88,10 @@
                 android:ems="10"
                 android:hint="@string/text_new_password"
                 android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +101,9 @@
                 android:id="@+id/aUPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:backgroundTint="@color/white"
                 android:layout_marginBottom="30dp"
                 android:ems="10"
                 android:inputType="phone" />
@@ -97,7 +113,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="70dp"
-                android:background="#FFFFFF"
+                android:background="@drawable/design_button"
                 android:elevation="2dp"
                 android:text="@string/saveButton"
                 android:translationZ="4dp" />

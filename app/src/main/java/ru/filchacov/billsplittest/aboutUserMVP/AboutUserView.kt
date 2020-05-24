@@ -77,8 +77,14 @@ class AboutUserView : Fragment(), AboutUserInterface {
                         oldPassword!!.text.toString().trim())
                 Toast.makeText(activity?.applicationContext,
                         "Изменеия сохранены", Toast.LENGTH_SHORT).show()
-                (activity as MainActivityInterface).setHeaderEmail(email = email!!.text.toString(), name = name!!.text.toString())
+                (activity as MainActivityInterface).setHeaderEmail(
+                        email = email!!.text.toString(), name = name!!.text.toString())
             }
         }
+    }
+
+    override fun errorUpdateEmail() {
+        Toast.makeText(activity?.applicationContext, "Такой email уже занят!",
+                Toast.LENGTH_SHORT).show()
     }
 }

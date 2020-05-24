@@ -101,48 +101,51 @@ class AuthPresenter {
                                                 }
                                                 String billUuid;
                                                 HashMap friends = (HashMap) ((HashMap) ds.getValue()).get("friends");
-                                                for (Map.Entry<String, HashMap> friendsItem : (Iterable<Map.Entry<String, HashMap>>) friends.entrySet()) {
-                                                    billUuid = friendsItem.getKey();
-                                                    UsersBills usersBills = new UsersBills(billUuid);
-                                                    usersBillsDao.insert(usersBills);
-                                                    UUID friendUuid = UUID.randomUUID();
-                                                    BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString());
-                                                    billDao.insert(billOfUser);
-                                                    listDateTime.add(billUuid);
-                                                    HashMap billMap = friendsItem.getValue();
-                                                    for (Object o : billMap.entrySet()) {
-                                                        Map.Entry billMapItem = (Map.Entry) o;
-                                                        if (!billMapItem.getKey().equals("savedFriends")) {
-                                                            UUID chooseUUID = UUID.randomUUID();
-                                                            FriendsIsChoose friendsIsChoose = new FriendsIsChoose(friendUuid.toString(), (String) billMapItem.getKey(), chooseUUID.toString());
-                                                            friendsIsChooseDao.insert(friendsIsChoose);
-                                                            ArrayList chooseList = (ArrayList) billMapItem.getValue();
-                                                            for (int i = 0; i < chooseList.size(); i++) {
-                                                                HashMap friendBillItem = (HashMap) chooseList.get(i);
-                                                                UUID itemUUID = UUID.randomUUID();
-                                                                FriendsBillList friendsBillList =
-                                                                        new FriendsBillList(
-                                                                                chooseUUID.toString(),
-                                                                                Integer.parseInt(friendBillItem.get("amount").toString()),
-                                                                                itemUUID.toString());
-                                                                friendsBillListDao.insert(friendsBillList);
-                                                                HashMap itemFromBillMap = (HashMap) friendBillItem.get("item");
-                                                                ItemFromBill itemFromBill = new ItemFromBill(itemUUID.toString(), (String) itemFromBillMap.get("name"), Integer.parseInt(itemFromBillMap.get("price").toString()), Integer.parseInt(itemFromBillMap.get("quantity").toString()), Integer.parseInt(itemFromBillMap.get("sum").toString()));
-                                                                itemFromBillDao.insert(itemFromBill);
+                                                if (friends != null) {
+                                                    for (Map.Entry<String, HashMap> friendsItem : (Iterable<Map.Entry<String, HashMap>>) friends.entrySet()) {
+                                                        billUuid = friendsItem.getKey();
+                                                        UsersBills usersBills = new UsersBills(billUuid);
+                                                        usersBillsDao.insert(usersBills);
+                                                        UUID friendUuid = UUID.randomUUID();
+                                                        BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString());
+                                                        billDao.insert(billOfUser);
+                                                        listDateTime.add(billUuid);
+                                                        HashMap billMap = friendsItem.getValue();
+                                                        for (Object o : billMap.entrySet()) {
+                                                            Map.Entry billMapItem = (Map.Entry) o;
+                                                            if (!billMapItem.getKey().equals("savedFriends")) {
+                                                                UUID chooseUUID = UUID.randomUUID();
+                                                                FriendsIsChoose friendsIsChoose = new FriendsIsChoose(friendUuid.toString(), (String) billMapItem.getKey(), chooseUUID.toString());
+                                                                friendsIsChooseDao.insert(friendsIsChoose);
+                                                                ArrayList chooseList = (ArrayList) billMapItem.getValue();
+                                                                for (int i = 0; i < chooseList.size(); i++) {
+                                                                    HashMap friendBillItem = (HashMap) chooseList.get(i);
+                                                                    UUID itemUUID = UUID.randomUUID();
+                                                                    FriendsBillList friendsBillList =
+                                                                            new FriendsBillList(
+                                                                                    chooseUUID.toString(),
+                                                                                    Integer.parseInt(friendBillItem.get("amount").toString()),
+                                                                                    itemUUID.toString());
+                                                                    friendsBillListDao.insert(friendsBillList);
+                                                                    HashMap itemFromBillMap = (HashMap) friendBillItem.get("item");
+                                                                    ItemFromBill itemFromBill = new ItemFromBill(itemUUID.toString(), (String) itemFromBillMap.get("name"), Integer.parseInt(itemFromBillMap.get("price").toString()), Integer.parseInt(itemFromBillMap.get("quantity").toString()), Integer.parseInt(itemFromBillMap.get("sum").toString()));
+                                                                    itemFromBillDao.insert(itemFromBill);
+                                                                }
+                                                            } else {
+                                                                HashMap savedFriend = (HashMap) billMapItem.getValue();
+                                                                for (Object friend : savedFriend.entrySet()) {
+                                                                    Map.Entry friendItem = (Map.Entry) friend;
+                                                                    HashMap friendMap = (HashMap) friendItem.getValue();
+                                                                    SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
+                                                                    savedFriendsDao.insert(savedFriends);
+                                                                }
+                                                                billMapItem.getValue();
                                                             }
-                                                        } else {
-                                                            HashMap savedFriend = (HashMap) billMapItem.getValue();
-                                                            for (Object friend : savedFriend.entrySet()) {
-                                                                Map.Entry friendItem = (Map.Entry) friend;
-                                                                HashMap friendMap = (HashMap) friendItem.getValue();
-                                                                SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
-                                                                savedFriendsDao.insert(savedFriends);
-                                                            }
-                                                            billMapItem.getValue();
                                                         }
-                                                    }
 
+                                                    }
                                                 }
+
                                                 String phone = Objects.requireNonNull(((HashMap) ds.getValue()).get("phone")).toString();
                                                 User curUser = new User(email, uid, name, phone);
                                                 List<User> list = userDao.getAll();
