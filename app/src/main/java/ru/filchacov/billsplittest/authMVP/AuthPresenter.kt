@@ -1,89 +1,45 @@
-package ru.filchacov.billsplittest.authMVP;
+package ru.filchacov.billsplittest.authMVP
 
-import android.net.Uri;
-import android.util.Log;
+import android.util.Log
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.filchacov.billsplittest.App
+import ru.filchacov.billsplittest.ModelDB
+import ru.filchacov.billsplittest.Singleton
+import java.util.*
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-
-import ru.filchacov.billsplittest.App;
-import ru.filchacov.billsplittest.ModelDB;
-import ru.filchacov.billsplittest.db.UserDB;
-import ru.filchacov.billsplittest.db.bill.BillDao;
-import ru.filchacov.billsplittest.db.bill.ItemDao;
-import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
-import ru.filchacov.billsplittest.db.billOfUser.BillOfUserDao;
-import ru.filchacov.billsplittest.db.friendsBillList.FriendsBillList;
-import ru.filchacov.billsplittest.db.friendsBillList.FriendsBillListDao;
-import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChoose;
-import ru.filchacov.billsplittest.db.friendsIsChoose.FriendsIsChooseDao;
-import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBill;
-import ru.filchacov.billsplittest.db.itemFromBill.ItemFromBillDao;
-import ru.filchacov.billsplittest.db.savedFriends.SavedFriends;
-import ru.filchacov.billsplittest.db.savedFriends.SavedFriendsDao;
-import ru.filchacov.billsplittest.db.user.User;
-import ru.filchacov.billsplittest.db.user.UserDao;
-import ru.filchacov.billsplittest.db.usersBills.UsersBills;
-import ru.filchacov.billsplittest.db.usersBills.UsersBillsDao;
-
-class AuthPresenter {
-    private ModelDB model = new ModelDB();
-    private AuthInterface view;
-    private UserDB userDB = App.getInstance().getDatabase();
-    private UserDao userDao = userDB.getUserDao();
-    private User currentUser;
-    private UsersBillsDao usersBillsDao = userDB.getUsersBillsDao();
-    private BillOfUserDao billDao = userDB.getBillOfUserDao();
-    private FriendsIsChooseDao friendsIsChooseDao = userDB.getFriendsIsChooseDao();
-    private FriendsBillListDao friendsBillListDao = userDB.getFriendsBillListDao();
-    private ItemFromBillDao itemFromBillDao = userDB.getItemFromBillDao();
-    private SavedFriendsDao savedFriendsDao = userDB.getSavedFriendsDao();
-    private ArrayList listDateTime = new ArrayList<String>();
-
-    AuthPresenter(AuthInterface view) {
-        this.view = view;
-    }
-
-    void init() {
-        model.getAuthReference();
-        if (userDao.getByUid(model.getAuth().getUid()) != null) {
-            currentUser = userDao.getByUid(model.getAuth().getUid());
-            String name = currentUser.getName(); //model.getUser().getDisplayName();
-            String email = currentUser.getEmail(); //model.getUser().getEmail();
-            String uid = currentUser.getUserUid(); // model.getUser().getUid();
-            view.onClickRead();
-            view.onLocalEnabled(name);
-        } else if (model.getUser() != null) {
-            String name = model.getUser().getDisplayName();
-            String email = model.getUser().getEmail();
-            Uri photoUrl = model.getUser().getPhotoUrl();
-            boolean emailVerified = model.getUser().isEmailVerified();
-            String uid = model.getUser().getUid();
-            view.onClickRead();
+internal class AuthPresenter(private val view: AuthInterface) {
+    private val model = ModelDB()
+    private val userDB = App.getInstance().database
+    private val userDao = userDB.userDao
+    private lateinit var currentUser: FirebaseUser
+    private val usersBillsDao = userDB.usersBillsDao
+    private val singleton = App.getInstance().singleton
+    private val billDao = userDB.billOfUserDao
+    private val friendsIsChooseDao = userDB.friendsIsChooseDao
+    private val friendsBillListDao = userDB.friendsBillListDao
+    private val itemFromBillDao = userDB.itemFromBillDao
+    private val savedFriendsDao = userDB.savedFriendsDao
+    private val listDateTime: ArrayList<*> = ArrayList<String>()
+    fun init() {
+        model.authReference
+        if (model.user != null) {
+            view.onClickRead()
         }
-
     }
 
-
-    void signIn(String email, String password) {
-
-        model.getAuth().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = model.getAuth().getCurrentUser();
-                        usersBillsDao.delete();
-                        model.getUserData()
+    fun signIn(email: String?, password: String?) {
+        model.auth.signInWithEmailAndPassword(email!!, password!!)
+                .addOnCompleteListener { task: Task<AuthResult?> ->
+                    if (task.isSuccessful) {
+                        val user = model.auth.currentUser
+                        usersBillsDao.delete()
+                        /* model.getUserData()
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -162,28 +118,37 @@ class AuthPresenter {
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                     }
-                                });
-
+                                });*/singleton.someMethod(user, email)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            var b = true
+                            while (b) {
+                                if (singleton.state == Singleton.COMPlETE) {
+                                    withContext(Dispatchers.Main) {
+                                        view.btnEnable(true)
+                                        updateUI(user)
+                                    }
+                                    b = false
+                                }
+                            }
+                        }
                         //Toast.LENGTH_LONG).show();
-
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.d("Local_DB", "signIn not completed");
-                        updateUI(null);
-                        view.btnEnable(true);
+                        Log.d("Local_DB", "signIn not completed")
+                        updateUI(null)
+                        view.btnEnable(true)
                     }
-
-                });
+                }
     }
 
-    private void updateUI(FirebaseUser user) {
+    private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            view.userValid(user);
-        } else view.userNotValid();
+            view.userValid(user)
+        } else view.userNotValid()
     }
 
-    void updateUIFromPresenter() {
-        updateUI(model.getUser());
+    fun updateUIFromPresenter() {
+        updateUI(model.user)
     }
 
 }

@@ -25,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 import ru.filchacov.billsplittest.MainActivity;
 import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
-import ru.filchacov.billsplittest.readMVP.ReadFragment;
 import ru.filchacov.billsplittest.RegistrationView;
 import ru.filchacov.billsplittest.ToolbarSettings;
+import ru.filchacov.billsplittest.readMVP.ReadFragment;
 
 public class AuthFragment extends Fragment implements AuthInterface {
     private EditText ETemail;
@@ -73,7 +73,7 @@ public class AuthFragment extends Fragment implements AuthInterface {
         super.onStart();
 
         signButton.setOnClickListener(v -> {
-            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()){
+            if (!ETemail.getText().toString().isEmpty() && !ETpassword.getText().toString().isEmpty()) {
                 presenter.signIn(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
                 btnEnable(false);
 

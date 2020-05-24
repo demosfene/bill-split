@@ -54,6 +54,8 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
         model.setFriend(bill.dateTime, newFriendItem.getKey(), newFriendItem)
         val savedFriendDB = SavedFriends(billOfUser[0].savedFriend, false, newFriendItem.getKey(), newFriendItem.getmText(), newFriendItem.getSum())
         savedFriendsDao.insert(savedFriendDB)
+        mFriendList.add(newFriendItem)
+        view.updateAdapter()
     }
 
     fun clickFriend(number: Int) {

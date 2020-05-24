@@ -21,6 +21,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
     private var totalSum = 0
 
     fun initBillList() {
+        bill
         for (item in bill.items) {
             val billUser = BillUser()
             billUser.setBillItem(item)
