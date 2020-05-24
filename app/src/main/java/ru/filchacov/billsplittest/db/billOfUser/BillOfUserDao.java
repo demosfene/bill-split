@@ -13,6 +13,9 @@ public interface BillOfUserDao {
     @Query("SELECT * FROM billofuser")
     List<BillOfUser> getAll();
 
+    @Query("SELECT * FROM billofuser WHERE billUid = :billUid")
+    List<BillOfUser> getBillOfUserByBillUid(String billUid);
+
     @Insert
     void insert(BillOfUser billOfUser);
 

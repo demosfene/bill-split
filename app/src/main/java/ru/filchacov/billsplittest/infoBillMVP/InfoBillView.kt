@@ -82,6 +82,10 @@ class InfoBillView : Fragment(), BillLListInterface {
         // Nothing to do
     }
 
+    override fun showSumZero() {
+        TODO("Not yet implemented")
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable("bill", bill)

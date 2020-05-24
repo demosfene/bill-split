@@ -87,6 +87,18 @@ public class ModelDB {
                 .setValue(true);
     }
 
+    public void setSumToFriend(String dateTime, String friendUid, int sum){
+        database.getReference("users")
+                .child(user.getUid())
+                .child("friends")
+                .child(dateTime)
+                .child("savedFriends")
+                .child(friendUid)
+                .child("sum")
+                .setValue(sum);
+
+    }
+
     public DatabaseReference getBillForFriend(String dateTime, String friendName) {
         return database.getReference("users")
                 .child(user.getUid())

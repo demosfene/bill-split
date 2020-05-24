@@ -12,10 +12,9 @@ import ru.filchacov.billsplittest.db.billOfUser.BillOfUser;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(entity = BillOfUser.class, parentColumns = "friendsIsChooseUid", childColumns = "id", onDelete = CASCADE),
+@Entity(foreignKeys = @ForeignKey(entity = BillOfUser.class, parentColumns = "savedFriend", childColumns = "id", onDelete = CASCADE),
         indices = @Index(value = {"choose"}, unique = true))
 public class FriendsIsChoose {
-
     private String id;
     private String name;
     @PrimaryKey

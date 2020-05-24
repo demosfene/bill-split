@@ -48,8 +48,6 @@ class AuthPresenter {
     private FriendsIsChooseDao friendsIsChooseDao = userDB.getFriendsIsChooseDao();
     private FriendsBillListDao friendsBillListDao = userDB.getFriendsBillListDao();
     private ItemFromBillDao itemFromBillDao = userDB.getItemFromBillDao();
-    private BillDao billDBDao = userDB.getBillDao();
-    private ItemDao itemDao = userDB.getItemDao();
     private SavedFriendsDao savedFriendsDao = userDB.getSavedFriendsDao();
     private ArrayList listDateTime = new ArrayList<String>();
 
@@ -108,8 +106,7 @@ class AuthPresenter {
                                                     UsersBills usersBills = new UsersBills(billUuid);
                                                     usersBillsDao.insert(usersBills);
                                                     UUID friendUuid = UUID.randomUUID();
-                                                    UUID friendIsChooseUuid = UUID.randomUUID();
-                                                    BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString(), friendIsChooseUuid.toString());
+                                                    BillOfUser billOfUser = new BillOfUser(billUuid, friendUuid.toString());
                                                     billDao.insert(billOfUser);
                                                     listDateTime.add(billUuid);
                                                     HashMap billMap = friendsItem.getValue();
@@ -117,7 +114,7 @@ class AuthPresenter {
                                                         Map.Entry billMapItem = (Map.Entry) o;
                                                         if (!billMapItem.getKey().equals("savedFriends")) {
                                                             UUID chooseUUID = UUID.randomUUID();
-                                                            FriendsIsChoose friendsIsChoose = new FriendsIsChoose(friendIsChooseUuid.toString(), (String) billMapItem.getKey(), chooseUUID.toString());
+                                                            FriendsIsChoose friendsIsChoose = new FriendsIsChoose(friendUuid.toString(), (String) billMapItem.getKey(), chooseUUID.toString());
                                                             friendsIsChooseDao.insert(friendsIsChoose);
                                                             ArrayList chooseList = (ArrayList) billMapItem.getValue();
                                                             for (int i = 0; i < chooseList.size(); i++) {
@@ -138,7 +135,7 @@ class AuthPresenter {
                                                             for (Object friend : savedFriend.entrySet()) {
                                                                 Map.Entry friendItem = (Map.Entry) friend;
                                                                 HashMap friendMap = (HashMap) friendItem.getValue();
-                                                                SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString());
+                                                                SavedFriends savedFriends = new SavedFriends(friendUuid.toString(), (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
                                                                 savedFriendsDao.insert(savedFriends);
                                                             }
                                                             billMapItem.getValue();
@@ -179,12 +176,6 @@ class AuthPresenter {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             view.userValid(user);
-        } else view.userNotValid();
-    }
-
-    private void updateUIForLocalDB(User user) {
-        if (user != null) {
-            view.userValidForLocalDB();
         } else view.userNotValid();
     }
 

@@ -5,7 +5,8 @@ import android.os.Parcelable
 
 class FriendItem(
         private var mImageResource: Int = 0,
-        private var mText: String? = ""
+        private var mText: String? = "",
+        private var sum:Int = 0
 ) : Parcelable {
 
 
@@ -13,13 +14,14 @@ class FriendItem(
 
     private var key: String = ""
 
-
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
-            parcel.readString()) {
+            parcel.readString(),
+            parcel.readInt()) {
         isSelected = parcel.readByte() != 0.toByte()
-        key = parcel.readString()!!
+        key = parcel.readString().toString()
     }
+
 
     fun getKey(): String {
         return key
@@ -49,6 +51,7 @@ class FriendItem(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(mImageResource)
         parcel.writeString(mText)
+        parcel.writeInt(sum)
         parcel.writeByte(if (isSelected) 1 else 0)
         parcel.writeString(key)
     }

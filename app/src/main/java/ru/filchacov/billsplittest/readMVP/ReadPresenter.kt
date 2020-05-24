@@ -62,8 +62,7 @@ class ReadPresenter(private val view: ReadInterface) {
 
 
     fun onNoteClick(position: Int) {
-        val bill = billRepository.getByDateTime(result[position].billUID)
-        bill.items = itemDao.getItems(result[position].billUID)
+        val bill = listTemp[position]
         view.showFriendFragment(bill)
     }
 

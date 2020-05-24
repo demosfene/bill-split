@@ -1,5 +1,6 @@
 package ru.filchacov.billsplittest.bill
 
+import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -28,9 +29,14 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
     }
 
     fun saveBillForFriend() {
-        model.setBillForFriend(bill.dateTime, mFriendItem?.getmText().toString(), listBillDB)
-        model.isSelected(bill.dateTime, mFriendItem?.getKey())
-        view.exitFromBill(bill)
+        if (totalSum != 0) {
+            model.setBillForFriend(bill.dateTime, mFriendItem?.getmText().toString(), listBillDB)
+            model.isSelected(bill.dateTime, mFriendItem?.getKey())
+            model.setSumToFriend(bill.dateTime, mFriendItem?.getKey(), totalSum)
+            view.exitFromBill(bill)
+        }else{
+            view.showSumZero()
+        }
     }
 
 

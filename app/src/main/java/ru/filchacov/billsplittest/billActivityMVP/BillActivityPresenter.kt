@@ -96,7 +96,7 @@ class BillActivityPresenter(billParameters: String, var view: BillInterface) {
                     }
                     val usersBills = UsersBills(dateTime)
                     usersBillsDao.insert(usersBills)
-                    val billOfUser = BillOfUser(dateTime, UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                    val billOfUser = BillOfUser(dateTime, UUID.randomUUID().toString())
                     billOfUserDao.insert(billOfUser)
                     if(userDao.getByEmail(modelDB.auth.currentUser?.email) != null) {
                         modelDB.setFriend(dateTime, FriendItem(mText = userDao.getByUid(modelDB.auth.currentUser?.uid)?.name))

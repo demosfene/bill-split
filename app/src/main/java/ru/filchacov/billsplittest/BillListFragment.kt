@@ -110,6 +110,10 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         adapter!!.updateAmount(position, billUer)
     }
 
+    override fun showSumZero() {
+        Toast.makeText(context, "Вы ничего не выбрали!", Toast.LENGTH_SHORT)
+    }
+
     override fun updateAdapter() {
         adapter!!.notifyDataSetChanged()
     }
@@ -150,4 +154,6 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
             else -> super.onContextItemSelected(item)
         }
     }
+
+
 }

@@ -13,16 +13,13 @@ import ru.filchacov.billsplittest.db.usersBills.UsersBills;
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(foreignKeys = @ForeignKey(entity = UsersBills.class, parentColumns = "billUID", childColumns = "billUid", onDelete = CASCADE),
-        indices = {@Index(value = "friendsIsChooseUid", unique = true),
-                   @Index(value = "savedFriend", unique = true)})
+        indices = {@Index(value = "savedFriend", unique = true)})
 public class BillOfUser {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
     private String billUid;
     private String savedFriend;
-    @NonNull
-    private String friendsIsChooseUid;
 
     public int getId() {
         return id;
@@ -49,18 +46,9 @@ public class BillOfUser {
         this.savedFriend = savedFriend;
     }
 
-    @NotNull
-    public String getFriendsIsChooseUid() {
-        return friendsIsChooseUid;
-    }
 
-    public void setFriendsIsChooseUid(@NotNull String friendsIsChooseUid) {
-        this.friendsIsChooseUid = friendsIsChooseUid;
-    }
-
-    public BillOfUser(@NonNull String billUid, String savedFriend, @NonNull String friendsIsChooseUid) {
+    public BillOfUser(@NonNull String billUid, String savedFriend) {
         this.billUid = billUid;
         this.savedFriend = savedFriend;
-        this.friendsIsChooseUid = friendsIsChooseUid;
     }
 }

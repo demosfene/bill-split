@@ -21,12 +21,21 @@ public class SavedFriends {
     @NonNull
     private String key;
     private String name;
+    private int totalSum;
 
-    public SavedFriends(String id, boolean isSelected, @NonNull String key, String name) {
+    public SavedFriends(String id, boolean isSelected, @NonNull String key, String name, int totalSum) {
         this.id = id;
         this.isSelected = isSelected;
         this.key = key;
         this.name = name;
+    }
+
+    public int getTotalSum() {
+        return totalSum;
+    }
+
+    public void setTotalSum(int totalSum) {
+        this.totalSum = totalSum;
     }
 
     public String getId() {

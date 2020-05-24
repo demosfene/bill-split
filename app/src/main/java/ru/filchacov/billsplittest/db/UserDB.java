@@ -24,7 +24,7 @@ import ru.filchacov.billsplittest.db.usersBills.UsersBillsDao;
 
 @Database(
         entities = {User.class, BillOfUser.class, FriendsBillList.class, FriendsIsChoose.class, ItemFromBill.class, SavedFriends.class, UsersBills.class, Bill.class, Item.class},
-        version = 18)
+        version = 20)
 public abstract class UserDB extends RoomDatabase {
     public abstract UserDao getUserDao();
 
