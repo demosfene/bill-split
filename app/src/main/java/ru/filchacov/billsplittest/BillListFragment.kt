@@ -111,7 +111,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
     }
 
     override fun showSumZero() {
-        Toast.makeText(context, "Вы ничего не выбрали!", Toast.LENGTH_SHORT)
+        Toast.makeText(activity, "Вы ничего не выбрали!", Toast.LENGTH_SHORT).show()
     }
 
     override fun updateAdapter() {
