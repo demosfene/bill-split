@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal">
 
     <TextView
         android:id="@+id/bill_item_name"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guid_line1"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintHorizontal_bias="0.4"
@@ -31,6 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textSize="20sp"
+        android:fontFamily="monospace"
         app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
         app:layout_constraintEnd_toStartOf="@id/guid_line2"
         app:layout_constraintHorizontal_weight="0.1"
@@ -46,19 +50,6 @@
         app:layout_constraintGuide_percent="0.5" />
 
 
-    <Button
-        android:id="@+id/minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minWidth="10dp"
-        android:text="@string/minus"
-        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        app:layout_constraintEnd_toStartOf="@id/bill_user_count"
-        app:layout_constraintHorizontal_weight="0.1"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
-
-
     <TextView
         android:id="@+id/bill_user_count"
         android:layout_width="wrap_content"
@@ -66,23 +57,13 @@
         android:layout_margin="20dp"
         android:gravity="center"
         android:text="@string/_0"
-        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guid_line5"
+        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintHorizontal_weight="0.1"
         app:layout_constraintStart_toEndOf="@id/guid_line2"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
-
-
-    <Button
-        android:id="@+id/plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minWidth="5dp"
-        android:text="@string/plus"
-        app:layout_constraintBottom_toBottomOf="@id/bill_item_name"
-        app:layout_constraintStart_toEndOf="@id/bill_user_count"
-        app:layout_constraintTop_toTopOf="@id/bill_item_name" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guid_line5"
@@ -102,6 +83,42 @@
         app:layout_constraintStart_toEndOf="@id/guid_line5"
         app:layout_constraintTop_toTopOf="@id/bill_item_name"
         tools:text="555" />
+
+    <View
+        android:layout_width="380dp"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/plus"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="4dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/design_btn_plus_minus"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bill_user_count"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/ic_iconfinder_plus_325963" />
+
+    <ImageButton
+        android:id="@+id/minus"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="4dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/design_btn_plus_minus"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bill_user_count"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/ic_iconfinder_minus_325962" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

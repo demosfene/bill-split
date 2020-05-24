@@ -40,6 +40,10 @@ class InfoBillView : Fragment(), BillLListInterface {
                               savedInstanceState: Bundle?): View? {
         val view:View = inflater.inflate(R.layout.fragment_info_bill_view, container, false)
 
+        if (activity is BillInterface) {
+            (activity as BillInterface).progressBarInvisible()
+        }
+
         if (savedInstanceState != null) {
             bill = savedInstanceState.getParcelable("bill")
         } else {

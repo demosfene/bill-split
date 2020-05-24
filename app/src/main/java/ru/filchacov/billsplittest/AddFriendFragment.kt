@@ -14,6 +14,7 @@ import ru.filchacov.billsplittest.addFriend.FriendAdapter
 import ru.filchacov.billsplittest.addFriend.FriendItem
 import ru.filchacov.billsplittest.addFriend.FriendPresenter
 import ru.filchacov.billsplittest.bill.Bill
+import ru.filchacov.billsplittest.billActivityMVP.BillInterface
 
 class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
@@ -55,7 +56,9 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
         presenter = FriendPresenter(this, bill)
 
-
+        if (activity is BillInterface) {
+            (activity as BillInterface).progressBarInvisible()
+        }
 
         btnToMainActivity = view.findViewById(R.id.btn_to_main_activity)
         mRecyclerView = view.findViewById(R.id.recyclerView)
@@ -103,8 +106,8 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("bill", bill)
         super.onSaveInstanceState(outState)
+        outState.putParcelable("bill", bill)
     }
 
     override fun goToMainActivity() {

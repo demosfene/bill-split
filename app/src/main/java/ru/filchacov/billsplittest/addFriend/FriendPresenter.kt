@@ -63,4 +63,6 @@ class FriendPresenter(var view: AddFriendInterface, var bill: Bill) {
         view.clickFriend(bill, mFriendList[number])
     }
 
+
+
 }
