@@ -45,7 +45,13 @@ class AboutUserPresenter(var view: AboutUserInterface) {
         val testList = userDao.all
 
         // Редактирование в FireBase
-        updatePasswordEmail(password, email)
+        if (email == "" && password != "") {
+            updatePassword(password)
+        } else if (password == "" && email != ""){
+            updateEmail(email)
+        } else if (!(password == "" && email == "")) {
+            updatePasswordEmail(password, email)
+        }
         model.authReference.child("users").child(model.user.uid).setValue(
                 User(email, model.user.uid, name, phone))
                 .addOnCompleteListener {
@@ -55,7 +61,7 @@ class AboutUserPresenter(var view: AboutUserInterface) {
     }
 
     private fun updatePasswordEmail(password: String, email: String) {
-        if (!password.equals("")) {
+        if (password != "") {
             model.user.updatePassword(password).addOnCompleteListener(object: OnCompleteListener<Void>{
                 override fun onComplete(p0: Task<Void>) {
                     if (p0.isSuccessful) {
@@ -79,6 +85,20 @@ class AboutUserPresenter(var view: AboutUserInterface) {
                     } else Log.d("UpdUser", p0.exception.toString() + "PASSWORD")
                 }
             })
+        }
+    }
+
+    private fun updatePassword(password: String) {
+        model.user.updatePassword(password).addOnCompleteListener {
+            if (it.isSuccessful)Log.d("UpdUser", "Password update")
+            else Log.d("UpdUser", it.exception.toString() + "PASSWORD_SINGE")
+        }
+    }
+
+    private fun updateEmail(email: String) {
+        model.user.updateEmail(email).addOnCompleteListener {
+            if (it.isSuccessful)Log.d("UpdUser", "Email update")
+            else Log.d("UpdUser", it.exception.toString() + "EMAIL_SINGE")
         }
     }
 }
