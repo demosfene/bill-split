@@ -37,13 +37,14 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
         setSupportActionBar(toolbar)
         mDataBase = FirebaseDatabase.getInstance().reference
 
+        textView = findViewById(R.id.progressBarMessage)
+        progressBar = findViewById(R.id.progressBar)
+
         val qrInfo = intent.getStringExtra("QRInfo")
         val presenter = BillActivityPresenter(qrInfo!!, this)
 
         if (savedInstanceState == null) {
-            progressBar = findViewById(R.id.progressBar)
             try {
-                textView = findViewById(R.id.progressBarMessage)
                 textView.visibility = VISIBLE
                 progressBar.visibility = VISIBLE
                 presenter.getBillInfo()
@@ -118,7 +119,6 @@ class BillActivity : AppCompatActivity(), OnClickFriendToBill, ExitFromBill, GoT
     override fun progressBarInvisible() {
         textView.visibility = View.INVISIBLE
         progressBar.visibility = View.INVISIBLE
-
     }
 
     override fun showErrorDialog() {

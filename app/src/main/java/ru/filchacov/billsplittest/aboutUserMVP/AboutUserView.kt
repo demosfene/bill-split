@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ru.filchacov.billsplittest.MainActivityInterface
 import ru.filchacov.billsplittest.R
 import ru.filchacov.billsplittest.ShowUpButton
 import ru.filchacov.billsplittest.ToolbarSettings
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.slots.PredefinedSlots
+import ru.tinkoff.decoro.watchers.FormatWatcher
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 
 class AboutUserView : Fragment(), AboutUserInterface {
 
@@ -33,6 +36,10 @@ class AboutUserView : Fragment(), AboutUserInterface {
         email = view.findViewById(R.id.aUEmail)
         password = view.findViewById(R.id.aUPassword)
         phone = view.findViewById(R.id.aUPhone)
+        val formatWatcher: FormatWatcher = MaskFormatWatcher(
+                MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER) // маска для серии и номера
+        )
+        formatWatcher.installOn(phone!!)
         oldPassword = view.findViewById(R.id.aUOldPassword)
         btnSave = view.findViewById(R.id.aUSave)
 

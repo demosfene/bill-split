@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.filchacov.billsplittest.addFriend.FriendItem
 import ru.filchacov.billsplittest.bill.*
+import ru.filchacov.billsplittest.billActivityMVP.BillInterface
 
 
 class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
@@ -53,6 +54,10 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         presenter = BillListPresenter(this, bill!!, friendItem!!)
 
         totalSumView = view.findViewById(R.id.sum)
+
+        if (activity is BillInterface) {
+            (activity as BillInterface).progressBarInvisible()
+        }
 
         btnSave = view.findViewById(R.id.button_save)
         btnSave!!.setOnClickListener {

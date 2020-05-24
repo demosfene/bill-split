@@ -1,10 +1,12 @@
 package ru.filchacov.billsplittest.bill
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -32,8 +34,8 @@ class BillAdapter(var items: ArrayList<BillUser>, var onClickPlus: OnClickChange
         private val itemName = itemView.findViewById<TextView>(R.id.bill_item_name)
         private val itemCount = itemView.findViewById<TextView>(R.id.bill_item_count)
         private val itemPrice = itemView.findViewById<TextView>(R.id.bill_item_price)
-        private val btnPlus = itemView.findViewById<Button>(R.id.plus)
-        private val btnMinus = itemView.findViewById<Button>(R.id.minus)
+        private val btnPlus = itemView.findViewById<ImageButton>(R.id.plus)
+        private val btnMinus = itemView.findViewById<ImageButton>(R.id.minus)
         private val itemUserCount = itemView.findViewById<TextView>(R.id.bill_user_count)
 
         fun bind(billUser: BillUser, isSelected: Boolean) {
