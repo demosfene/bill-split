@@ -138,41 +138,8 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         adapter!!.notifyDataSetChanged()
     }
 
-    override fun exitFromBill(bill: Bill){
+    override fun exitFromBill(bill: Bill) {
         (activity as ExitFromBill).exitBill(bill)
-    }
-
-    private fun shareCashDebt(activity: Activity, debt: String) {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            putExtra(Intent.EXTRA_TEXT, "Верни мне $debt рублей пожалуйста")
-        }
-
-        val manager = activity.packageManager
-        if (intent.resolveActivity(manager) == null) {
-            Toast.makeText(activity, "ERROR", Toast.LENGTH_SHORT)
-                    .show()
-        }
-
-        val title = "Через что просим денег?"
-        val chooser = Intent.createChooser(intent, title)
-        activity.startActivity(chooser)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        activity?.menuInflater?.inflate(R.menu.overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.share -> {
-                activity?.let { shareCashDebt(it, totalSumView!!.text as String) }
-                true
-            }
-            else -> super.onContextItemSelected(item)
-        }
     }
 
 

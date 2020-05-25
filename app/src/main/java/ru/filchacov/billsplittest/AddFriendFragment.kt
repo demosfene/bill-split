@@ -1,22 +1,21 @@
 package ru.filchacov.billsplittest
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.filchacov.billsplittest.addFriend.AddFriendInterface
-import ru.filchacov.billsplittest.addFriend.FriendAdapter
-import ru.filchacov.billsplittest.addFriend.FriendItem
-import ru.filchacov.billsplittest.addFriend.FriendPresenter
+import ru.filchacov.billsplittest.addFriend.*
 import ru.filchacov.billsplittest.bill.Bill
 import ru.filchacov.billsplittest.billActivityMVP.BillInterface
 
-class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
+class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface, OnClickShare {
 
     private lateinit var bill: Bill
     private lateinit var presenter: FriendPresenter
@@ -62,7 +61,7 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = FriendAdapter(presenter.mFriendList, this)
+        mAdapter = FriendAdapter(presenter.mFriendList, this, this)
         mRecyclerView.layoutManager = mLayoutManager
         mRecyclerView.adapter = mAdapter
 
@@ -112,5 +111,23 @@ class AddFriendFragment : Fragment(), OnCLickFriend, AddFriendInterface {
 
     override fun updateAdapter() {
         mAdapter.notifyDataSetChanged()
+    }
+
+    override fun clockShare(sum: Double) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            putExtra(Intent.EXTRA_TEXT, "Верни мне $sum рублей пожалуйста")
+        }
+
+        val manager = activity?.packageManager
+        if (intent.resolveActivity(manager!!) == null) {
+            Toast.makeText(activity, "ERROR", Toast.LENGTH_SHORT)
+                    .show()
+        }
+
+        val title = "Через что просим денег?"
+        val chooser = Intent.createChooser(intent, title)
+        activity?.startActivity(chooser)
     }
 }

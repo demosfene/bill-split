@@ -20,10 +20,12 @@ import ru.filchacov.billsplittest.R;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
     private ArrayList<FriendItem> mFriendList;
     private OnCLickFriend onCLickFriend;
+    private OnClickShare onClickShare;
 
-    public FriendAdapter(ArrayList<FriendItem> friendList, OnCLickFriend onCLickFriend) {
+    public FriendAdapter(ArrayList<FriendItem> friendList, OnCLickFriend onCLickFriend, OnClickShare onClickShare) {
         mFriendList = friendList;
         this.onCLickFriend = onCLickFriend;
+        this.onClickShare = onClickShare;
     }
 
     @NonNull
@@ -41,6 +43,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         holder.mImageView.setImageResource(currentItem.getmImageResource());
         holder.mTextView1.setText(currentItem.getmText());
         holder.bindClickFriend(position, onCLickFriend);
+        holder.bindClickShare(currentItem, onClickShare);
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> menu.add(holder.getAdapterPosition(), 0, 0, "Удалить"));
     }
 
@@ -90,6 +93,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
             }else{
                 group.setVisibility(View.INVISIBLE);
             }
+        }
+
+        void bindClickShare(FriendItem friendItem, OnClickShare onClickShare) {
+            imageViewShare.setOnClickListener(v -> onClickShare.clockShare(Double.parseDouble(String.valueOf(friendItem.getSum()))/100));
         }
     }
 }

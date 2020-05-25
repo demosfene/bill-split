@@ -12,7 +12,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
 
     private var mFriendItem: FriendItem? = null
 
-    constructor(view: BillLListInterface, bill: Bill,  friendItem: FriendItem) : this(view, bill) {
+    constructor(view: BillLListInterface, bill: Bill, friendItem: FriendItem) : this(view, bill) {
         mFriendItem = friendItem
     }
 
@@ -41,7 +41,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
             val updateFriend = SavedFriends(bill.dateTime, true, mFriendItem!!.getKey(), mFriendItem!!.getmText(), totalSum)
             savedFriendsDao.update(updateFriend)
             view.exitFromBill(bill)
-        }else{
+        } else {
             view.showSumZero()
         }
     }
@@ -137,7 +137,7 @@ class BillListPresenter(var view: BillLListInterface, var bill: Bill) {
                             val map = ds.value as Map<*, *>
                             val billDB = BillUser()
                             //billDB.amount = map["amount"].toString().toInt()
-                           // val itemMap = map["items"] as Map<*, *>
+                            // val itemMap = map["items"] as Map<*, *>
                             val billItem = Bill.Item()
                             billItem.price = map["price"].toString().toInt()
                             billItem.quantity = map["quantity"].toString().toInt()

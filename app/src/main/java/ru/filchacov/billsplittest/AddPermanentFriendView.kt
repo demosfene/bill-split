@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.filchacov.billsplittest.addFriend.FriendAdapter
+import ru.filchacov.billsplittest.addFriend.OnClickShare
 import ru.filchacov.billsplittest.permanentFriend.AddPermanentFriendPresenter
 import ru.filchacov.billsplittest.permanentFriend.PermanentFriendInterface
 
 
-class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterface {
+class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterface, OnClickShare {
 
     companion object {
         const val TAG = "PermanentFriend"
@@ -50,7 +51,7 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterfa
         mRecyclerView = view.findViewById(R.id.recyclerView)
         mRecyclerView!!.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = FriendAdapter(presenter!!.mFriendList, this)
+        mAdapter = FriendAdapter(presenter!!.mFriendList, this, this)
         mRecyclerView!!.layoutManager = mLayoutManager
         mRecyclerView!!.adapter = mAdapter
 
@@ -96,6 +97,10 @@ class AddPermanentFriendView : Fragment(), OnCLickFriend, PermanentFriendInterfa
 
     override fun clickFriend(number: Int) {
         Toast.makeText(context, text, duration).show()
+    }
+
+    override fun clockShare(sum: Double) {
+        TODO("Not yet implemented")
     }
 
 }
