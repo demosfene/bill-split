@@ -18,6 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import ru.filchacov.billsplittest.DecoderActivity;
 import ru.filchacov.billsplittest.MainActivityInterface;
 import ru.filchacov.billsplittest.R;
@@ -91,7 +93,7 @@ public class ReadFragment extends Fragment
         recyclerView.setAdapter(adapter);
 
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager llm = new GridLayoutManager(getContext(), requireContext().getResources().getInteger(R.integer.col_count));
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(llm);

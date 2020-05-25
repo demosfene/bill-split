@@ -47,5 +47,6 @@
     <string name="user_info">Информация</string>
     <string name="old_password">Старый пароль</string>
     <string name="registration_text">Регистрация</string>
+    <string name="zero">0,00</string>
 
 </resources>

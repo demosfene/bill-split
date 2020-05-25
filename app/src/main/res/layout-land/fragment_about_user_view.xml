@@ -28,16 +28,17 @@
 
             <EditText
                 android:id="@+id/aUEmail"
-                android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:textColorLink="@color/white"
-                android:backgroundTint="@color/white"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="30dp"
+                android:autofillHints="@string/email"
+                android:backgroundTint="@color/white"
+                android:ems="10"
                 android:inputType="textEmailAddress"
-                android:ems="10" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white" />
 
 
             <EditText
@@ -45,12 +46,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:textColorLink="@color/white"
+                android:autofillHints="@string/name"
                 android:backgroundTint="@color/white"
+                android:ems="10"
                 android:inputType="textCapWords"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,27 +63,29 @@
                 android:id="@+id/aUOldPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:textColorLink="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginBottom="30dp"
+                android:autofillHints="@string/old_password"
+                android:backgroundTint="@color/white"
+                android:ems="10"
                 android:hint="@string/old_password"
                 android:inputType="textPassword"
-                android:ems="10" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white" />
 
             <EditText
                 android:id="@+id/aUPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
+                android:autofillHints="@string/text_new_password"
+                android:backgroundTint="@color/white"
                 android:ems="10"
                 android:hint="@string/text_new_password"
                 android:inputType="textPassword"
-                android:textColorHint="@color/white"
                 android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textColorLink="@color/white"
-                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,23 +95,25 @@
                 android:id="@+id/aUPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
-                android:textColorLink="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginBottom="30dp"
+                android:autofillHints="@string/your_phone"
+                android:backgroundTint="@color/white"
                 android:ems="10"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white" />
 
             <Button
                 android:id="@+id/aUSave"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="70dp"
                 android:background="#FFFFFF"
                 android:elevation="2dp"
+                android:padding="8dp"
                 android:text="@string/saveButton"
-                android:translationZ="4dp" />
+                android:translationZ="8dp" />
         </LinearLayout>
     </ScrollView>
 

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registration_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/registration_fragment"
-    tools:context=".RegistrationView"
-    android:background="@drawable/back_registration">
+    android:background="@drawable/back_registration"
+    tools:context=".RegistrationView">
 
 
     <ScrollView
@@ -23,9 +22,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
                 android:text="@string/registration_text"
                 android:textColor="@color/white"
-                android:layout_marginTop="70dp"
                 android:textSize="23sp" />
 
             <EditText
@@ -34,11 +33,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="48dp"
                 android:layout_weight="1"
-                android:textColorHint="@color/white"
                 android:backgroundTint="@color/white"
                 android:hint="@string/your_name"
-                android:textColor="@color/white"
                 android:inputType="textCapWords"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +49,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="48dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
-                android:hint="@string/your_email"
-                android:textColorHint="@color/white"
                 android:backgroundTint="@color/white"
+                android:hint="@string/your_email"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
@@ -69,11 +68,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="48dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
                 android:hint="@string/your_phone"
                 android:inputType="phone"
+                android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/edit_name"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -88,11 +87,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="48dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:backgroundTint="@color/white"
                 android:hint="@string/your_password"
                 android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,11 +103,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="48dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:backgroundTint="@color/white"
                 android:hint="@string/confirm_your_password"
                 android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,20 +116,20 @@
             <Button
                 android:id="@+id/btn_sign_up"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="170dp"
-                android:layout_height="55dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:layout_marginBottom="48dp"
-                android:textAllCaps="false"
                 android:background="@drawable/design_button"
                 android:elevation="3dp"
+                android:padding="16dp"
                 android:stateListAnimator="@null"
                 android:text="@string/sing_up"
+                android:textAllCaps="false"
                 android:textColor="#000000"
-                android:translationZ="3dp"/>
+                android:translationZ="3dp" />
         </LinearLayout>
     </ScrollView>
-
 
 
 </FrameLayout>
