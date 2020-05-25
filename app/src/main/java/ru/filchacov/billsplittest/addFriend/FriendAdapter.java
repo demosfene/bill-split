@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import ru.filchacov.billsplittest.OnCLickFriend;
@@ -72,9 +74,19 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         void bind(FriendItem friendItem) {
             mImageView.setImageResource(friendItem.getmImageResource());
             mTextView1.setText(friendItem.getmText());
+            DecimalFormat df = new DecimalFormat();
+            df.setGroupingUsed(true);
+            df.setGroupingSize(3);
+
+            DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+            decimalFormatSymbols.setDecimalSeparator(',');
+            decimalFormatSymbols.setGroupingSeparator(' ');
+
+            df.setDecimalFormatSymbols(decimalFormatSymbols);
+
             if (friendItem.getisSelected()) {
                 group.setVisibility(View.VISIBLE);
-                textViewSum.setText(String.valueOf(friendItem.getSum()));
+                textViewSum.setText(df.format(Double.parseDouble(String.valueOf(friendItem.getSum()))/100));
             }else{
                 group.setVisibility(View.INVISIBLE);
             }

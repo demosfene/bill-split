@@ -53,14 +53,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/text_sum"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sum"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/sum"
-        app:layout_constraintEnd_toEndOf="@id/button_cancel"
-        app:layout_constraintStart_toStartOf="@id/button_cancel" />
+        app:layout_constraintBottom_toTopOf="@id/button_cancel"
+        app:layout_constraintEnd_toStartOf="@id/sum"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -70,9 +71,9 @@
         android:layout_height="wrap_content"
         android:text="@string/zero"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/button_save"
-        app:layout_constraintEnd_toEndOf="@+id/button_save"
-        app:layout_constraintStart_toStartOf="@+id/button_save" />
+        app:layout_constraintBottom_toBottomOf="@id/text_sum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_sum" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

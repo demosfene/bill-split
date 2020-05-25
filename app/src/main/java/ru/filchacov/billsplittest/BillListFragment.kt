@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.view.View.INVISIBLE
+import android.view.View.GONE
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.filchacov.billsplittest.addFriend.FriendItem
 import ru.filchacov.billsplittest.bill.*
 import ru.filchacov.billsplittest.billActivityMVP.BillInterface
+import java.text.DecimalFormat
 
 
 class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
@@ -69,7 +70,7 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
         }
 
         if (friendItem!!.getisSelected()) {
-            btnSave!!.visibility = INVISIBLE
+            btnSave!!.visibility = GONE
             presenter!!.loadBillList()
         } else {
             presenter!!.initBillList()
@@ -105,7 +106,16 @@ class BillListFragment : Fragment(), OnClickChangeAmount, BillLListInterface {
 
 
     override fun updateTotalSum(totalSum: Double) {
-        totalSumView!!.text = String.format("%.2f", totalSum)
+        val df = DecimalFormat()
+        df.isGroupingUsed = true
+        df.groupingSize = 3
+
+        val decimalFormatSymbols = df.decimalFormatSymbols
+        decimalFormatSymbols.decimalSeparator = ','
+        decimalFormatSymbols.groupingSeparator = ' '
+        df.decimalFormatSymbols = decimalFormatSymbols
+
+        totalSumView!!.text = df.format(totalSum)
     }
 
     override fun clickPlus(position: Int) {
