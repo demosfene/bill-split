@@ -104,7 +104,7 @@ public class Singleton {
                                         for (Object friend : savedFriend.entrySet()) {
                                             Map.Entry friendItem = (Map.Entry) friend;
                                             HashMap friendMap = (HashMap) friendItem.getValue();
-                                            SavedFriends savedFriends = new SavedFriends(billUuid, (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), (friendMap.get("map") != null) ? Integer.parseInt(friendMap.get("sum").toString()) : 0);
+                                            SavedFriends savedFriends = new SavedFriends(billUuid, (Boolean) friendMap.get("isSelected"), friendItem.getKey().toString(), friendMap.get("mText").toString(), Integer.parseInt(friendMap.get("sum").toString()));
                                             savedFriendsDao.insert(savedFriends);
                                         }
                                         billMapItem.getValue();
