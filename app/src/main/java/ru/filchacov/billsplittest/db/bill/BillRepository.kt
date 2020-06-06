@@ -33,10 +33,12 @@ class BillRepository(var mDao: BillDao, var modelDB: ModelDB, var itemDao: ItemD
         modelDB.getBill(dateTime).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val bill = dataSnapshot.getValue(Bill::class.java)
-                insert(bill!!)
-                for (item in bill.items) {
-                    val itemDB = Item(bill.dateTime, item.name, item.quantity!!, item.sum!!, item.price!!)
-                    itemDao.insert(itemDB)
+                if (bill != null) {
+                    insert(bill)
+                    for (item in bill.items) {
+                        val itemDB = Item(bill.dateTime, item.name, item.quantity!!, item.sum!!, item.price!!)
+                        itemDao.insert(itemDB)
+                    }
                 }
             }
 
